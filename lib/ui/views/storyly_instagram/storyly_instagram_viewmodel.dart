@@ -1,0 +1,19 @@
+import 'package:stacked/stacked.dart';
+import 'package:storyly_flutter/storyly_flutter.dart';
+
+class StorylyInstagramViewModel extends BaseViewModel {
+  static const storylyToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NfaWQiOjEyMTM2LCJhcHBfaWQiOjE3OTQwLCJpbnNfaWQiOjIxMDgyfQ.zf3MeCKnKUaE6m1216mlDpP5BvqF5z6Hhk1UumwcLb4";
+
+  String get UstorylyToken => storylyToken;
+  late StorylyViewController storylyViewController;
+
+  void onStorylyViewCreated(StorylyViewController storylyViewController) {
+    this.storylyViewController = storylyViewController;
+  }
+}
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NfaWQiOjEyMTM2LCJhcGlfc2FsdCI6dHJ1ZX0.xaoaEw5NkuvWLmyKC67HvqZYlkD-n6ymbjjSLy9EssY
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NfaWQiOjEyMTM2LCJhcHBfaWQiOjE3OTQwLCJpbnNfaWQiOjIwMDQ0fQ.yF9unT9R9-yb1IK9TvWI0VHnFtGbNuuelQqPfUprTZk
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NfaWQiOjEyMTM2LCJhcHBfaWQiOjE3OTQwLCJpbnNfaWQiOjIwMDQzfQ.XZWDVde6wgG2g59Ci76v_objew9_vrmzfyto2RlzUgc
+// eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NfaWQiOjc2MCwiYXBwX2lkIjo0MDUsImluc19pZCI6NDA0fQ.1AkqOy_lsiownTBNhVOUKc91uc9fDcAxfQZtpm3nj40
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NfaWQiOjEyMTM2LCJhcGlfc2FsdCI6dHJ1ZX0.xaoaEw5NkuvWLmyKC67HvqZYlkD-n6ymbjjSLy9EssY
