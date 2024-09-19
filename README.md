@@ -6,7 +6,7 @@
 
 
 <!--  Donations -->
- <a href="https://ko-fi.com">
+ <a href="https://ko-fi.com/ynadtiy19">
   <img width="300" src="https://user-images.githubusercontent.com/26390946/161375567-9e14cd0e-1675-4896-a576-a449b0bcd293.png">
  </a>
  <div align="center">
