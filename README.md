@@ -10,10 +10,10 @@
   <img width="300" src="https://user-images.githubusercontent.com/26390946/161375567-9e14cd0e-1675-4896-a576-a449b0bcd293.png">
  </a>
  <div align="center">
-   <a href="https://www.buymeacoffee.com/">
+   <a href="https://ko-fi.com/ynadtiy19">
     <img width="150" alt="buymeacoffee" src="https://user-images.githubusercontent.com/26390946/161375563-69c634fd-89d2-45ac-addd-931b03996b34.png">
   </a>  
-   <a href="https://ko-fi.com/">
+   <a href="https://ko-fi.com/ynadtiy19">
     <img width="150" alt="Ko-fi" src="https://user-images.githubusercontent.com/26390946/161375565-e7d64410-bbcf-4a28-896b-7514e106478e.png">
   </a>   
  </div>
