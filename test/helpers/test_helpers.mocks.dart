@@ -682,4 +682,47 @@ class MockGeminiService extends _i1.Mock implements _i7.GeminiService {}
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockSelectImgFavoService extends _i1.Mock
-    implements _i8.SelectImgFavoService {}
+    implements _i8.SelectImgFavoService {
+  @override
+  String get filename => (super.noSuchMethod(
+        Invocation.getter(#filename),
+        returnValue: _i3.dummyValue<String>(
+          this,
+          Invocation.getter(#filename),
+        ),
+        returnValueForMissingStub: _i3.dummyValue<String>(
+          this,
+          Invocation.getter(#filename),
+        ),
+      ) as String);
+
+  @override
+  String get filepath => (super.noSuchMethod(
+        Invocation.getter(#filepath),
+        returnValue: _i3.dummyValue<String>(
+          this,
+          Invocation.getter(#filepath),
+        ),
+        returnValueForMissingStub: _i3.dummyValue<String>(
+          this,
+          Invocation.getter(#filepath),
+        ),
+      ) as String);
+
+  @override
+  _i5.Future<dynamic> replacetoSelectView(
+    String? filename,
+    String? filepath,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #replacetoSelectView,
+          [
+            filename,
+            filepath,
+          ],
+        ),
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
+}

@@ -22,6 +22,7 @@ import 'package:hung/ui/views/prompt_to_query_favorite/prompt_to_query_favorite_
 import 'package:hung/ui/views/prompt_to_favo_page/prompt_to_favo_page_view.dart';
 import 'package:hung/ui/views/prompt_to_select/prompt_to_select_view.dart';
 import 'package:hung/services/select_img_favo_service.dart';
+import 'package:hung/ui/views/pinterest/pinterest_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -42,6 +43,7 @@ import 'package:hung/services/select_img_favo_service.dart';
     MaterialRoute(page: PromptToQueryFavoriteView),
     MaterialRoute(page: PromptToFavoPageView),
     MaterialRoute(page: PromptToSelectView),
+    MaterialRoute(page: PinterestView),
 // @stacked-route
   ],
   dependencies: [

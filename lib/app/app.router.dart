@@ -5,7 +5,7 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i18;
+import 'package:flutter/material.dart' as _i19;
 import 'package:flutter/material.dart';
 import 'package:hung/ui/views/article/article_view.dart' as _i4;
 import 'package:hung/ui/views/chat/chat_view.dart' as _i5;
@@ -13,6 +13,7 @@ import 'package:hung/ui/views/chatsity/chatsity_view.dart' as _i14;
 import 'package:hung/ui/views/geminichat_screen/geminichat_screen_view.dart'
     as _i10;
 import 'package:hung/ui/views/home/home_view.dart' as _i2;
+import 'package:hung/ui/views/pinterest/pinterest_view.dart' as _i18;
 import 'package:hung/ui/views/profile/profile_view.dart' as _i6;
 import 'package:hung/ui/views/promotetowords/promotetowords_view.dart' as _i13;
 import 'package:hung/ui/views/prompt_to_favo_page/prompt_to_favo_page_view.dart'
@@ -30,7 +31,7 @@ import 'package:hung/ui/views/storyly_instagram/storyly_instagram_view.dart'
 import 'package:hung/ui/views/travelcard/travelcard_view.dart' as _i8;
 import 'package:hung/ui/views/travelstory/travelstory_view.dart' as _i9;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i19;
+import 'package:stacked_services/stacked_services.dart' as _i20;
 
 class Routes {
   static const homeView = '/home-view';
@@ -65,6 +66,8 @@ class Routes {
 
   static const promptToSelectView = '/prompt-to-select-view';
 
+  static const pinterestView = '/pinterest-view';
+
   static const all = <String>{
     homeView,
     startupView,
@@ -82,6 +85,7 @@ class Routes {
     promptToQueryFavoriteView,
     promptToFavoPageView,
     promptToSelectView,
+    pinterestView,
   };
 }
 
@@ -151,48 +155,52 @@ class StackedRouter extends _i1.RouterBase {
       Routes.promptToSelectView,
       page: _i17.PromptToSelectView,
     ),
+    _i1.RouteDef(
+      Routes.pinterestView,
+      page: _i18.PinterestView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.HomeView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.HomeView(),
         settings: data,
       );
     },
     _i3.StartupView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.StartupView(),
         settings: data,
       );
     },
     _i4.ArticleView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.ArticleView(),
         settings: data,
       );
     },
     _i5.ChatView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i5.ChatView(),
         settings: data,
       );
     },
     _i6.ProfileView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i6.ProfileView(),
         settings: data,
       );
     },
     _i7.StorylyInstagramView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i7.StorylyInstagramView(),
         settings: data,
       );
     },
     _i8.TravelcardView: (data) {
       final args = data.getArgs<TravelcardViewArguments>(nullOk: false);
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => _i8.TravelcardView(
             scrollController: args.scrollController,
             index: args.index,
@@ -201,39 +209,39 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i9.TravelstoryView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i9.TravelstoryView(),
         settings: data,
       );
     },
     _i10.GeminichatScreenView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i10.GeminichatScreenView(),
         settings: data,
       );
     },
     _i11.PromptToRealView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i11.PromptToRealView(),
         settings: data,
       );
     },
     _i12.PromptToTranslateView: (data) {
       final args = data.getArgs<PromptToTranslateViewArguments>(nullOk: false);
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i12.PromptToTranslateView(args.scrollController, key: args.key),
         settings: data,
       );
     },
     _i13.PromotetowordsView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i13.PromotetowordsView(),
         settings: data,
       );
     },
     _i14.ChatsityView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i14.ChatsityView(),
         settings: data,
       );
@@ -241,7 +249,7 @@ class StackedRouter extends _i1.RouterBase {
     _i15.PromptToQueryFavoriteView: (data) {
       final args =
           data.getArgs<PromptToQueryFavoriteViewArguments>(nullOk: false);
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => _i15.PromptToQueryFavoriteView(
             scrollController: args.scrollController,
             index: args.index,
@@ -250,14 +258,20 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i16.PromptToFavoPageView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i16.PromptToFavoPageView(),
         settings: data,
       );
     },
     _i17.PromptToSelectView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i17.PromptToSelectView(),
+        settings: data,
+      );
+    },
+    _i18.PinterestView: (data) {
+      return _i19.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i18.PinterestView(),
         settings: data,
       );
     },
@@ -277,11 +291,11 @@ class TravelcardViewArguments {
     this.key,
   });
 
-  final _i18.ScrollController scrollController;
+  final _i19.ScrollController scrollController;
 
   final int index;
 
-  final _i18.Key? key;
+  final _i19.Key? key;
 
   @override
   String toString() {
@@ -308,9 +322,9 @@ class PromptToTranslateViewArguments {
     this.key,
   });
 
-  final _i18.ScrollController scrollController;
+  final _i19.ScrollController scrollController;
 
-  final _i18.Key? key;
+  final _i19.Key? key;
 
   @override
   String toString() {
@@ -336,11 +350,11 @@ class PromptToQueryFavoriteViewArguments {
     this.key,
   });
 
-  final _i18.ScrollController scrollController;
+  final _i19.ScrollController scrollController;
 
   final int index;
 
-  final _i18.Key? key;
+  final _i19.Key? key;
 
   @override
   String toString() {
@@ -361,7 +375,7 @@ class PromptToQueryFavoriteViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i19.NavigationService {
+extension NavigatorStateExtension on _i20.NavigationService {
   Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -447,9 +461,9 @@ extension NavigatorStateExtension on _i19.NavigationService {
   }
 
   Future<dynamic> navigateToTravelcardView({
-    required _i18.ScrollController scrollController,
+    required _i19.ScrollController scrollController,
     required int index,
-    _i18.Key? key,
+    _i19.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -508,8 +522,8 @@ extension NavigatorStateExtension on _i19.NavigationService {
   }
 
   Future<dynamic> navigateToPromptToTranslateView({
-    required _i18.ScrollController scrollController,
-    _i18.Key? key,
+    required _i19.ScrollController scrollController,
+    _i19.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -554,9 +568,9 @@ extension NavigatorStateExtension on _i19.NavigationService {
   }
 
   Future<dynamic> navigateToPromptToQueryFavoriteView({
-    required _i18.ScrollController scrollController,
+    required _i19.ScrollController scrollController,
     required int index,
-    _i18.Key? key,
+    _i19.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -594,6 +608,20 @@ extension NavigatorStateExtension on _i19.NavigationService {
         transition,
   ]) async {
     return navigateTo<dynamic>(Routes.promptToSelectView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToPinterestView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.pinterestView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -685,9 +713,9 @@ extension NavigatorStateExtension on _i19.NavigationService {
   }
 
   Future<dynamic> replaceWithTravelcardView({
-    required _i18.ScrollController scrollController,
+    required _i19.ScrollController scrollController,
     required int index,
-    _i18.Key? key,
+    _i19.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -746,8 +774,8 @@ extension NavigatorStateExtension on _i19.NavigationService {
   }
 
   Future<dynamic> replaceWithPromptToTranslateView({
-    required _i18.ScrollController scrollController,
-    _i18.Key? key,
+    required _i19.ScrollController scrollController,
+    _i19.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -792,9 +820,9 @@ extension NavigatorStateExtension on _i19.NavigationService {
   }
 
   Future<dynamic> replaceWithPromptToQueryFavoriteView({
-    required _i18.ScrollController scrollController,
+    required _i19.ScrollController scrollController,
     required int index,
-    _i18.Key? key,
+    _i19.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -832,6 +860,20 @@ extension NavigatorStateExtension on _i19.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.promptToSelectView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithPinterestView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.pinterestView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

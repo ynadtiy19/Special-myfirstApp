@@ -147,7 +147,7 @@ class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
                       child: TextFormField(
                         textInputAction: TextInputAction.send,
                         onFieldSubmitted: (value) async {
-                          print(viewModel.targetLanguage);
+                          // print(viewModel.targetLanguage);
                           await viewModel.translateText(
                               PromptToTranslateViewModel.query.text,
                               viewModel.targetLanguage);

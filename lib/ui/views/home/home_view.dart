@@ -5,6 +5,7 @@ import 'package:hung/ui/views/profile/profile_view.dart';
 import 'package:hung/ui/widgets/common/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:stacked/stacked.dart';
 
+import '../pinterest/pinterest_view.dart';
 import 'home_viewmodel.dart';
 
 class HomeView extends StackedView<HomeViewModel> {
@@ -33,13 +34,11 @@ class HomeView extends StackedView<HomeViewModel> {
       ),
       body: IndexedStack(
         index: viewModel.uuuindex,
-        children: <Widget>[
-          const ChatView(),
-          const ArticleView(), // 传递 jsonCache
-          Container(
-            color: Colors.green,
-          ),
-          const ProfileView(),
+        children: const <Widget>[
+          ChatView(),
+          ArticleView(), // 传递 jsonCache
+          PinterestView(),
+          ProfileView(),
           // 其他视图...
         ],
       ),

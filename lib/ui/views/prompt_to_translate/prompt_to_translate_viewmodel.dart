@@ -135,7 +135,7 @@ class PromptToTranslateViewModel extends BaseViewModel {
         selection.end,
       );
       highlightText(selectedText, selection.start, selection.end);
-      print(selectedText);
+      // print(selectedText);
     }
   }
 
