@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:hung/ui/animationartical/models/models.dart';
@@ -629,14 +630,23 @@ class _ArticleCardState extends State<ArticleCard>
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   CircleAvatar(
-                                    backgroundImage:
-                                        NetworkImage(widget.avatarUrl),
+                                    backgroundImage: CachedNetworkImageProvider(
+                                      widget.avatarUrl, // 网络图片的URL
+                                    ),
                                     radius: 20,
+                                    onBackgroundImageError:
+                                        (exception, stackTrace) {
+                                      // 处理加载图片时的错误
+                                      print('Error loading image: $exception');
+                                    },
+                                    // child: const CircularProgressIndicator(
+                                    //   color: Colors.green,
+                                    // ), // 可选：用于加载时显示
                                   ),
-                                  SizedBox(width: 12),
+                                  const SizedBox(width: 12),
                                   Text(
                                     widget.name,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -668,10 +678,19 @@ class _ArticleCardState extends State<ArticleCard>
                                   // ),
                                   child: AspectRatio(
                                     aspectRatio: 16 / 9,
-                                    child: Image.network(
-                                      widget.postImg,
+                                    child: CachedNetworkImage(
+                                      imageUrl: widget.postImg,
                                       height: 500,
                                       fit: BoxFit.cover,
+                                      placeholder: (context, url) =>
+                                          const Center(
+                                              child: CircularProgressIndicator(
+                                        color: Colors.green,
+                                      )), // 加载中占位符
+                                      errorWidget: (context, url, error) =>
+                                          const Center(
+                                              child:
+                                                  Icon(Icons.error)), // 加载失败占位符
                                     ),
                                   ),
                                 ),

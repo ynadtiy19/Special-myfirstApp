@@ -49,7 +49,10 @@ void main() async {
   setupDialogUi(); // Assuming this is a function from your first app
   setupBottomSheetUi(); // Assuming this is a function from your first app
   runApp(
-    const MyApp(),
+    WillPopScope(
+      onWillPop: () async => false,
+      child: const MyApp(),
+    ),
   );
   configLoading();
 }

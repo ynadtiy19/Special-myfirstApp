@@ -28,8 +28,17 @@ class PinterestView extends StackedView<PinterestViewModel> {
             )),
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () => _showSearchBar(context, viewModel),
+              icon: Icon(LineIcons.delicious),
+              onPressed: () {
+                viewModel.deleteGalleryImage(context);
+              }),
+          const SizedBox(width: 10),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () => _showSearchBar(context, viewModel),
+            ),
           ),
         ],
       ),
@@ -39,23 +48,25 @@ class PinterestView extends StackedView<PinterestViewModel> {
           mainAxisSpacing: 4.0,
           crossAxisSpacing: 4.0,
         ),
-        itemCount: viewModel.grideImages.length,
+        itemCount: viewModel.imageUrls.length,
         itemBuilder: (context, index) {
-          final image = viewModel.grideImages[index]['image'];
           final imageId = viewModel.imageUrls[index];
-          final width = image['width'] as int;
-          final height = image['height'] as int;
+          final width = imageId['width'] as int;
+          final height = imageId['height'] as int;
+          final url = imageId['url'] as String; // 提取 URL
+          final originalUrl = imageId['original'] as String;
 
           return InstaImageViewer(
               uonTap: (bool value) async {
-                await viewModel.singleImageToGallery(image['url']);
+                print(originalUrl);
+                await viewModel.singleImageToGallery(originalUrl);
                 toastification.show(
                   context: context,
                   type: ToastificationType.success,
                   style: ToastificationStyle.flatColored,
-                  title: const Text("取消保存，这张图片已经存在于收藏中"),
-                  description: const Text(
-                      "Cancel save, this image already exists in favorites."),
+                  title: const Text("这张图片已经添加进相册"),
+                  description:
+                      const Text("This picture has been added to the album."),
                   alignment: Alignment.bottomCenter,
                   autoCloseDuration: const Duration(milliseconds: 2350),
                   primaryColor: Colors.green,
@@ -74,10 +85,12 @@ class PinterestView extends StackedView<PinterestViewModel> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0), // 圆角
                   child: CachedNetworkImage(
-                    imageUrl: imageId,
+                    imageUrl: url,
                     fit: BoxFit.contain,
                     placeholder: (context, url) => const Center(
-                        child: CircularProgressIndicator()), // 加载中占位符
+                        child: CircularProgressIndicator(
+                      color: Colors.green,
+                    )), // 加载中占位符
                     errorWidget: (context, url, error) =>
                         const Center(child: Icon(Icons.error)), // 加载失败占位符
                   ),
@@ -90,41 +103,64 @@ class PinterestView extends StackedView<PinterestViewModel> {
 
   void _showSearchBar(BuildContext context, PinterestViewModel viewModel) {
     final TextEditingController searchController = TextEditingController();
+    final FocusNode searchFocusNode = FocusNode(); // 创建 FocusNode
 
-    showModalBottomSheet(
+    showDialog(
       context: context,
-      builder: (BuildContext context) {
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: searchController,
-                  decoration: InputDecoration(
-                    hintText: 'Enter search query',
-                    border: OutlineInputBorder(),
-                  ),
+      builder: (BuildContext dialogContext) {
+        // 延迟弹出键盘以便 UI 初始化完成
+        Future.delayed(const Duration(milliseconds: 100), () {
+          if (dialogContext.mounted) {
+            // 检查上下文是否有效
+            FocusScope.of(dialogContext)
+                .requestFocus(searchFocusNode); // 使 TextField 获取焦点并弹出键盘
+          }
+        });
+        return Align(
+          alignment: Alignment.topCenter, // 对齐到顶部
+          child: Padding(
+            padding: const EdgeInsets.only(top: 50.0), // 距离顶部的距离
+            child: Material(
+              color: Colors.transparent, // 透明背景
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                color: Colors.white, // 背景颜色
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: searchController,
+                        focusNode: searchFocusNode, // 将 FocusNode 传递给 TextField
+                        textInputAction: TextInputAction.send,
+                        decoration: InputDecoration(
+                          hintText: '搜索',
+                          border: const OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: const BorderSide(color: Colors.green),
+                          ),
+                        ),
+                        onSubmitted: (value) {
+                          Navigator.of(context).pop(); // 收起对话框
+                          viewModel.fetchAndParseData(value); // 执行搜索逻辑
+                        },
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.cancel),
+                      onPressed: () {
+                        FocusScope.of(dialogContext).unfocus(); // 收起键盘
+                        Navigator.of(dialogContext).pop(); // 关闭弹窗
+                      },
+                    ),
+                  ],
                 ),
               ),
-              IconButton(
-                icon: Icon(Icons.cancel),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
+            ),
           ),
         );
       },
-    ).then((_) {
-      // 执行搜索逻辑
-      final query = searchController.text.trim();
-      if (query.isNotEmpty) {
-        print('搜索: $query');
-        viewModel.fetchAndParseData(query);
-      }
-    });
+    );
   }
 
   @override

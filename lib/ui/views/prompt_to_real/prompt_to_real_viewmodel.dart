@@ -97,7 +97,10 @@ class PromptToRealViewModel extends ReactiveViewModel {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('确定'),
+                child: const Text(
+                  '确定',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
             ],
           );
@@ -115,17 +118,23 @@ class PromptToRealViewModel extends ReactiveViewModel {
           actions: [
             CupertinoDialogAction(
               onPressed: () {
-                Navigator.of(context).pop(); // 关闭对话框
-              },
-              child: const Text('取消'),
-            ),
-            CupertinoDialogAction(
-              onPressed: () {
                 ImageRepository.deleteImages();
                 notifyListeners();
                 Navigator.of(context).pop(); // 关闭对话框
               },
-              child: const Text('确定'),
+              child: const Text(
+                '确定',
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop(); // 关闭对话框
+              },
+              child: const Text(
+                '取消',
+                style: TextStyle(color: Colors.black),
+              ),
             ),
           ],
         );

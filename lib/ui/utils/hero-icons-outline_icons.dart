@@ -1,10 +1,3 @@
-// Place fonts/hero-icons-outline.ttf in your fonts/ directory and
-// add the following to your pubspec.yaml
-// flutter:
-//   fonts:
-//    - family: hero-icons-outline
-//      fonts:
-//       - asset: fonts/hero-icons-outline.ttf
 import 'package:flutter/widgets.dart';
 
 class Hero_icons_outline {

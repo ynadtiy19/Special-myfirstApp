@@ -19,7 +19,7 @@ class HomeView extends StackedView<HomeViewModel> {
   ) {
     return Scaffold(
       bottomNavigationBar: AnimatedCrossFade(
-        secondChild: SizedBox.shrink(), // 隐藏底部导航栏
+        secondChild: const SizedBox.shrink(), // 隐藏底部导航栏
         firstChild: MeBottomNavigationBar(
           (index) {
             // 处理底部导航栏按钮点击事件
