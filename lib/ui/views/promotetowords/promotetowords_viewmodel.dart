@@ -30,8 +30,8 @@ class PromotetowordsViewModel extends BaseViewModel {
   bool isfetching = false;
   get isFetching => isfetching;
 
-  bool usureTotranslate = false;
-  get sureToTranslate => usureTotranslate;
+  static bool usureTotranslate = false;
+  static get sureToTranslate => usureTotranslate;
   // 每个 Chip 的标签
   final List<String> _chipLabels = [
     "DALL-E",
@@ -208,7 +208,7 @@ class PromotetowordsViewModel extends BaseViewModel {
         {
           "role": "user",
           "content":
-              "Create $number captivating image prompts tailored for $model. Each prompt should:\n            1. Begin with an engaging verb like \"Imagine\", \"Illustrate\", \"Capture\", etc.\n            2. Range between 35 and 50 words, weaving a tapestry of visual storytelling.\n            3. Clearly express the image ratio as \"square ($Ratio)\" at the forefront of each prompt.\n            4. Highlight the style: photorealistic, to evoke realism and depth.\n            5. Include the enchanting theme: $text, symbolizing serenity and flow.\n            6. Utilize clear, straightforward language to ensure understanding.\n            7. Emphasize key elements and details that resonate with beauty and thoughtfulness.\n            8. Adhere to best practices for Midjourney prompts, crafting images that inspire awe."
+              "Create $number captivating image prompts tailored for $model. Each prompt should:\n            1. Begin with an engaging verb like \"Imagine\", \"Illustrate\", \"Capture\", etc.\n            2. Range between 85 and 120 words, weaving a tapestry of visual storytelling.\n            3. Clearly express the image ratio as \"square ($Ratio)\" at the forefront of each prompt.\n            4. Highlight the style: photorealistic, to evoke realism and depth.\n            5. Include the enchanting theme: $text, symbolizing serenity and flow.\n            6. Utilize clear, straightforward language to ensure understanding.\n            7. Emphasize key elements and details that resonate with beauty and thoughtfulness.\n            8. Adhere to best practices for Midjourney prompts, crafting images that inspire awe."
         }
       ]
     });

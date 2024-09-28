@@ -227,32 +227,6 @@ class PromotetowordsView extends StackedView<PromotetowordsViewModel> {
                                 ),
                               ),
                               const SizedBox(width: 5), // 添加间隔
-                              // 右侧的四周都有圆角的 OutlinedButton
-                              ClipRect(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: IconButton.outlined(
-                                    tooltip: '生成提示',
-                                    onPressed: viewModel.isfetching
-                                        ? null
-                                        : () async {
-                                            await viewModel.fetchPromoteData(
-                                                PromotetowordsViewModel
-                                                    .query.text,
-                                                PromotetowordsViewModel
-                                                    .selectedCategory,
-                                                viewModel.rightselectedLabels,
-                                                viewModel.leftselectedLabels);
-                                          },
-                                    iconSize: 27.0,
-                                    color: Colors.black87,
-                                    icon: const Icon(
-                                        Hero_icons_outline.rocket_launch),
-                                    // 这里使用IconButton的`padding`属性来调整图标位置
-                                    padding: EdgeInsets.all(10), // 调整内侧的padding
-                                  ),
-                                ),
-                              )
                             ],
                           ),
                         ],
