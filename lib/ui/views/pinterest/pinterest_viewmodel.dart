@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:high_q_paginated_drop_down/high_q_paginated_drop_down.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:json_path/json_path.dart';
@@ -9,49 +12,92 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 
-class PinterestViewModel extends BaseViewModel {
+class Scenery {
+  final String keyword;
+  final String? volume;
+
+  Scenery({required this.keyword, this.volume});
+
+  factory Scenery.fromJson(Map<String, dynamic> json) {
+    return Scenery(
+      keyword: json['keyword'],
+      volume: json['volume'],
+    );
+  }
+}
+
+class PinterestViewModel extends BaseViewModel with WidgetsBindingObserver {
   static List<Map<String, dynamic>> uimageUrls = [];
   List<Map<String, dynamic>> get imageUrls => uimageUrls;
+
+  late String keyword = 'winter';
+  String get uquery => keyword;
+
+  void changedquery(String value) {
+    keyword = value;
+    notifyListeners();
+  }
+
+  final PaginatedSearchDropdownController<Scenery>
+      searchableDropdownController1 =
+      PaginatedSearchDropdownController<Scenery>();
+
+  PaginatedSearchDropdownController<Scenery> get dropdownValue1 =>
+      searchableDropdownController1;
+
+  final GlobalKey<FormFieldState<int>> dropdownFormFieldKey1 =
+      GlobalKey<FormFieldState<int>>();
+  GlobalKey<FormFieldState<int>> get dropdownFormFieldKey =>
+      dropdownFormFieldKey1;
 
   @override
   PinterestViewModel() {
     print('初始化PinterestViewModel');
     loadData();
   }
-  Future<void> singleImageToGallery(String url) async {
-    String base64Image = '';
-    try {
-      final response = await http.get(Uri.parse(
-          'https://mydiumtify.globeapp.dev/pinterestImage?isImage=false&url=$url'));
 
-      if (response.statusCode == 200) {
-        base64Image = response.body; // 获取 Base64 字符串
-        print('接收成功');
-        print(base64Image);
+  Future<String> translateText(String text) async {
+    // final response = await http.get(Uri.parse(
+    //     'https://findmyip.net/api/translate.php?text=$text&target_lang=$targetLang'));
+    final uresponse = await http.get(Uri.parse(
+        'https://mydiumtify.globeapp.dev/googlemit?text=$text&to_lang=en&from_lang=auto'));
+    if (uresponse.statusCode == 200) {
+      // final data = json.decode(uresponse.body);
+      final udata = jsonDecode(utf8.decode(uresponse.bodyBytes))['data'];
+      print('🥰🎶😊🐳👌🍧😂');
+      return udata;
+    } else {
+      return "这里很暖和";
+    }
+  }
+
+  Future<void> saveCachedImageToGallery(String url) async {
+    try {
+      // 从缓存中获取图片文件
+      File? cachedImageFile = await DefaultCacheManager().getSingleFile(url);
+      if (!cachedImageFile.existsSync()) {
+        print('No cached image found for URL: $url');
+        return;
+      }
+
+      // 请求存储权限
+      var status = await Permission.storage.request();
+      if (status.isGranted) {
+        // 读取缓存图片的字节数据
+        final bytes = await cachedImageFile.readAsBytes();
+
+        // 保存图片到相册
+        await ImageGallerySaverPlus.saveImage(
+          bytes,
+          quality: 100,
+          name: '云雨之洲✨✨✨_${DateTime.now().millisecondsSinceEpoch}',
+        );
+        print('Image saved to gallery from cache');
       } else {
-        print('Request failed with status: ${response.statusCode}.');
-        return; // 退出函数
+        print("Permission Denied");
       }
     } catch (e) {
       print('Error: $e');
-      return; // 退出函数
-    }
-
-    // Request storage permissions
-    var status = await Permission.storage.request();
-    if (status.isGranted) {
-      // Decode Base64 string to bytes
-      final bytes = base64Decode(base64Image);
-
-      // Save the image to the gallery
-      await ImageGallerySaverPlus.saveImage(
-        bytes,
-        quality: 100,
-        name: '云雨之洲✨✨✨_${DateTime.now().millisecondsSinceEpoch}.png',
-      );
-      print('Image saved to gallery');
-    } else {
-      print("Permission Denied");
     }
   }
 

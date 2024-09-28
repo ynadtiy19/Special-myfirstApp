@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:colorgram/colorgram.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hive/hive.dart';
 import 'package:hl_image_picker_android/hl_image_picker_android.dart';
@@ -13,15 +13,18 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as h2;
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:listview_screenshot/listview_screenshot.dart';
 import 'package:mime/mime.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../../app/app.locator.dart';
 import '../../../services/chat_message.dart';
 import '../../../services/image_repository_service.dart';
+import '../../utils/BackgroundAnimation.dart';
 import '../../utils/hero-icons-outline_icons.dart';
 
 class ChatsityViewModel extends BaseViewModel {
@@ -45,11 +48,75 @@ class ChatsityViewModel extends BaseViewModel {
 
   @override
   ChatsityViewModel() {
+    print('初始化 ChatsityViewModel');
     getAllImagePaths();
     loadData();
     loadbackgroundImage();
     _textController.addListener(initState);
   }
+
+  Future<void> routeTotextPage(String text, BuildContext context) async {
+    await HapticFeedback.lightImpact();
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          body: Stack(
+            children: <Widget>[
+              BackgroundAnimation(
+                image: const Image(
+                  image: AssetImage("images/gift_icon.png"),
+                ),
+                child: AlertDialog(
+                  scrollable: true,
+                  insetPadding: const EdgeInsets.symmetric(horizontal: 15),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Clipboard.setData(ClipboardData(text: text));
+                          toastification.show(
+                            context: context,
+                            type: ToastificationType.success,
+                            style: ToastificationStyle.flatColored,
+                            title: const Text("文字已复制到剪切板"),
+                            description: const Text(
+                                "The text has been copied to the clipboard."),
+                            alignment: Alignment.bottomCenter,
+                            autoCloseDuration:
+                                const Duration(milliseconds: 2000),
+                            primaryColor: Colors.green,
+                            icon: const Icon(LineIcons.checkCircleAlt),
+                            borderRadius: BorderRadius.circular(15.0),
+                            applyBlurEffect: true,
+                          );
+                        },
+                        child: Text(
+                          text,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 100, // This accounts for the status bar height
+                left: 25,
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Hero_icons_outline.arrow_small_left,
+                      size: 30, color: Colors.black),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Future<void> getAllImagePaths() async {
     // 获取应用程序的文档目录
     Directory appDocDir = await getApplicationDocumentsDirectory();
@@ -245,7 +312,7 @@ class ChatsityViewModel extends BaseViewModel {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (ufolderPrefix.isNotEmpty) {
       uuname = ufolderPrefix;
-      prefs.setString('uname', '$ufolderPrefix'); // 将文本和图片路径存储起来
+      prefs.setString('uname', ufolderPrefix); // 将文本和图片路径存储起来
       debugPrint('Saved name and path: $ufolderPrefix');
       notifyListeners();
     }

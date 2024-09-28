@@ -8,10 +8,7 @@ import 'prompt_to_query_favorite_viewmodel.dart';
 class PromptToQueryFavoriteView
     extends StackedView<PromptToQueryFavoriteViewModel> {
   final ScrollController scrollController;
-  final int index;
-
-  const PromptToQueryFavoriteView(
-      {required this.scrollController, required this.index, Key? key})
+  const PromptToQueryFavoriteView({required this.scrollController, Key? key})
       : super(key: key);
 
   @override

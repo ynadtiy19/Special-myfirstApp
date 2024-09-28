@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:hive/hive.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 
 import 'image_data.dart';
@@ -13,6 +14,7 @@ class ImageRepositoryService with ListenableServiceMixin {
     listenToReactiveValues([_favoriteImagesBox]);
     listenToReactiveValues([_folderNames]);
     listenToReactiveValues([isBottomNavVisible]);
+    listenToReactiveValues([avatarImagePath]);
   }
 
   bool isBottomNavVisible = true;
@@ -28,7 +30,19 @@ class ImageRepositoryService with ListenableServiceMixin {
       Hive.box<ImageData>('favoriteImagesBox');
   Box<ImageData> get favoriteImagesBox => _favoriteImagesBox;
 
-  // ImageRepositoryService() : _imagesBox = Hive.box<ImageData>('imagesBox');
+  String? avatarImagePath;
+  String? get avatarImagePathValue => avatarImagePath;
+
+  Future<void> loadAvatarImagePath() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    avatarImagePath = prefs.getString('uavatar');
+    notifyListeners(); // 更新 UI
+  }
+
+  void changeAvatatImagePath(String path) {
+    avatarImagePath = path;
+    notifyListeners();
+  }
 
   void setBottomNavVisible() {
     if (isBottomNavVisible) {

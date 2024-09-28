@@ -202,9 +202,7 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<TravelcardViewArguments>(nullOk: false);
       return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => _i8.TravelcardView(
-            scrollController: args.scrollController,
-            index: args.index,
-            key: args.key),
+            scrollController: args.scrollController, key: args.key),
         settings: data,
       );
     },
@@ -229,14 +227,16 @@ class StackedRouter extends _i1.RouterBase {
     _i12.PromptToTranslateView: (data) {
       final args = data.getArgs<PromptToTranslateViewArguments>(nullOk: false);
       return _i19.MaterialPageRoute<dynamic>(
-        builder: (context) =>
-            _i12.PromptToTranslateView(args.scrollController, key: args.key),
+        builder: (context) => _i12.PromptToTranslateView(
+            scrollController: args.scrollController, key: args.key),
         settings: data,
       );
     },
     _i13.PromotetowordsView: (data) {
+      final args = data.getArgs<PromotetowordsViewArguments>(nullOk: false);
       return _i19.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i13.PromotetowordsView(),
+        builder: (context) => _i13.PromotetowordsView(
+            scrollController: args.scrollController, key: args.key),
         settings: data,
       );
     },
@@ -251,9 +251,7 @@ class StackedRouter extends _i1.RouterBase {
           data.getArgs<PromptToQueryFavoriteViewArguments>(nullOk: false);
       return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => _i15.PromptToQueryFavoriteView(
-            scrollController: args.scrollController,
-            index: args.index,
-            key: args.key),
+            scrollController: args.scrollController, key: args.key),
         settings: data,
       );
     },
@@ -287,32 +285,27 @@ class StackedRouter extends _i1.RouterBase {
 class TravelcardViewArguments {
   const TravelcardViewArguments({
     required this.scrollController,
-    required this.index,
     this.key,
   });
 
   final _i19.ScrollController scrollController;
 
-  final int index;
-
   final _i19.Key? key;
 
   @override
   String toString() {
-    return '{"scrollController": "$scrollController", "index": "$index", "key": "$key"}';
+    return '{"scrollController": "$scrollController", "key": "$key"}';
   }
 
   @override
   bool operator ==(covariant TravelcardViewArguments other) {
     if (identical(this, other)) return true;
-    return other.scrollController == scrollController &&
-        other.index == index &&
-        other.key == key;
+    return other.scrollController == scrollController && other.key == key;
   }
 
   @override
   int get hashCode {
-    return scrollController.hashCode ^ index.hashCode ^ key.hashCode;
+    return scrollController.hashCode ^ key.hashCode;
   }
 }
 
@@ -343,35 +336,57 @@ class PromptToTranslateViewArguments {
   }
 }
 
-class PromptToQueryFavoriteViewArguments {
-  const PromptToQueryFavoriteViewArguments({
+class PromotetowordsViewArguments {
+  const PromotetowordsViewArguments({
     required this.scrollController,
-    required this.index,
     this.key,
   });
 
   final _i19.ScrollController scrollController;
 
-  final int index;
+  final _i19.Key? key;
+
+  @override
+  String toString() {
+    return '{"scrollController": "$scrollController", "key": "$key"}';
+  }
+
+  @override
+  bool operator ==(covariant PromotetowordsViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.scrollController == scrollController && other.key == key;
+  }
+
+  @override
+  int get hashCode {
+    return scrollController.hashCode ^ key.hashCode;
+  }
+}
+
+class PromptToQueryFavoriteViewArguments {
+  const PromptToQueryFavoriteViewArguments({
+    required this.scrollController,
+    this.key,
+  });
+
+  final _i19.ScrollController scrollController;
 
   final _i19.Key? key;
 
   @override
   String toString() {
-    return '{"scrollController": "$scrollController", "index": "$index", "key": "$key"}';
+    return '{"scrollController": "$scrollController", "key": "$key"}';
   }
 
   @override
   bool operator ==(covariant PromptToQueryFavoriteViewArguments other) {
     if (identical(this, other)) return true;
-    return other.scrollController == scrollController &&
-        other.index == index &&
-        other.key == key;
+    return other.scrollController == scrollController && other.key == key;
   }
 
   @override
   int get hashCode {
-    return scrollController.hashCode ^ index.hashCode ^ key.hashCode;
+    return scrollController.hashCode ^ key.hashCode;
   }
 }
 
@@ -462,7 +477,6 @@ extension NavigatorStateExtension on _i20.NavigationService {
 
   Future<dynamic> navigateToTravelcardView({
     required _i19.ScrollController scrollController,
-    required int index,
     _i19.Key? key,
     int? routerId,
     bool preventDuplicates = true,
@@ -472,7 +486,7 @@ extension NavigatorStateExtension on _i20.NavigationService {
   }) async {
     return navigateTo<dynamic>(Routes.travelcardView,
         arguments: TravelcardViewArguments(
-            scrollController: scrollController, index: index, key: key),
+            scrollController: scrollController, key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -539,14 +553,18 @@ extension NavigatorStateExtension on _i20.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToPromotetowordsView([
+  Future<dynamic> navigateToPromotetowordsView({
+    required _i19.ScrollController scrollController,
+    _i19.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.promotetowordsView,
+        arguments: PromotetowordsViewArguments(
+            scrollController: scrollController, key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -569,7 +587,6 @@ extension NavigatorStateExtension on _i20.NavigationService {
 
   Future<dynamic> navigateToPromptToQueryFavoriteView({
     required _i19.ScrollController scrollController,
-    required int index,
     _i19.Key? key,
     int? routerId,
     bool preventDuplicates = true,
@@ -579,7 +596,7 @@ extension NavigatorStateExtension on _i20.NavigationService {
   }) async {
     return navigateTo<dynamic>(Routes.promptToQueryFavoriteView,
         arguments: PromptToQueryFavoriteViewArguments(
-            scrollController: scrollController, index: index, key: key),
+            scrollController: scrollController, key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -714,7 +731,6 @@ extension NavigatorStateExtension on _i20.NavigationService {
 
   Future<dynamic> replaceWithTravelcardView({
     required _i19.ScrollController scrollController,
-    required int index,
     _i19.Key? key,
     int? routerId,
     bool preventDuplicates = true,
@@ -724,7 +740,7 @@ extension NavigatorStateExtension on _i20.NavigationService {
   }) async {
     return replaceWith<dynamic>(Routes.travelcardView,
         arguments: TravelcardViewArguments(
-            scrollController: scrollController, index: index, key: key),
+            scrollController: scrollController, key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -791,14 +807,18 @@ extension NavigatorStateExtension on _i20.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithPromotetowordsView([
+  Future<dynamic> replaceWithPromotetowordsView({
+    required _i19.ScrollController scrollController,
+    _i19.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.promotetowordsView,
+        arguments: PromotetowordsViewArguments(
+            scrollController: scrollController, key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -821,7 +841,6 @@ extension NavigatorStateExtension on _i20.NavigationService {
 
   Future<dynamic> replaceWithPromptToQueryFavoriteView({
     required _i19.ScrollController scrollController,
-    required int index,
     _i19.Key? key,
     int? routerId,
     bool preventDuplicates = true,
@@ -831,7 +850,7 @@ extension NavigatorStateExtension on _i20.NavigationService {
   }) async {
     return replaceWith<dynamic>(Routes.promptToQueryFavoriteView,
         arguments: PromptToQueryFavoriteViewArguments(
-            scrollController: scrollController, index: index, key: key),
+            scrollController: scrollController, key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

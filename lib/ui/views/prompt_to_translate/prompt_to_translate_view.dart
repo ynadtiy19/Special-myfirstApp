@@ -6,9 +6,9 @@ import 'package:stacked/stacked.dart';
 import 'prompt_to_translate_viewmodel.dart';
 
 class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
-  const PromptToTranslateView(this.scrollController, {Key? key})
-      : super(key: key);
   final ScrollController scrollController;
+  const PromptToTranslateView({required this.scrollController, Key? key})
+      : super(key: key);
 
   @override
   Widget builder(
@@ -32,19 +32,19 @@ class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
                   Expanded(
                     child: Container(
                       height: 60,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         borderRadius:
                             BorderRadius.only(topLeft: Radius.circular(15)),
                       ),
                       child: Material(
                         borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(15)),
-                        color: Color.fromARGB(255, 216, 219, 231),
+                        color: const Color.fromARGB(255, 216, 219, 231),
                         child: InkWell(
                           borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(15)),
                           onTap: () async {},
-                          child: Center(
+                          child: const Center(
                             child: Text(
                               '自动',
                               style:
@@ -61,11 +61,11 @@ class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
                   Ink(
                     width: 41,
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 216, 219, 231),
+                      color: const Color.fromARGB(255, 216, 219, 231),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Material(
-                      color: Color.fromARGB(255, 216, 219, 231),
+                      color: const Color.fromARGB(255, 216, 219, 231),
                       borderRadius: BorderRadius.circular(15),
                       child: InkWell(
                         borderRadius: BorderRadius.circular(15),
@@ -91,7 +91,7 @@ class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
                   ),
                   Expanded(
                     child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 216, 219, 231),
                         borderRadius:
                             BorderRadius.only(topRight: Radius.circular(15)),
@@ -100,16 +100,16 @@ class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
                       child: Material(
                         borderRadius: const BorderRadius.only(
                             topRight: Radius.circular(15)),
-                        color: Color.fromARGB(255, 216, 219, 231),
+                        color: const Color.fromARGB(255, 216, 219, 231),
                         child: InkWell(
-                          borderRadius:
-                              BorderRadius.only(topRight: Radius.circular(15)),
+                          borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(15)),
                           onTap: () async {},
                           child: Center(
                             child: Text(
                               viewModel.targetLanguage,
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
+                              style: const TextStyle(
+                                  fontSize: 16, color: Colors.black),
                             ),
                           ),
                         ),
@@ -118,7 +118,7 @@ class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
                   ),
                 ],
               ),
-              Divider(
+              const Divider(
                 color: Colors.black54,
                 height: 2,
                 thickness: 1,
@@ -126,13 +126,13 @@ class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
               Container(
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 216, 219, 231),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(15),
                       bottomRight: Radius.circular(15)),
                   boxShadow: [
                     BoxShadow(
-                      color:
-                          Color.fromARGB(255, 216, 219, 231).withOpacity(0.8),
+                      color: const Color.fromARGB(255, 216, 219, 231)
+                          .withOpacity(0.8),
                       spreadRadius: 0.8,
                       blurRadius: 8,
                       offset: Offset(1.5, 0.5),
@@ -154,16 +154,16 @@ class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
                         },
                         controller: PromptToTranslateViewModel.query,
                         maxLines: 8,
-                        decoration: InputDecoration.collapsed(
+                        decoration: const InputDecoration.collapsed(
                           hintStyle: TextStyle(color: Colors.black),
-                          hintText: '开始编写文本或插入链接',
+                          hintText: '在此输入或者粘贴文本',
                         ),
                         style: TextStyle(fontSize: 24, color: Colors.black),
                       ),
                     ),
                     Container(
                       height: 50,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 216, 219, 231),
                         borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(15),
@@ -181,11 +181,13 @@ class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
                               Ink(
                                 width: 41,
                                 decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 216, 219, 231),
+                                  color:
+                                      const Color.fromARGB(255, 216, 219, 231),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 child: Material(
-                                  color: Color.fromARGB(255, 216, 219, 231),
+                                  color:
+                                      const Color.fromARGB(255, 216, 219, 231),
                                   borderRadius: BorderRadius.circular(15),
                                   child: InkWell(
                                     borderRadius: BorderRadius.circular(15),
@@ -209,11 +211,13 @@ class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
                               Ink(
                                 width: 41,
                                 decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 216, 219, 231),
+                                  color:
+                                      const Color.fromARGB(255, 216, 219, 231),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 child: Material(
-                                  color: Color.fromARGB(255, 216, 219, 231),
+                                  color:
+                                      const Color.fromARGB(255, 216, 219, 231),
                                   borderRadius: BorderRadius.circular(15),
                                   child: InkWell(
                                     borderRadius: BorderRadius.circular(15),
@@ -246,7 +250,7 @@ class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: Material(
-                              color: Color.fromARGB(255, 216, 219, 231),
+                              color: const Color.fromARGB(255, 216, 219, 231),
                               borderRadius: BorderRadius.circular(15),
                               child: InkWell(
                                 borderRadius: BorderRadius.circular(15),
@@ -277,7 +281,7 @@ class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 12,
               ),
               PromptToTranslateViewModel.translation.isNotEmpty
@@ -287,15 +291,16 @@ class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
                         minHeight: MediaQuery.of(context).size.height * 0.28,
                       ),
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 216, 219, 231),
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        color: const Color.fromARGB(255, 216, 219, 231),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(15)),
                         boxShadow: [
                           BoxShadow(
-                            color: Color.fromARGB(255, 216, 219, 231)
+                            color: const Color.fromARGB(255, 216, 219, 231)
                                 .withOpacity(0.8),
                             spreadRadius: 0.8,
                             blurRadius: 8,
-                            offset: Offset(1.5, 0.5),
+                            offset: const Offset(1.5, 0.5),
                           ),
                         ],
                       ),
@@ -309,13 +314,13 @@ class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
                                   MediaQuery.of(context).size.height * 0.28,
                             ),
                             child: SelectableText(
-                              scrollPhysics: BouncingScrollPhysics(),
+                              scrollPhysics: const BouncingScrollPhysics(),
                               cursorColor: Colors.black87,
                               PromptToTranslateViewModel.translation,
                               maxLines: null,
                               // textWidthBasis: TextWidthBasis.parent,
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.black),
+                              style: const TextStyle(
+                                  fontSize: 18, color: Colors.black),
                             ),
                           ),
                           Positioned(

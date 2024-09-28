@@ -45,6 +45,7 @@ class PromptToRealViewModel extends ReactiveViewModel {
 
   @override
   PromptToRealViewModel() {
+    print('初始化PromptToRealViewModel');
     ImageRepository.getFolderNames();
     print(_folderNames);
     notifyListeners();
@@ -385,7 +386,10 @@ class PromptToRealViewModel extends ReactiveViewModel {
               onPressed: () async {
                 Navigator.of(context).pop(); // 关闭对话框
               },
-              child: const Text('取消'),
+              child: const Text(
+                '取消',
+                style: TextStyle(color: Colors.black),
+              ),
             ),
           ],
         ),

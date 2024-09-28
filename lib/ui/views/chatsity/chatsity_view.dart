@@ -7,7 +7,6 @@ import 'package:chat_bubbles/bubbles/bubble_special_one.dart';
 import 'package:chat_bubbles/message_bars/message_bar.dart';
 import 'package:device_scan_animation/device_scan_animation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:listview_screenshot/listview_screenshot.dart';
 import 'package:pretty_animated_buttons/widgets/pretty_shadow_button.dart';
@@ -76,7 +75,6 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                             itemBuilder: (context, index) {
                               final message = box.getAt(index)!;
                               bool seenStatus;
-
                               if (index >= box.length - 2) {
                                 // 最新的两条消息使用 isfetching
                                 seenStatus = viewModel.isfetching;
@@ -99,36 +97,10 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                                     ),
                                   Column(
                                     children: [
-                                      // viewModel.itemdialogs
-                                      //     ? Container(
-                                      //         color: Colors.black
-                                      //             .withOpacity(0.45),
-                                      //         child: const BubbleSpecialOne(
-                                      //           text:
-                                      //               'bubble special one without tail',
-                                      //           tail: false,
-                                      //           color: Color(0xFFE8E8EE),
-                                      //           sent: true,
-                                      //         ),
-                                      //       )
-                                      //     : Container(),
-                                      // viewModel.itemdialogs
-                                      //     ? Container(
-                                      //         height: 32,
-                                      //         color: Colors.transparent,
-                                      //       )
-                                      //     : Container(),
                                       BounceTapper(
-                                        onLongPress: () {
-                                          //长按复制message.text,
-                                          Clipboard.setData(ClipboardData(
-                                              text: message.text));
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            const SnackBar(
-                                              content: Text('复制成功'),
-                                            ),
-                                          );
+                                        onLongPress: () async {
+                                          viewModel.routeTotextPage(
+                                              message.text, context);
                                         },
                                         child: BubbleSpecialOne(
                                           seen: seenStatus,

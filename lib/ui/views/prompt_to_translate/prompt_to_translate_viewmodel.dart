@@ -44,7 +44,7 @@ class PromptToTranslateViewModel extends BaseViewModel {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Select Target Language'),
+          title: const Text('选择目标翻译语言'),
           content: DropdownButton<String>(
             value: selectedLanguage,
             onChanged: (String? newValue) {
@@ -79,13 +79,19 @@ class PromptToTranslateViewModel extends BaseViewModel {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancel'),
+              child: const Text(
+                '取消',
+                style: TextStyle(color: Colors.black),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('OK'),
+              child: const Text(
+                '确定',
+                style: TextStyle(color: Colors.black),
+              ),
               onPressed: () {
                 _targetLanguage = selectedLanguage!;
                 Navigator.of(context).pop();

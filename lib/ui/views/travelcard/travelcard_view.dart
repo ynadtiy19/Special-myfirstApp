@@ -10,11 +10,9 @@ import '../../utils/hero-icons-outline_icons.dart';
 import 'travelcard_viewmodel.dart';
 
 class TravelcardView extends StackedView<TravelcardViewModel> {
-  final int index;
   final ScrollController scrollController;
 
-  const TravelcardView(
-      {required this.scrollController, required this.index, Key? key})
+  const TravelcardView({required this.scrollController, Key? key})
       : super(key: key);
 
   //传递匿名函数

@@ -44,6 +44,7 @@ dependencies:
   dotlottie_loader: ^0.0.4
   json_cache: ^3.0.2
   cached_network_image: ^3.4.1
+  flutter_cache_manager: ^3.4.1
   json_path: ^0.7.4
   haptic_feedback: ^0.5.1+1
   hyper_effects: ^0.2.3
@@ -61,6 +62,9 @@ dependencies:
   path: ^1.9.0
   cupertino_clock: ^0.1.0+1
   bounce_tapper: ^1.0.4
+  high_q_paginated_drop_down: ^2.1.0
+  full_screen_image: ^2.0.0
+  brotli: ^0.6.0
 
 
 dev_dependencies:

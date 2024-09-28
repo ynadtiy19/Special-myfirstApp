@@ -18,7 +18,6 @@ class SiderBarPage extends StackedView<SiderBarPageModel> {
     SiderBarPageModel viewModel,
     Widget? child,
   ) {
-    int _selectedIndex = 0;
     bool isExpanded = false;
     return Scaffold(
       backgroundColor: kcRiceYellowColor,
@@ -27,7 +26,7 @@ class SiderBarPage extends StackedView<SiderBarPageModel> {
           SideRail(
             selectedTextStyle: const TextStyle(color: Colors.white),
             isExpanded: !isExpanded,
-            selectedIndex: _selectedIndex,
+            selectedIndex: SiderBarPageModel.selectedIndex,
             onTap: (index) {
               viewModel.SideRailRouteTo(context, index);
             },
@@ -74,7 +73,8 @@ class SiderBarPage extends StackedView<SiderBarPageModel> {
                               radius: 45.toDouble() + 2,
                               child: CircleAvatar(
                                 radius: 45.toDouble(),
-                                backgroundImage: viewModel.avatarImagePath !=
+                                backgroundImage: viewModel
+                                            .avatarImagePathValue !=
                                         null
                                     ? FileImage(File(
                                             viewModel.avatarImagePathValue!))
@@ -201,6 +201,18 @@ class SiderBarPage extends StackedView<SiderBarPageModel> {
                     size: 21,
                   ),
                   title: Text("Donate")),
+              NavDestinationItem(
+                  isSectionHeader: false,
+                  radius: 20,
+                  trailing: Icon(
+                    Hero_icons_outline.arrow_top_right_on_square,
+                    size: 21,
+                  ),
+                  icon: Icon(
+                    Hero_icons_outline.arrow_up_on_square,
+                    size: 21,
+                  ),
+                  title: Text("About Me")),
             ],
           ),
         ],

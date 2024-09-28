@@ -11,7 +11,64 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:storyly_flutter/storyly_flutter.dart';
 
-class ArticleViewModel extends BaseViewModel {
+import '../../../services/image_repository_service.dart';
+
+class MediaInfo {
+  final String uniqueSlug;
+  final String title;
+  final String subtitle;
+  final String name;
+  final String avatarUrl;
+  final String postImg;
+  final String readingTime;
+  final String createdAt;
+  final bool isEligibleForRevenue;
+
+  MediaInfo({
+    required this.uniqueSlug,
+    required this.title,
+    required this.subtitle,
+    required this.name,
+    required this.avatarUrl,
+    required this.postImg,
+    required this.readingTime,
+    required this.createdAt,
+    required this.isEligibleForRevenue,
+  });
+
+  // 将 MediaInfo 转换为 Map
+  Map<String, dynamic> toJson() {
+    return {
+      'uniqueSlug': uniqueSlug,
+      'title': title,
+      'subtitle': subtitle,
+      'name': name,
+      'avatarUrl': avatarUrl,
+      'postImg': postImg,
+      'readingTime': readingTime,
+      'createdAt': createdAt,
+      'isEligibleForRevenue': isEligibleForRevenue,
+    };
+  }
+}
+
+class ArticleViewModel extends ReactiveViewModel {
+  final List<String> categories = [
+    'All',
+    'Wellness',
+    'Mental Health',
+    'Productivity',
+    'Technology',
+    'Health',
+    'Business',
+    'Personal Development',
+    'Culture',
+    'Politics',
+    'Science',
+    'Lifestyle',
+    'Education',
+    'Design',
+  ];
   final foregroundImages = ['rio.png', 'france.png', 'iceland.png'];
   final backgroundImages = ['rio-bg.jpg', 'france-bg.jpg', 'iceland-bg.jpg'];
   final texts = ['巴西', '法国', '冰岛'];
@@ -27,16 +84,65 @@ class ArticleViewModel extends BaseViewModel {
     _isfetching = true;
 
     final String apiUrl =
-        'https://mydiumtify.globeapp.dev/medium/search?q=$query&pageindex=1';
+        'https://readmedium.com/api/search-posts?query=$query&pageIndex=1';
 
     final response = await http.get(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
-      // print(data);
+      Map<String, Map<String, dynamic>> mediaInfoMap = {};
+      List<dynamic> previewInfos = data['previewInfos'] as List<dynamic>;
+      for (var data in previewInfos) {
+        final uniqueSlug = data['uniqueSlug'].toString();
+        final title = data['title'].toString();
+        final subtitle = data['subtitle'].toString();
+        final name = data['authorInfo']['name'].toString();
+
+        // 获取并修改 avatarUrl
+        String avatarUrl = data['authorInfo']['avatarUrl'].toString();
+        avatarUrl = avatarUrl
+            .replaceFirst('miro.medium.com', 'cdn-images-1.readmedium.com')
+            .replaceFirst(
+              'v2/resize:fill:88:88',
+              'v2/resize:fill:2048:1152',
+            ); // 2K 分辨率
+
+        // 获取并修改 postImg
+        String postImg = data['postImg'].toString();
+        postImg = postImg
+            .replaceFirst('miro.medium.com', 'cdn-images-1.readmedium.com')
+            .replaceFirst('v2/resize:fit:224', 'v2/resize:fit:2048'); // 2K 分辨率
+
+        final readingTime = data['readingTime'].toString();
+        final createdAt = data['createdAt'].toString();
+        final isEligibleForRevenueString =
+            data['isEligibleForRevenue'].toString();
+
+        // 将字符串转换为布尔值
+        final isEligibleForRevenue =
+            isEligibleForRevenueString.toLowerCase() == 'true';
+
+        // 创建 MediaInfo 实例
+        MediaInfo mediaInfo = MediaInfo(
+          uniqueSlug: uniqueSlug,
+          title: title,
+          subtitle: subtitle,
+          name: name,
+          avatarUrl: avatarUrl, // 使用修改后的 avatarUrl
+          postImg: postImg, // 使用修改后的 postImg
+          readingTime: readingTime,
+          createdAt: createdAt,
+          isEligibleForRevenue: isEligibleForRevenue,
+        );
+
+        // 将 MediaInfo 实例添加到 Map 中
+        mediaInfoMap[uniqueSlug] = mediaInfo.toJson();
+      }
 
       // 存储数据
-      await jsonCacheMem.refresh('fetchedData', data);
+      await jsonCacheMem.refresh('fetchedData', mediaInfoMap);
+
+      print('消息已经存储');
 
       // 获取缓存信息并打印
       // final cachedInfo = await jsonCacheMem.value('fetchedData');
@@ -46,7 +152,7 @@ class ArticleViewModel extends BaseViewModel {
       _isfetching = false; // Reset fetching state
       notifyListeners();
 
-      return data;
+      return mediaInfoMap;
     } else {
       _isfetching = false; // Reset fetching state in case of error
       notifyListeners();
@@ -74,6 +180,21 @@ class ArticleViewModel extends BaseViewModel {
 
   String _selectedCategory = 'All';
   String get selectedCategory => _selectedCategory;
+
+  final ImageRepository = locator<ImageRepositoryService>();
+
+  @override
+  ArticleViewModel() {
+    print('初始化 ArticleViewModel');
+    ImageRepository.loadAvatarImagePath();
+  }
+
+  @override
+  List<ListenableServiceMixin> get listenableServices => [
+        ImageRepository,
+      ];
+
+  String? get avatarImagePathValue => ImageRepository.avatarImagePathValue;
 
   static const storylyToken =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NfaWQiOjEyMTM2LCJhcHBfaWQiOjE3OTQwLCJpbnNfaWQiOjIxMDgyfQ.zf3MeCKnKUaE6m1216mlDpP5BvqF5z6Hhk1UumwcLb4";
@@ -129,6 +250,8 @@ class ArticleViewModel extends BaseViewModel {
 
   void onCategorySelected(String category) {
     _selectedCategory = category;
+    _controller.text = category;
+    print('Category selected: $category');
     notifyListeners();
   }
 

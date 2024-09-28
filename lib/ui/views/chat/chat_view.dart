@@ -19,89 +19,94 @@ class ChatView extends StackedView<ChatViewModel> {
   ) {
     return DefaultTabController(
       length: 2,
-      child: Scaffold(
-        drawer: const Drawer(
-          child: Tooltip(message: '侧边栏', child: SiderBarPage()),
-        ),
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(50 + 42.0),
-          child: AppBar(
-            leading: Builder(
-              builder: (context) => IconButton(
-                icon: const Icon(
-                    Hero_icons_outline.bars_3_bottom_left), // 设置自定义图标
-                onPressed: () {
-                  Scaffold.of(context).openDrawer(); // 打开侧边栏
-                },
-              ),
-            ),
-            toolbarHeight: 90,
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            automaticallyImplyLeading: false,
-            flexibleSpace: CustomPaint(
-              size: Size.fromHeight(50 + 2 * 42.0),
-              painter: DiagonalStripesPainter(),
-            ),
-            title: Text(
-              'Chating Buddy',
-              style: GoogleFonts.abhayaLibre(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            bottom: TabBar(
-              tabAlignment: TabAlignment.center,
-              indicatorColor: Colors.lightGreen,
-              indicatorSize: TabBarIndicatorSize.label,
-              isScrollable: true,
-              labelColor: Colors.black,
-              labelStyle: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-              ),
-              unselectedLabelColor: Colors.white54,
-              unselectedLabelStyle: const TextStyle(
-                fontSize: 10,
-              ),
-              tabs: [
-                Tab(
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Chating'),
-                        SizedBox(width: 4),
-                        Icon(Hero_icons_outline.sparkles),
-                      ],
-                    ),
-                  ),
+      child: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          drawer: const Drawer(
+            child: Tooltip(message: '侧边栏', child: SiderBarPage()),
+          ),
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(50 + 42.0),
+            child: AppBar(
+              leading: Builder(
+                builder: (context) => IconButton(
+                  icon: const Icon(
+                      Hero_icons_outline.bars_3_bottom_left), // 设置自定义图标
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer(); // 打开侧边栏
+                  },
                 ),
-                Tab(
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Prompting'),
-                        SizedBox(width: 4),
-                        Icon(Hero_icons_outline.paint_brush),
-                      ],
+              ),
+              toolbarHeight: 90,
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              automaticallyImplyLeading: false,
+              flexibleSpace: CustomPaint(
+                size: Size.fromHeight(50 + 2 * 42.0),
+                painter: DiagonalStripesPainter(),
+              ),
+              title: Text(
+                'Chating Buddy',
+                style: GoogleFonts.abhayaLibre(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              bottom: TabBar(
+                tabAlignment: TabAlignment.center,
+                indicatorColor: Colors.lightGreen,
+                indicatorSize: TabBarIndicatorSize.label,
+                isScrollable: true,
+                labelColor: Colors.black,
+                labelStyle: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+                unselectedLabelColor: Colors.white54,
+                unselectedLabelStyle: const TextStyle(
+                  fontSize: 10,
+                ),
+                tabs: [
+                  Tab(
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Chating'),
+                          SizedBox(width: 4),
+                          Icon(Hero_icons_outline.sparkles),
+                        ],
+                      ),
                     ),
                   ),
-                )
-              ],
+                  Tab(
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Prompting'),
+                          SizedBox(width: 4),
+                          Icon(Hero_icons_outline.paint_brush),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        body: const TabBarView(
-          physics: NeverScrollableScrollPhysics(), // 禁用滑动
-          children: [
-            ChatsityView(),
-            PromptToRealView(),
-          ],
+          body: const TabBarView(
+            physics: NeverScrollableScrollPhysics(), // 禁用滑动
+            children: [
+              ChatsityView(),
+              PromptToRealView(),
+            ],
+          ),
         ),
       ),
     );

@@ -3,13 +3,14 @@ import 'dart:convert';
 import 'package:dotlottie_loader/dotlottie_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:insta_image_viewer/insta_image_viewer.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:lottie/lottie.dart';
 import 'package:stacked/stacked.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../utils/hero-icons-outline_icons.dart';
+import '../promotetowords/promotetowords_view.dart';
 import '../prompt_to_query_favorite/prompt_to_query_favorite_view.dart';
 import '../prompt_to_translate/prompt_to_translate_view.dart';
 import '../travelcard/travelcard_view.dart';
@@ -39,7 +40,7 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                 children: [
                   IconButton.outlined(
                     tooltip: '打开旋转相册',
-                    icon: Icon(LineIcons.youtube),
+                    icon: const Icon(Hero_icons_outline.light_bulb),
                     color: Colors.grey,
                     onPressed: () {
                       showCustomDialog(context);
@@ -96,29 +97,9 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                                   },
                             iconSize: 27.0,
                             color: Colors.black87,
-                            icon: const Icon(LineIcons.telegramPlane),
+                            icon: const Icon(Hero_icons_outline.rocket_launch),
                           ),
                         ),
-                        // prefixIcon: Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: IconButton.outlined(
-                        //     onPressed: () {
-                        //       showModalBottomSheet(
-                        //         context: context,
-                        //         showDragHandle: true,
-                        //         builder: (BuildContext context) {
-                        //           return const Padding(
-                        //             padding: EdgeInsets.all(8.0),
-                        //             child: PinterestGrid(),
-                        //           );
-                        //         },
-                        //       );
-                        //     },
-                        //     iconSize: 27.0,
-                        //     color: Colors.black87,
-                        //     icon: const Icon(LineIcons.camera),
-                        //   ),
-                        // ),
                       ),
                     ),
                   ),
@@ -128,15 +109,12 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'history',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    //亮白色字体
-                    color: Colors.black87,
-                  ),
-                ),
+                Text('Painting',
+                    style: GoogleFonts.sacramento().copyWith(
+                      color: const Color.fromARGB(255, 5, 5, 2),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                    )),
                 const SizedBox(width: 4),
                 Row(
                   children: [
@@ -161,7 +139,7 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                             child: Tooltip(
                               message: 'Paste from clipboard',
                               child: Icon(
-                                LineIcons.paste,
+                                Hero_icons_outline.square_2_stack,
                                 color: Colors.black87,
                               ),
                             ),
@@ -181,14 +159,14 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(12)),
                           onTap: () {
-                            viewModel.query.text = '';
+                            viewModel.query.clear();
                           },
                           child: const Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Tooltip(
                               message: 'Clean',
                               child: Icon(
-                                LineIcons.stream,
+                                Hero_icons_outline.archive_box_x_mark,
                                 color: Colors.black87,
                               ),
                             ),
@@ -215,7 +193,7 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                             child: Tooltip(
                               message: 'Delete all picture',
                               child: Icon(
-                                LineIcons.artstation,
+                                Hero_icons_outline.trash,
                                 color: Colors.black87,
                               ),
                             ),
@@ -291,23 +269,26 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                                                     return true;
                                                   },
                                                   child: TabBarView(
+                                                    physics:
+                                                        const NeverScrollableScrollPhysics(),
                                                     controller: tabController,
                                                     children: [
                                                       TravelcardView(
-                                                          scrollController:
-                                                              scrollController,
-                                                          index: 1),
-                                                      PromptToQueryFavoriteView(
-                                                          scrollController:
-                                                              scrollController,
-                                                          index: 2),
-                                                      PromptToTranslateView(
-                                                        scrollController,
+                                                        scrollController:
+                                                            scrollController,
                                                       ),
-                                                      CustomTabView(
-                                                          scrollController:
-                                                              scrollController,
-                                                          index: 4),
+                                                      PromptToQueryFavoriteView(
+                                                        scrollController:
+                                                            scrollController,
+                                                      ),
+                                                      PromptToTranslateView(
+                                                        scrollController:
+                                                            scrollController,
+                                                      ),
+                                                      PromotetowordsView(
+                                                        scrollController:
+                                                            scrollController,
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
@@ -327,7 +308,7 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                             child: Tooltip(
                               message: 'More',
                               child: Icon(
-                                LineIcons.horizontalSliders,
+                                Hero_icons_outline.rectangle_stack,
                                 color: Colors.black87,
                               ),
                             ),
@@ -414,7 +395,8 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                                                         milliseconds: 2350),
                                                 primaryColor: Colors.green,
                                                 icon: const Icon(
-                                                    LineIcons.checkCircleAlt),
+                                                    Hero_icons_outline
+                                                        .check_badge),
                                                 borderRadius:
                                                     BorderRadius.circular(15.0),
                                                 applyBlurEffect: true,
@@ -519,7 +501,7 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
       barrierDismissible: true, // 点击对话框外部区域可以关闭
       builder: (BuildContext context) {
         return Center(
-          child: Container(
+          child: SizedBox(
             height: 200, // 自定义高度
             width: 410, // 自定义宽度
             child: Dialog(
@@ -527,7 +509,7 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                 borderRadius: BorderRadius.circular(55), // 设置圆角
               ),
               backgroundColor: Colors.transparent,
-              child: Align(
+              child: const Align(
                 alignment: Alignment.center,
                 child: SimpleScrollView(),
               ),
@@ -558,7 +540,7 @@ class CustomTabBar extends StatelessWidget {
             index: 0,
             tabController: tabController,
             defaultColor: Colors.transparent,
-            selectedColor: Color.fromRGBO(253, 218, 225, 1),
+            selectedColor: const Color.fromRGBO(253, 218, 225, 1),
           ),
           const SizedBox(width: 8.0),
           CustomTabButton(
@@ -566,7 +548,7 @@ class CustomTabBar extends StatelessWidget {
             index: 1,
             tabController: tabController,
             defaultColor: Colors.transparent,
-            selectedColor: Color.fromRGBO(253, 218, 225, 1),
+            selectedColor: const Color.fromRGBO(253, 218, 225, 1),
           ),
           const SizedBox(width: 8.0),
           CustomTabButton(
@@ -574,7 +556,7 @@ class CustomTabBar extends StatelessWidget {
             index: 2,
             tabController: tabController,
             defaultColor: Colors.transparent,
-            selectedColor: Color.fromRGBO(253, 218, 225, 1),
+            selectedColor: const Color.fromRGBO(253, 218, 225, 1),
           ),
           const SizedBox(width: 8.0),
           CustomTabButton(
@@ -582,7 +564,7 @@ class CustomTabBar extends StatelessWidget {
             index: 3,
             tabController: tabController,
             defaultColor: Colors.transparent,
-            selectedColor: Color.fromRGBO(248, 195, 206, 1.0),
+            selectedColor: const Color.fromRGBO(248, 195, 206, 1.0),
           ),
         ],
       ),
@@ -633,24 +615,6 @@ class CustomTabButton extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class CustomTabView extends StatelessWidget {
-  final ScrollController scrollController;
-  final int index;
-
-  CustomTabView({required this.scrollController, required this.index});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      controller: scrollController,
-      itemCount: 20,
-      itemBuilder: (BuildContext context, int i) {
-        return ListTile(title: Text('Tab $index - Item $i'));
-      },
     );
   }
 }

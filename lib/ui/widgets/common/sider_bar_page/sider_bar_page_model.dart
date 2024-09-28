@@ -4,22 +4,29 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 
-class SiderBarPageModel extends BaseViewModel {
-  // final _navigationService = locator<NavigationService>();
-  //
-  // final Map<int, String> indexToRoute = {
-  //   0: Routes.profileView,
-  //   1: Routes.profileView,
-  //   2: donate,
-  //   // Add more entries for different routes based on index
-  // };
+import '../../../../app/app.locator.dart';
+import '../../../../services/image_repository_service.dart';
+import '../../../webviewsite/shopsite.dart';
+
+class SiderBarPageModel extends ReactiveViewModel {
+  final ImageRepository = locator<ImageRepositoryService>();
+
+  @override
+  List<ListenableServiceMixin> get listenableServices => [
+        ImageRepository,
+      ];
+
   @override
   SiderBarPageModel() {
-    loadAvatarImagePath();
+    ImageRepository.loadAvatarImagePath();
   }
+
+  String? get avatarImagePathValue => ImageRepository.avatarImagePathValue;
   ImagePicker? _picker;
   String? avatarImagePath;
-  String? get avatarImagePathValue => avatarImagePath;
+
+  static int _selectedIndex = 0;
+  static int get selectedIndex => _selectedIndex; //更改全局静态变量需要重新构建小部件树
 
   Future<void> initializeAndSelectImage() async {
     // 初始化 ImagePicker
@@ -34,19 +41,16 @@ class SiderBarPageModel extends BaseViewModel {
 
       // 更新模型中的头像路径
       avatarImagePath = image.path;
+      ImageRepository.changeAvatatImagePath(avatarImagePath!);
 
       // 通知监听器以更新 UI
       notifyListeners(); // 提供隐式 getter
     }
   }
 
-  Future<void> loadAvatarImagePath() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    avatarImagePath = prefs.getString('uavatar');
-    notifyListeners(); // 更新 UI
-  }
-
   void SideRailRouteTo(BuildContext context, int index) {
+    _selectedIndex = index;
+    notifyListeners();
     switch (index) {
       case 0:
         Navigator.push(
@@ -69,6 +73,12 @@ class SiderBarPageModel extends BaseViewModel {
         );
         break;
 
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const shopwebview()),
+        );
+        break;
       default:
         break;
     }
