@@ -3,10 +3,10 @@ import 'package:hung/ui/widgets/common/sider_bar_page/Donate.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../app/app.locator.dart';
 import '../../../../services/image_repository_service.dart';
-import '../../../webviewsite/shopsite.dart';
 
 class SiderBarPageModel extends ReactiveViewModel {
   final ImageRepository = locator<ImageRepositoryService>();
@@ -65,18 +65,18 @@ class SiderBarPageModel extends ReactiveViewModel {
           MaterialPageRoute(builder: (context) => donate()),
         );
         break;
-
       case 2:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => donate()),
+        launchUrl(
+          Uri.parse(
+            'http://yunyuzhizhou.mlover.site/',
+          ),
         );
         break;
-
       case 3:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const shopwebview()),
+        launchUrl(
+          Uri.parse(
+            'https://theleap.co/creator/ynadtiy19/',
+          ),
         );
         break;
       default:

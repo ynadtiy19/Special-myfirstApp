@@ -5,14 +5,14 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import '../utils/hero-icons-outline_icons.dart';
 
-class shopwebview extends StatefulWidget {
-  const shopwebview({super.key});
+class ynaditiy19 extends StatefulWidget {
+  const ynaditiy19({super.key});
 
   @override
-  State<shopwebview> createState() => _WebviewPageState();
+  State<ynaditiy19> createState() => _WebviewPageState();
 }
 
-class _WebviewPageState extends State<shopwebview> {
+class _WebviewPageState extends State<ynaditiy19> {
   WebViewController? webViewController;
 
   @override
@@ -42,7 +42,7 @@ class _WebviewPageState extends State<shopwebview> {
         },
       ))
       ..loadRequest(
-        Uri.parse('https://theleap.co/creator/ynadtiy19/'),
+        Uri.parse('http://yunyuzhizhou.mlover.site/'),
       );
   }
 
@@ -52,7 +52,7 @@ class _WebviewPageState extends State<shopwebview> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           webViewController!
-              .loadRequest(Uri.parse('https://theleap.co/creator/ynadtiy19/'));
+              .loadRequest(Uri.parse('http://yunyuzhizhou.mlover.site/'));
         },
         child: const Icon(Hero_icons_outline.arrow_path_rounded_square),
       ),

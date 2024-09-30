@@ -200,7 +200,7 @@ class SiderBarPage extends StackedView<SiderBarPageModel> {
                     Hero_icons_outline.credit_card,
                     size: 21,
                   ),
-                  title: Text("Donate")),
+                  title: Text("Shoping")),
               NavDestinationItem(
                   isSectionHeader: false,
                   radius: 20,

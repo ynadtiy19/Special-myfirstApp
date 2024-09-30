@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../utils/hero-icons-outline_icons.dart';
@@ -174,7 +173,7 @@ class _WebviewPageState extends State<MusicWebView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showRefreshDialog, // 点击弹出对话框
-        child: Icon(LineIcons.tree),
+        child: const Icon(Hero_icons_outline.arrow_path_rounded_square),
       ),
       body: SafeArea(
         child: WebViewWidget(
