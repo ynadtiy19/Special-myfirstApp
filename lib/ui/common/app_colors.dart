@@ -14,7 +14,7 @@ const Color kcRiceYellowColor = Color(0xffF6E7B0); //米黄色的英文
 const Color kcHotPinkWithTealColor = Color(0xFFE03DAC);
 
 const Color grayBackground = Color(0xFF5B565B);
-const Color teaGreen = Color(0xFFC7EBB3);
+const Color teaGreen = Color(0xFF13C518);
 const Color smokeyBlack = Color(0xFF111111);
 const Color champagnePink = Color(0xFFF4DFCD);
 const Color pinkLace = Color(0xFFFFD5F8);

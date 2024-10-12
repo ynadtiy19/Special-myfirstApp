@@ -1,9 +1,7 @@
 import 'dart:io';
 
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:bounce_tapper/bounce_tapper.dart';
 import 'package:chat_bubbles/bubbles/bubble_normal_image.dart';
-import 'package:chat_bubbles/bubbles/bubble_special_one.dart';
 import 'package:chat_bubbles/message_bars/message_bar.dart';
 import 'package:device_scan_animation/device_scan_animation.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +14,7 @@ import 'package:user_profile_avatar/user_profile_avatar.dart';
 import '../../../services/chat_message.dart';
 import '../../common/app_colors.dart';
 import '../../utils/hero-icons-outline_icons.dart';
+import 'bubbletext.dart';
 import 'chatsity_viewmodel.dart';
 
 class ChatsityView extends StackedView<ChatsityViewModel> {
@@ -75,14 +74,16 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                             itemBuilder: (context, index) {
                               final message = box.getAt(index)!;
                               bool seenStatus;
-                              if (index >= box.length - 2) {
-                                // 最新的两条消息使用 isfetching
+                              if (index >= box.length - 1 &&
+                                  !viewModel.isfetching) {
+                                // 最新的一条消息使用 isfetching
                                 seenStatus = viewModel.isfetching;
                               } else {
                                 // 之前的消息都设置为 seen: true
                                 seenStatus = true;
                               }
                               return Column(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
                                   if (message.imagePath != null)
                                     BubbleNormalImage(
@@ -97,23 +98,29 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                                     ),
                                   Column(
                                     children: [
-                                      BounceTapper(
-                                        onLongPress: () async {
-                                          viewModel.routeTotextPage(
-                                              message.text, context);
-                                        },
-                                        child: BubbleSpecialOne(
-                                          seen: seenStatus,
-                                          text: message.text,
-                                          isSender: message.isSender,
-                                          color: message.isSender
-                                              ? Colors.purple.shade100
-                                              : Colors.grey.shade300,
-                                          textStyle: TextStyle(
-                                            fontSize: 14,
+                                      Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onDoubleTap: () async {
+                                            viewModel.routeTotextPage(
+                                                message.text, context);
+                                          },
+                                          child: BubbleSpecial(
+                                            isAnimated: seenStatus,
+                                            seen: seenStatus,
+                                            text: message.text,
+                                            isSender: message.isSender,
                                             color: message.isSender
-                                                ? Colors.purple
-                                                : Colors.black,
+                                                ? const Color.fromRGBO(
+                                                    225, 190, 231, 1)
+                                                : const Color.fromRGBO(
+                                                    255, 219, 205, 1),
+                                            textStyle: TextStyle(
+                                              fontSize: 16,
+                                              color: message.isSender
+                                                  ? Colors.purple
+                                                  : Colors.black,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -131,184 +138,181 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
               : SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   physics: const AlwaysScrollableScrollPhysics(),
-                  child: Stack(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
                     children: [
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          const SizedBox(height: 70),
-                          InkWell(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: const Text('聊天',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 30)),
-                                      content: const Text('选择一个你喜欢的聊天机器人'),
-                                      actions: <Widget>[
-                                        Container(
-                                          alignment: Alignment.center,
-                                          width: double.infinity,
-                                          child: Column(
-                                            children: [
-                                              PrettyShadowButton(
-                                                label: "进入Chatgpt聊天",
-                                                onPressed: () {
-                                                  viewModel.UchangeUI();
-                                                  Navigator.of(context).pop();
-                                                },
-                                                icon: Icons.arrow_forward,
-                                                shadowColor: Colors.green,
-                                              ),
-                                              const SizedBox(height: 10),
-                                              PrettyShadowButton(
-                                                label: "进入GGemini聊天",
-                                                onPressed: () {
-                                                  viewModel.UchangeUI();
-                                                  Navigator.of(context).pop();
-                                                },
-                                                icon: Icons.arrow_forward,
-                                                shadowColor: Colors.green,
-                                              ),
-                                              const SizedBox(height: 10),
-                                              PrettyShadowButton(
-                                                label: "选择喜欢的背景墙",
-                                                onPressed: () {
-                                                  viewModel
-                                                      .pickImageforbackground();
-                                                  Navigator.of(context).pop();
-                                                },
-                                                icon: Icons.arrow_forward,
-                                                shadowColor: Colors.green,
-                                              ),
-                                              const SizedBox(height: 10),
-                                              TextButton(
-                                                child: const Text('取消',
-                                                    style: TextStyle(
-                                                        color: Colors.black)),
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                              ),
-                                            ],
+                      const SizedBox(height: 70),
+                      InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('聊天',
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 30)),
+                                  content: const Text('选择一个你喜欢的聊天机器人'),
+                                  actions: <Widget>[
+                                    Container(
+                                      alignment: Alignment.center,
+                                      width: double.infinity,
+                                      child: Column(
+                                        children: [
+                                          PrettyShadowButton(
+                                            label: "进入Chatgpt聊天",
+                                            onPressed: () {
+                                              viewModel.uchangeGeminichat();
+                                              viewModel.UchangeUI();
+                                              viewModel.ImageRepository
+                                                  .setBottomNavVisible(); //调用方法
+                                              Navigator.of(context).pop();
+                                            },
+                                            icon: Icons.arrow_forward,
+                                            shadowColor: Colors.green,
                                           ),
-                                        ),
-                                      ],
-                                    );
-                                  },
+                                          const SizedBox(height: 10),
+                                          PrettyShadowButton(
+                                            label: "进入Gemini聊天",
+                                            onPressed: () {
+                                              viewModel.changeGeminichat();
+                                              viewModel.UchangeUI();
+                                              viewModel.ImageRepository
+                                                  .setBottomNavVisible();
+                                              Navigator.of(context).pop();
+                                            },
+                                            icon: Icons.arrow_forward,
+                                            shadowColor: Colors.green,
+                                          ),
+                                          const SizedBox(height: 10),
+                                          PrettyShadowButton(
+                                            label: "选择喜欢的背景墙",
+                                            onPressed: () {
+                                              viewModel
+                                                  .pickImageforbackground();
+                                              Navigator.of(context).pop();
+                                            },
+                                            icon: Icons.arrow_forward,
+                                            shadowColor: Colors.green,
+                                          ),
+                                          const SizedBox(height: 10),
+                                          TextButton(
+                                            child: const Text('取消',
+                                                style: TextStyle(
+                                                    color: Colors.black)),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 );
                               },
-                              child: DeviceScanWidget()),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            );
+                          },
+                          child: DeviceScanWidget()),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Chatgpt',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 20),
-                                    ),
-                                  ),
-                                  TextButton.icon(
-                                    iconAlignment: IconAlignment.end,
-                                    icon: const Icon(
-                                      Hero_icons_outline.chevron_right,
-                                      color: champagnePink,
-                                      size: 15,
-                                    ),
-                                    onPressed: () {
-                                      viewModel.clearChatBox();
-                                      print('clear chatbox');
-                                    },
-                                    label: const Text(
-                                      '浏览全部',
-                                      style: TextStyle(color: champagnePink),
-                                    ),
-                                  ),
-                                ],
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Chatgpt',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 20),
+                                ),
                               ),
-                              Container(
-                                height: 200,
-                                child: ListView.builder(
-                                  itemCount: 10,
-                                  scrollDirection: Axis.horizontal,
-                                  physics: AlwaysScrollableScrollPhysics(),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0),
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return const RecentPlayCard(
-                                      imageUrl:
-                                          'https://sjbz-fd.zol-img.com.cn/t_s1080x1920c/g5/M00/00/02/ChMkJ1fJVACIOcDTAAmrpgi1J2QAAU9uQETzP4ACau-914.jpg',
-                                      title: "Top 50 Global",
-                                      description:
-                                          "Worldwide hits.\nCover: Bad Bunny",
-                                    );
-                                  },
+                              TextButton.icon(
+                                iconAlignment: IconAlignment.end,
+                                icon: const Icon(
+                                  Hero_icons_outline.chevron_right,
+                                  color: champagnePink,
+                                  size: 15,
+                                ),
+                                onPressed: () {
+                                  viewModel.clearChatBox();
+                                  print('clear chatbox');
+                                },
+                                label: const Text(
+                                  '浏览全部',
+                                  style: TextStyle(color: champagnePink),
                                 ),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 20),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Container(
+                            height: 200,
+                            child: ListView.builder(
+                              itemCount: 10,
+                              scrollDirection: Axis.horizontal,
+                              physics: AlwaysScrollableScrollPhysics(),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              itemBuilder: (BuildContext context, int index) {
+                                return const RecentPlayCard(
+                                  imageUrl:
+                                      'https://sjbz-fd.zol-img.com.cn/t_s1080x1920c/g5/M00/00/02/ChMkJ1fJVACIOcDTAAmrpgi1J2QAAU9uQETzP4ACau-914.jpg',
+                                  title: "Top 50 Global",
+                                  description:
+                                      "Worldwide hits.\nCover: Bad Bunny",
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Google Gemini',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 20),
-                                    ),
-                                  ),
-                                  TextButton.icon(
-                                    iconAlignment: IconAlignment.end,
-                                    icon: const Icon(
-                                      Hero_icons_outline.chevron_right,
-                                      color: champagnePink,
-                                      size: 15,
-                                    ),
-                                    onPressed: () {},
-                                    label: const Text(
-                                      '浏览全部',
-                                      style: TextStyle(color: champagnePink),
-                                    ),
-                                  ),
-                                ],
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Google Gemini',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 20),
+                                ),
                               ),
-                              Container(
-                                height: 200,
-                                child: ListView.builder(
-                                  itemCount: 10,
-                                  scrollDirection: Axis.horizontal,
-                                  physics: AlwaysScrollableScrollPhysics(),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0),
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return const RecentPlayCard(
-                                      imageUrl:
-                                          'https://sjbz-fd.zol-img.com.cn/t_s1080x1920c/g5/M00/00/02/ChMkJ1fJVACIOcDTAAmrpgi1J2QAAU9uQETzP4ACau-914.jpg',
-                                      title: "Top 50 Global",
-                                      description:
-                                          "Worldwide hits.\nCover: Bad Bunny",
-                                    );
-                                  },
+                              TextButton.icon(
+                                iconAlignment: IconAlignment.end,
+                                icon: const Icon(
+                                  Hero_icons_outline.chevron_right,
+                                  color: champagnePink,
+                                  size: 15,
+                                ),
+                                onPressed: () {},
+                                label: const Text(
+                                  '浏览全部',
+                                  style: TextStyle(color: champagnePink),
                                 ),
                               ),
                             ],
+                          ),
+                          Container(
+                            height: 200,
+                            child: ListView.builder(
+                              itemCount: 10,
+                              scrollDirection: Axis.horizontal,
+                              physics: AlwaysScrollableScrollPhysics(),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              itemBuilder: (BuildContext context, int index) {
+                                return const RecentPlayCard(
+                                  imageUrl:
+                                      'https://sjbz-fd.zol-img.com.cn/t_s1080x1920c/g5/M00/00/02/ChMkJ1fJVACIOcDTAAmrpgi1J2QAAU9uQETzP4ACau-914.jpg',
+                                  title: "Top 50 Global",
+                                  description:
+                                      "Worldwide hits.\nCover: Bad Bunny",
+                                );
+                              },
+                            ),
                           ),
                         ],
                       ),
@@ -352,17 +356,17 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                               viewModel.dominantColor.g,
                               viewModel.dominantColor.b)
                           : Colors.white,
-                      messageBarHitText: 'Type something...',
+                      messageBarHitText: '消息',
                       messageBarHintStyle: const TextStyle(
                         fontSize: 16,
-                        color: Colors.black,
+                        color: Colors.black87,
                       ),
                       infliiColor: const Color.fromARGB(255, 216, 219, 231),
                       sendButtonIcon: viewModel.chatImage
-                          ? Hero_icons_outline.arrow_small_up
+                          ? Hero_icons_outline.arrow_small_up //图像对话
                           : viewModel.chatwithHistory
-                              ? Hero_icons_outline.rocket_launch
-                              : Hero_icons_outline.paper_airplane,
+                              ? Hero_icons_outline.rocket_launch //多轮聊天
+                              : Hero_icons_outline.paper_airplane, //谷歌聊天
                       sendButtonColor: Colors.orangeAccent.withOpacity(0.68),
                       onSend: (text) async {
                         viewModel.UchangeUI();

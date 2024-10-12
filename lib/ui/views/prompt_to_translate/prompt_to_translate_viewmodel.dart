@@ -31,11 +31,11 @@ class PromptToTranslateViewModel extends BaseViewModel {
     rebuildUi();
   }
 
-  // void onSpeechResult(SpeechRecognitionResult result) {
-  //   _query.text = result.recognizedWords;
-  //
-  //   rebuildUi();
-  // }
+  @override
+  void dispose() {
+    _query.dispose();
+    super.dispose();
+  }
 
   void changeTargetLanguage(BuildContext context) {
     String? selectedLanguage = _targetLanguage;

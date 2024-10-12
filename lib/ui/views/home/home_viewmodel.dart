@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:hung/app/app.bottomsheets.dart';
 import 'package:hung/app/app.dialogs.dart';
 import 'package:hung/app/app.locator.dart';
@@ -10,6 +11,9 @@ import '../../../services/image_repository_service.dart';
 class HomeViewModel extends ReactiveViewModel {
   final _dialogService = locator<DialogService>();
   final _bottomSheetService = locator<BottomSheetService>();
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey;
 
   String get counterLabel => 'Counter is: $_counter';
   int _counter = 0;

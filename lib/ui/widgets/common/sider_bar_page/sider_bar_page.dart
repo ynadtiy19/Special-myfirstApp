@@ -188,7 +188,7 @@ class SiderBarPage extends StackedView<SiderBarPageModel> {
                     Hero_icons_outline.viewfinder_circle,
                     size: 21,
                   ),
-                  title: Text("Gallery")),
+                  title: Text("Reals")),
               NavDestinationItem(
                   isSectionHeader: false,
                   radius: 20,

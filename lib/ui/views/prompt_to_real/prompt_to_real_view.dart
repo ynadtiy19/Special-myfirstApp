@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:dotlottie_loader/dotlottie_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,7 +29,10 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
       // backgroundColor: Theme.of(context).colorScheme.surface,
       backgroundColor: const Color.fromARGB(255, 216, 219, 231),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
+        padding: EdgeInsets.only(
+            left: 8.0,
+            right: 8.0,
+            bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -326,25 +328,8 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
             // !PromptToRealViewModel.isInitialLoading &&
             !PromptToRealViewModel.isloading //此时isInitialLoading为true（改变了）
                 ? viewModel.uuimageBox.isEmpty
-                    ? SizedBox(
-                        height: 250,
-                        width: 250,
-                        child: DotLottieLoader.fromNetwork(
-                          "https://lottie.host/bb27625c-2078-4437-bd42-05d4ce993726/qDpLUiEd4B.lottie",
-                          frameBuilder: (ctx, dotlottie) {
-                            if (dotlottie != null) {
-                              return Lottie.memory(
-                                  dotlottie.animations.values.single);
-                            } else {
-                              return const Text("Loading...");
-                            }
-                          },
-                          errorBuilder: (ctx, e, s) {
-                            print(s);
-                            return Text(e.toString());
-                          },
-                        ),
-                      )
+                    ? const SizedBox(
+                        height: 250, width: 250, child: Text('原始图像为空'))
                     : !PromptToRealViewModel.isInitialLoading
                         ? Expanded(
                             child: GridView.builder(

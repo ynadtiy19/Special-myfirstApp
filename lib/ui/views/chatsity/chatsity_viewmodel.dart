@@ -34,13 +34,20 @@ class ChatsityViewModel extends BaseViewModel {
   final ImageRepository = locator<ImageRepositoryService>();
   void setBottomNavVisible() => ImageRepository.setBottomNavVisible();
 
+  @override
+  List<ListenableServiceMixin> get listenableServices => [
+        ImageRepository,
+      ];
+
+  bool get isBottomNavVisibleValue => ImageRepository.isBottomNavVisibleValue;
+
   final TextEditingController _textController = TextEditingController();
   TextEditingController get textController => _textController;
 
   final GlobalKey _shotKey = GlobalKey();
   GlobalKey get shotKey => _shotKey;
 
-  late Box<ChatMessage> _chatBox = Hive.box<ChatMessage>('chatjson');
+  late final Box<ChatMessage> _chatBox = Hive.box<ChatMessage>('chatjson');
   Box<ChatMessage> get chatBox => _chatBox;
 
   List<String> imagePaths = []; // 保存所有图像文件路径
@@ -91,8 +98,11 @@ class ChatsityViewModel extends BaseViewModel {
                             applyBlurEffect: true,
                           );
                         },
-                        child: Text(
-                          text,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            text,
+                          ),
                         ),
                       ),
                     ],
@@ -197,7 +207,7 @@ class ChatsityViewModel extends BaseViewModel {
   static bool _isgoingpickImage = false;
   bool get isgoingpickImage => _isgoingpickImage; //保证每次打开都是选择后的相片
 
-  bool _isfetching = false;
+  bool _isfetching = true;
   bool get isfetching => _isfetching;
 
   static bool _animating = false;
@@ -205,6 +215,9 @@ class ChatsityViewModel extends BaseViewModel {
 
   static bool _openreply = false;
   bool get openreply => _openreply;
+
+  static bool _isGeminichat = false;
+  bool get isGemini => _isGeminichat;
 
   static String _listenText = '';
   String get listenText => _listenText;
@@ -237,6 +250,16 @@ class ChatsityViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void changeGeminichat() {
+    _isGeminichat = true;
+    notifyListeners();
+  }
+
+  void uchangeGeminichat() {
+    _isGeminichat = false;
+    notifyListeners();
+  }
+
   void scrollToBottom() {
     if (_scrollController.hasClients) {
       _scrollController.animateTo(
@@ -263,13 +286,36 @@ class ChatsityViewModel extends BaseViewModel {
                 },
               ),
               const SizedBox(height: 12.0),
-              GestureDetector(
-                onTap: UpopenImagePicker, // 点击选择图片
-                child: CircleAvatar(
-                  radius: 30.0,
-                  backgroundColor: Colors.grey.shade200,
-                  child: const Icon(Hero_icons_outline.plus, size: 30),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GestureDetector(
+                    onTap: UpopenImagePicker, // 点击选择图片
+                    child: CircleAvatar(
+                      radius: 30.0,
+                      backgroundColor: Colors.grey.shade200,
+                      child: const Icon(Hero_icons_outline.plus, size: 30),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      _isfetching = true;
+                      if (!isBottomNavVisibleValue) {
+                        ImageRepository.setBottomNavVisible();
+                      } else {
+                        print('已经打开了底部导航栏');
+                      }
+                      EchangeUI();
+                      Navigator.of(context).pop();
+                    },
+                    // 点击选择图片
+                    child: CircleAvatar(
+                      radius: 30.0,
+                      backgroundColor: Colors.grey.shade200,
+                      child: const Icon(Hero_icons_outline.chart_bar, size: 30),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -458,6 +504,7 @@ class ChatsityViewModel extends BaseViewModel {
   @override
   void dispose() {
     _textController.removeListener(initState);
+    _textController.dispose();
     scrollController.dispose();
     super.dispose();
   }
@@ -491,12 +538,11 @@ class ChatsityViewModel extends BaseViewModel {
 
   Future<void> UchatwithHistory(String text) async {
     final url = Uri.parse('https://delve.a9.io/retrieve');
+    _isfetching = true;
 
     final message = ChatMessage(isSender: true, text: text, imagePath: null);
     // 将发送的消息构建为 JSON 格式并存储到 Hive
     _chatBox.add(message);
-
-    _isfetching = false;
 
     // 从 Hive 中获取所有消息
     List<ChatMessage> messages = _chatBox.values.toList();
@@ -518,7 +564,8 @@ class ChatsityViewModel extends BaseViewModel {
 
       if (response.statusCode == 200) {
         // 请求成功
-        final responseBody = utf8.decode(response.bodyBytes); // 使用UTF-8解码
+        final responseBody =
+            utf8.decode(response.bodyBytes); // 使用UTF-8解码,string类型
 
         String cleanText(String input) {
           // 处理 :item[...] { to="..." } 的情况
@@ -545,7 +592,7 @@ class ChatsityViewModel extends BaseViewModel {
         );
         // 将接收到的消息存储到 Hive
         _chatBox.add(message);
-        _isfetching = true;
+        _isfetching = false;
         notifyListeners();
         print('Response data: $responseBody');
       } else {
@@ -588,39 +635,73 @@ class ChatsityViewModel extends BaseViewModel {
 
   Future<Map<String, dynamic>?> sendmessage(
       [String query = 'How are you doing today?']) async {
+    _isfetching = true;
     final message = ChatMessage(isSender: true, text: query, imagePath: null);
     // 将发送的消息构建为 JSON 格式并存储到 Hive
     _chatBox.add(message);
 
-    _isfetching = false;
+    // 根据 _isGeminichat 的值选择不同的 API
+    final apiUrl = _isGeminichat
+        ? 'https://mylinktoa.globeapp.dev/linka?q=${Uri.encodeComponent(query)}'
+        : 'https://labs.writingmate.ai/api/chat/public';
 
-    final apiUrl =
-        'https://mylinktoa.globeapp.dev/linka?q=${Uri.encodeComponent(query)}';
     print(apiUrl);
 
     try {
-      final response = await http.get(Uri.parse(apiUrl));
+      // 如果 _isGeminichat 为 false，发送 POST 请求到 writingmate API
+      final response = _isGeminichat
+          ? await http.get(Uri.parse(apiUrl))
+          : await http.post(
+              Uri.parse(apiUrl),
+              headers: {
+                "Content-Type": "application/json",
+                "User-Agent":
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.5845.111 Safari/537.36",
+                "Referer": "https://labs.writingmate.ai",
+                "Accept":
+                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+                "Accept-Language": "en-US,en;q=0.9",
+                "X-Forwarded-For": "203.0.113.195", // 假设的IP地址
+              },
+              body: jsonEncode({
+                "response_format": {"type": "text"},
+                "chatSettings": {
+                  "model": "gpt-4o-mini",
+                  "temperature": 0.5,
+                  "contextLength": 16385,
+                  "includeProfileContext": false,
+                  "includeWorkspaceInstructions": false,
+                  "embeddingsProvider": "openai"
+                },
+                "messages": [
+                  {"role": "user", "content": query}
+                ],
+                "customModelId": ""
+              }),
+            );
 
       if (response.statusCode == 200) {
-        Map<String, dynamic> data = jsonDecode(response.body);
-        print(response.body);
-        final message = ChatMessage(
-          isSender: data['isSender'],
-          text: data['text'],
-          imagePath: null,
-        );
-        // 将接收到的消息存储到 Hive
-        _chatBox.add(message);
-
-        // // 存储数据
-        // await jsonCacheMem.refresh('chattext', data);
-
-        // 获取缓存信息并打印
-        // final cachedInfo = await jsonCacheMem.value('chattext');
-        // final cachedJson = jsonEncode(cachedInfo);
-        // print(cachedJson);
-
-        _isfetching = true; // Reset fetching state
+        if (_isGeminichat) {
+          // 处理 JSON 响应
+          Map<String, dynamic> data = jsonDecode(response.body);
+          final message = ChatMessage(
+            isSender: data['isSender'],
+            text: data['text'],
+            imagePath: null,
+          );
+          _chatBox.add(message);
+          _isfetching = false;
+        } else {
+          // 处理纯文本响应
+          final message = ChatMessage(
+            isSender: false,
+            text: response.body, // 直接使用返回的纯文本
+            imagePath: null,
+          );
+          print(response.body);
+          _chatBox.add(message);
+          _isfetching = false;
+        }
         notifyListeners();
       } else {
         _isfetching = false; // Reset fetching state in case of error
@@ -636,6 +717,7 @@ class ChatsityViewModel extends BaseViewModel {
     return null;
   }
 
+  // 读取背景图片
   Future<void> loadbackgroundImage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? storedName = prefs.getString('backgroundImage'); // 获取存储的数据
@@ -683,12 +765,11 @@ class ChatsityViewModel extends BaseViewModel {
       );
       return; // 在这里结束执行
     }
+    _isfetching = true;
     final message = ChatMessage(
         isSender: true, text: text, imagePath: _image?.path); // 存储图像路径
     // 将发送的消息构建为 JSON 格式并存储到 Hive
     _chatBox.add(message);
-
-    _isfetching = false;
 
     // 从 Hive 中获取图像路径
     List<ChatMessage> messages = _chatBox.values.toList();
@@ -713,7 +794,7 @@ class ChatsityViewModel extends BaseViewModel {
     final request = http.MultipartRequest(
       'POST',
       Uri.parse(
-          'https://mylinktoa.globeapp.dev/linkb?q=${Uri.encodeComponent(text)}'),
+          'https://mydiumtify.globeapp.dev/chatadvance?q=${Uri.encodeComponent(text)}'),
     );
 
     // request.fields['q'] = _textController.text;
@@ -742,9 +823,8 @@ class ChatsityViewModel extends BaseViewModel {
       );
       // 将接收到的消息存储到 Hive
       _chatBox.add(message);
-      _isfetching = true;
+      _isfetching = false;
       _image = null;
-      // Reset fetching state
       notifyListeners();
     } else {
       _isfetching = false; // Reset fetching state in case of error

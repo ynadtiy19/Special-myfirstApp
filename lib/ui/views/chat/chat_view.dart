@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hung/ui/widgets/common/sider_bar_page/sider_bar_page.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../utils/hero-icons-outline_icons.dart';
+import '../../widgets/common/sider_bar_page/sider_bar_page.dart';
 import '../chatsity/chatsity_view.dart';
 import '../prompt_to_real/prompt_to_real_view.dart';
 import 'chat_viewmodel.dart';

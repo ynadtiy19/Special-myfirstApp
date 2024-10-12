@@ -84,6 +84,12 @@ class PromptToRealViewModel extends ReactiveViewModel {
     notifyListeners(); // 通知监听器数据已更新
   }
 
+  @override
+  void dispose() {
+    _query.dispose();
+    super.dispose();
+  }
+
   void deleteImage(BuildContext context) {
     if (uuimageBox.isEmpty) {
       // 如果数据库已经为空，提示用户

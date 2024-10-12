@@ -265,17 +265,17 @@ class TravelstoryView extends StackedView<TravelstoryViewModel> {
                                   children: [
                                     CircleAvatar(
                                       backgroundImage: AssetImage(
-                                          'images/bard.png'), // Replace with your image asset
+                                          'images/dev.png'), // Replace with your image asset
                                     ),
                                     SizedBox(width: 8),
                                     CircleAvatar(
                                       backgroundImage: AssetImage(
-                                          'images/bard.png'), // Replace with your image asset
+                                          'images/dev.png'), // Replace with your image asset
                                     ),
                                     SizedBox(width: 8),
                                     CircleAvatar(
                                       backgroundImage: AssetImage(
-                                          'images/bard.png'), // Replace with your image asset
+                                          'images/dev.png'), // Replace with your image asset
                                     ),
                                     SizedBox(width: 8),
                                     CircleAvatar(

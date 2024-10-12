@@ -1,14 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:colorgram/colorgram.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:high_q_paginated_drop_down/high_q_paginated_drop_down.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:json_path/json_path.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:primer_progress_bar/primer_progress_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 
@@ -30,11 +33,140 @@ class PinterestViewModel extends BaseViewModel with WidgetsBindingObserver {
   static List<Map<String, dynamic>> uimageUrls = [];
   List<Map<String, dynamic>> get imageUrls => uimageUrls;
 
+  static Map<int, String> _translatedTitles = {};
+  static Map<int, String> get titles => _translatedTitles;
+
+// 在你的视图模型中，定义 segments 为一个 Map<int, List<Segment>>
+  static Map<int, List<Segment>> segments = {}; // 变化的地方
+
+  Future<void> extractColorsFromCachedImages(List<dynamic> imageUrls) async {
+    // 遍历所有图像 URL
+    for (int urlIndex = 0; urlIndex < imageUrls.length; urlIndex++) {
+      String url = imageUrls[urlIndex]; // 获取当前 URL
+      try {
+        // 从缓存中获取图片文件
+        File? cachedImageFile = await DefaultCacheManager().getSingleFile(url);
+        if (!cachedImageFile.existsSync()) {
+          print('No cached image found for URL: $url');
+          continue; // 如果没有缓存的图像，则继续下一个 URL
+        }
+
+        // 读取缓存图片的字节数据
+        final bytes = await cachedImageFile.readAsBytes();
+
+        // 使用字节数据创建图像提供者
+        Uint8List imageData = Uint8List.fromList(bytes);
+        FileImage imageProvider = FileImage(cachedImageFile);
+
+        // 提取图像中的颜色
+        List<CgColor> colorList =
+            await extractColor(imageProvider, 10); // 提取 10 种颜色
+
+        // 如果 segments 里没有当前 URL 的颜色列表，则初始化一个
+        if (!segments.containsKey(urlIndex)) {
+          segments[urlIndex] = []; // 初始化一个新的空列表
+        }
+
+        // 获取当前索引的段
+        List<Segment> currentSegments = segments[urlIndex]!;
+
+        // 只添加新提取的颜色，保持原有的颜色不变
+        for (CgColor color in colorList) {
+          if (currentSegments.length < 10) {
+            currentSegments.add(Segment(
+              value: 10, // 根据需要调整这个值
+              color: Color.fromARGB(255, color.r, color.g, color.b),
+              label: Text("Color ${currentSegments.length + 1}"), // 添加标签
+            ));
+          } else {
+            break; // 如果已经有10个颜色，则停止添加
+          }
+        }
+
+        // 更新 segments 字典
+        segments[urlIndex] = currentSegments; // 更新存储的段
+      } catch (e) {
+        print('Error extracting color from cached image: $e');
+      }
+    }
+
+    print('提取完成，段数：${segments.length}');
+    notifyListeners(); // 通知监听器更新 UI
+  }
+
   late String keyword = 'winter';
   String get uquery => keyword;
 
+  static Map<int, bool> _translationEnabled = {};
+  static Map<int, bool> get translationEnabled => _translationEnabled;
+
   void changedquery(String value) {
     keyword = value;
+    notifyListeners();
+  }
+
+  // Future<void> extractColorsFromCachedImages(List<String> imageUrls) async {
+  //   segments.clear(); // 清空之前的段
+  //   for (String url in imageUrls) {
+  //     try {
+  //       // 从缓存中获取图片文件
+  //       File? cachedImageFile = await DefaultCacheManager().getSingleFile(url);
+  //       if (!cachedImageFile.existsSync()) {
+  //         print('No cached image found for URL: $url');
+  //         continue;
+  //       }
+  //
+  //       // 读取缓存图片的字节数据
+  //       final bytes = await cachedImageFile.readAsBytes();
+  //
+  //       // 使用字节数据创建图像提供者
+  //       Uint8List imageData = Uint8List.fromList(bytes);
+  //       FileImage imageProvider = FileImage(cachedImageFile);
+  //
+  //       // 提取图像中的颜色
+  //       List<CgColor> colorList =
+  //           await extractColor(imageProvider, 10); // 提取 10 种颜色
+  //       if (colorList.isNotEmpty) {
+  //         for (int i = 0; i < colorList.length; i++) {
+  //           CgColor color = colorList[i];
+  //           segments[segments.length] = Segment(
+  //             value: 10, // 根据需要调整这个值
+  //             color: Color.fromARGB(255, color.r, color.g, color.b),
+  //             label: Text("Color ${segments.length}"), // 添加标签
+  //           );
+  //         }
+  //         // 遍历 colorList，将每个颜色都添加到 segments 列表中
+  //         // for (CgColor color in colorList) {
+  //         //   segments.add(Segment(
+  //         //     value: 10, // 根据需要调整这个值
+  //         //     color: Color.fromARGB(
+  //         //       255,
+  //         //       color.r,
+  //         //       color.g,
+  //         //       color.b,
+  //         //     ),
+  //         //   ));
+  //         // }
+  //       }
+  //     } catch (e) {
+  //       print('Error extracting color from cached image: $e');
+  //     }
+  //   }
+  //
+  //   print('提取完成，段数：${segments.length}');
+  //   notifyListeners(); // 通知监听器更新 UI
+  // }
+
+  // 切换回原始语言
+  void changetoBack(int index) {
+    // 检查 _translatedTitles 中是否存在该 index
+    if (_translatedTitles.containsKey(index) && _translationEnabled[index]!) {
+      // 还原标题
+      uimageUrls[index]['title'] = _translatedTitles[index];
+      _translationEnabled[index] = false;
+      print(_translationEnabled);
+    }
+    print(uimageUrls[index]['title']);
     notifyListeners();
   }
 
@@ -68,6 +200,29 @@ class PinterestViewModel extends BaseViewModel with WidgetsBindingObserver {
       return udata;
     } else {
       return "这里很暖和";
+    }
+  }
+
+  Future<void> translatetitleText(int index, String text) async {
+    // 检查该 index 的翻译状态，如果已翻译则返回
+    if (text.isEmpty || (_translationEnabled[index] ?? false)) {
+      return;
+    }
+    _translatedTitles.putIfAbsent(index, () => text); // 确保该 index 存在
+    print(_translatedTitles[index]);
+
+    final uresponse = await http.get(Uri.parse(
+        'https://mydiumtify.globeapp.dev/googlemit?text=$text&to_lang=zh-CN&from_lang=auto'));
+    if (uresponse.statusCode == 200) {
+      final udata = jsonDecode(utf8.decode(uresponse.bodyBytes))['data'];
+      print('🥰🎶😊🐳👌🍧😂');
+      uimageUrls[index]['title'] = udata;
+      print(uimageUrls[index]['title']); // 根据index保存翻译结果
+      _translationEnabled[index] = true;
+      notifyListeners(); // 通知UI刷新
+    } else {
+      _translatedTitles[index] = "这里很暖和";
+      notifyListeners();
     }
   }
 
@@ -141,11 +296,25 @@ class PinterestViewModel extends BaseViewModel with WidgetsBindingObserver {
 
         await saveLast14Urls();
         notifyListeners();
+
+        // 等待所有图像缓存完成
+        await cacheImages(uimageUrls.map((e) => e['url']).toList());
+        print('开始提取颜色');
+        // 调用提取颜色函数
+        await extractColorsFromCachedImages(
+            uimageUrls.map((e) => e['url']).toList());
+        print('提取颜色结束');
       } else {
         print('请求失败，状态码: ${response.statusCode}');
       }
     } catch (e) {
       print('发生错误: $e');
+    }
+  }
+
+  Future<void> cacheImages(List<dynamic> imageUrls) async {
+    for (String url in imageUrls) {
+      await DefaultCacheManager().getSingleFile(url);
     }
   }
 
@@ -176,6 +345,11 @@ class PinterestViewModel extends BaseViewModel with WidgetsBindingObserver {
       uimageUrls = storedJson
           .map((jsonStr) => jsonDecode(jsonStr) as Map<String, dynamic>)
           .toList();
+      print(uimageUrls.map((urlMap) => urlMap['url'] as String).toList());
+      // urlExtracted = uimageUrls.map((urlMap) => urlMap['url'] as String).toList();
+      // 将提取的 URL 字符串传递给 extractColorsFromCachedImages
+      await extractColorsFromCachedImages(
+          uimageUrls.map((urlMap) => urlMap['url'] as String).toList());
     } else {
       uimageUrls = [];
     }

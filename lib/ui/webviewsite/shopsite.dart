@@ -1,18 +1,15 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../utils/hero-icons-outline_icons.dart';
-
-class shopwebview extends StatefulWidget {
-  const shopwebview({super.key});
+class ShopWebView extends StatefulWidget {
+  const ShopWebView({super.key});
 
   @override
-  State<shopwebview> createState() => _WebviewPageState();
+  State<ShopWebView> createState() => _WebviewPageState();
 }
 
-class _WebviewPageState extends State<shopwebview> {
+class _WebviewPageState extends State<ShopWebView> {
   WebViewController? webViewController;
 
   @override
@@ -22,42 +19,65 @@ class _WebviewPageState extends State<shopwebview> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(NavigationDelegate(
         onProgress: (int progress) {
-          log('WebView is loading (progress : $progress%)' as num);
+          debugPrint('WebView is loading (progress : $progress%)');
         },
         onPageStarted: (String url) {
-          log('Page started loading: $url' as num);
+          debugPrint('Page started loading: $url');
         },
         onPageFinished: (String url) {
-          log('Page finished loading: $url' as num);
+          // 允许媒体自动播放
+          webViewController?.runJavaScript(
+              "document.querySelectorAll('video, audio').forEach(media => media.autoplay = true);");
+          debugPrint('Page finished loading: $url');
         },
         onWebResourceError: (WebResourceError error) {
-          log('Page resource error: $error' as num);
+          debugPrint('Page resource error: $error');
         },
         onNavigationRequest: (NavigationRequest request) {
           if (request.url.contains('x-gpt')) {
-            log("navigation is blocked: $request" as num);
+            debugPrint("Navigation is blocked: $request");
             return NavigationDecision.prevent;
           }
           return NavigationDecision.navigate;
         },
       ))
       ..loadRequest(
-        Uri.parse('https://theleap.co/creator/ynadtiy19/'),
+        Uri.parse(
+            'https://www.theleap.co/creator/ynadtiy19/mini-course/mastering-smart-goals/take?token=Fh_y9qRZXZBHAv9e0QkaGg'),
       );
+  }
+
+  static const MethodChannel _channel =
+      MethodChannel('com.example.webview/scroll');
+
+  Future<void> scrollLeft() async {
+    // try {
+    //   await _channel.invokeMethod('scrollLeft');
+    // } on PlatformException catch (e) {
+    //   print("Failed to scroll left: '${e.message}'.");
+    // }
+  }
+
+  Future<void> scrollRight() async {
+    // try {
+    //   await _channel.invokeMethod('scrollRight');
+    // } on PlatformException catch (e) {
+    //   print("Failed to scroll right: '${e.message}'.");
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          webViewController!
-              .loadRequest(Uri.parse('https://theleap.co/creator/ynadtiy19/'));
-        },
-        child: const Icon(Hero_icons_outline.arrow_path_rounded_square),
+      appBar: AppBar(
+        title: const Text('家乡的故事'),
       ),
-      body: WebViewWidget(
-        controller: webViewController!,
+      body: Stack(
+        children: [
+          WebViewWidget(
+            controller: webViewController!,
+          ),
+        ],
       ),
     );
   }

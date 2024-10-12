@@ -60,9 +60,10 @@ class SiderBarPageModel extends ReactiveViewModel {
         break;
 
       case 1:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => donate()),
+        launchUrl(
+          Uri.parse(
+            'https://www.theleap.co/creator/ynadtiy19/mini-course/mastering-smart-goals/take?token=Fh_y9qRZXZBHAv9e0QkaGg',
+          ),
         );
         break;
       case 2:

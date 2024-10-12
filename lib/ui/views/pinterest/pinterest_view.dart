@@ -1,14 +1,17 @@
 import 'dart:convert';
 
+import 'package:auto_size_text_plus/auto_size_text_plus.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:high_q_paginated_drop_down/high_q_paginated_drop_down.dart';
 import 'package:http/http.dart' as http;
 import 'package:insta_image_viewer/insta_image_viewer.dart';
+import 'package:primer_progress_bar/primer_progress_bar.dart';
 import 'package:stacked/stacked.dart';
 import 'package:toastification/toastification.dart';
 
+import '../../common/app_colors.dart';
 import '../../utils/hero-icons-outline_icons.dart';
 import 'pinterest_viewmodel.dart';
 
@@ -27,10 +30,11 @@ class PinterestView extends StackedView<PinterestViewModel> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Gallery 画廊',
+          backgroundColor: kcRiceYellowColor,
+          title: Text('Gallery Pinterest',
               style: GoogleFonts.sacramento().copyWith(
-                color: const Color.fromARGB(255, 19, 197, 24),
-                fontWeight: FontWeight.bold,
+                color: teaGreen,
+                fontWeight: FontWeight.w700,
                 fontSize: 25,
               )),
           actions: [
@@ -57,6 +61,7 @@ class PinterestView extends StackedView<PinterestViewModel> {
             crossAxisCount: 2,
             mainAxisSpacing: 4.0,
             crossAxisSpacing: 4.0,
+            childAspectRatio: 0.32,
           ),
           itemCount: viewModel.imageUrls.length,
           itemBuilder: (context, index) {
@@ -65,47 +70,191 @@ class PinterestView extends StackedView<PinterestViewModel> {
             final height = imageId['height'] as int;
             final url = imageId['url'] as String; // 提取 URL
             final originalUrl = imageId['original'] as String;
+            final title = imageId['title'] as String;
+            // final Segment? segment =
+            //     PinterestViewModel.segments[index];
+            final List<Segment>? segmentsForImage = PinterestViewModel
+                .segments[index]; // 对应index下面的值，转换成{[segment]}
 
-            return InstaImageViewer(
-                uonTap: (bool value) async {
-                  print(originalUrl);
-                  await viewModel.saveCachedImageToGallery(url);
-                  toastification.show(
-                    context: context,
-                    type: ToastificationType.success,
-                    style: ToastificationStyle.flatColored,
-                    title: const Text("这张图片已经添加进相册"),
-                    description:
-                        const Text("This picture has been added to the album."),
-                    alignment: Alignment.bottomCenter,
-                    autoCloseDuration: const Duration(milliseconds: 2350),
-                    primaryColor: Colors.green,
-                    icon: const Icon(Hero_icons_outline.check_badge),
-                    borderRadius: BorderRadius.circular(15.0),
-                    applyBlurEffect: true,
-                  );
-                  return true;
+            // 获取屏幕宽度
+            final screenWidth = MediaQuery.of(context).size.width;
+
+            // 计算每个网格项的宽度（屏幕宽度的1/2，因为crossAxisCount = 2）
+            final itemWidth = (screenWidth - 6.0 * 2) / 2; // 减去spacing后除以2
+
+            // 依据 childAspectRatio 计算高度
+            final itemHeight = itemWidth / 0.85;
+
+            return Material(
+              borderRadius: BorderRadius.circular(15.0),
+              child: InkWell(
+                onTap: () {
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) => Scaffold(
+                  //     extendBody: true,
+                  //     body: GestureDetector(
+                  //       onTap: () => Navigator.of(context).pop(),
+                  //       child: FullScreenWidget(
+                  //         disposeLevel: full_screen_image.DisposeLevel.High,
+                  //         child: SafeArea(
+                  //           child: Card(
+                  //             elevation: 4,
+                  //             child: Container(
+                  //               height: 350,
+                  //               padding: const EdgeInsets.all(8.0),
+                  //               child: Column(
+                  //                 children: <Widget>[
+                  //                   Hero(
+                  //                     tag: "customWidget",
+                  //                     child: ClipRRect(
+                  //                       borderRadius: BorderRadius.circular(16),
+                  //                       child: Image.asset(
+                  //                         "images/coca.jpg",
+                  //                         fit: BoxFit.cover,
+                  //                       ),
+                  //                     ),
+                  //                   ),
+                  //                   SizedBox(
+                  //                     height: 16,
+                  //                   ),
+                  //                   Text(
+                  //                     'Lorem text',
+                  //                     style: TextStyle(
+                  //                         color: Colors.black,
+                  //                         fontWeight: FontWeight.bold),
+                  //                   ),
+                  //                   SizedBox(
+                  //                     height: 16,
+                  //                   ),
+                  //                   Expanded(
+                  //                     child: Text(
+                  //                       'uuu',
+                  //                     ),
+                  //                   ),
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ));
                 },
-                ufavoriteIcon: Hero_icons_outline.heart,
-                ucloseIcon: Hero_icons_outline.x_mark,
-                disableSwipeToDismiss: true,
-                backgroundColor: const Color.fromARGB(255, 216, 219, 231),
-                child: AspectRatio(
-                  aspectRatio: width / height,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0), // 圆角
-                    child: CachedNetworkImage(
-                      imageUrl: url,
-                      fit: BoxFit.contain,
-                      placeholder: (context, url) => const Center(
-                          child: CircularProgressIndicator(
-                        color: Colors.green,
-                      )), // 加载中占位符
-                      errorWidget: (context, url, error) =>
-                          const Center(child: Icon(Icons.error)), // 加载失败占位符
-                    ),
+                child: Container(
+                  margin: const EdgeInsets.all(5.0),
+                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        blurRadius: 10.0,
+                        spreadRadius: 1.0,
+                      ),
+                    ],
                   ),
-                ));
+                  // 根据屏幕宽度适配卡片宽度
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      // 标题和描述
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            // 限制Text宽度为屏幕宽度的70%
+                            child: FractionallySizedBox(
+                              widthFactor: 0.7, // 占屏幕宽度的70%
+                              child: GestureDetector(
+                                onTap: () {
+                                  viewModel.translatetitleText(index, title);
+                                },
+                                onDoubleTap: () {
+                                  viewModel.changetoBack(index);
+                                },
+                                child: AutoSizeText(
+                                  title, // 显示原始标题
+                                  style: const TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  maxLines: 4, // 限制文本最多显示3行
+                                  overflow: TextOverflow.ellipsis, // 超出部分显示省略号
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Icon(
+                            Hero_icons_outline.check_badge,
+                            color: Color.fromRGBO(255, 192, 23, 1),
+                          ),
+                        ],
+                      ),
+                      PrimerProgressBar(
+                        segments: segmentsForImage ?? [],
+                      ),
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxHeight: itemHeight, // 设置最大高度
+                        ),
+                        child: AspectRatio(
+                          aspectRatio: width / height,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(5.0), // 圆角
+                            child: InstaImageViewer(
+                              uonTap: (bool value) async {
+                                print(originalUrl);
+                                await viewModel.saveCachedImageToGallery(url);
+                                toastification.show(
+                                  context: context,
+                                  type: ToastificationType.success,
+                                  style: ToastificationStyle.flatColored,
+                                  title: const Text("这张图片已经添加进相册"),
+                                  description: const Text(
+                                      "This picture has been added to the album."),
+                                  alignment: Alignment.bottomCenter,
+                                  autoCloseDuration:
+                                      const Duration(milliseconds: 2350),
+                                  primaryColor: Colors.green,
+                                  icon: const Icon(
+                                      Hero_icons_outline.check_badge),
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  applyBlurEffect: true,
+                                );
+                                return true;
+                              },
+                              ufavoriteIcon: Hero_icons_outline.heart,
+                              ucloseIcon: Hero_icons_outline.x_mark,
+                              disableSwipeToDismiss: true,
+                              backgroundColor:
+                                  const Color.fromARGB(255, 216, 219, 231),
+                              child: CachedNetworkImage(
+                                imageUrl: url,
+                                fit: BoxFit.contain,
+                                placeholder: (context, url) => const Center(
+                                    child: CircularProgressIndicator(
+                                  color: Colors.green,
+                                )), // 加载中占位符
+                                errorWidget: (context, url, error) =>
+                                    const Center(
+                                        child: Icon(Icons.error)), // 加载失败占位符
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 1.5,
+                        color: Colors.brown.shade300,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
           },
         ),
       ),

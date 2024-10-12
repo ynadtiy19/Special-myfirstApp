@@ -262,7 +262,12 @@ class ArticleView extends StackedView<ArticleViewModel> {
                                             child: viewModel
                                                         .avatarImagePathValue ==
                                                     null
-                                                ? Image.asset('images/dev.png')
+                                                ? Image.asset(
+                                                    'images/dev.png',
+                                                    width: 60.0,
+                                                    height: 60.0,
+                                                    fit: BoxFit.cover,
+                                                  )
                                                 : Image.file(
                                                     File(viewModel
                                                         .avatarImagePathValue!),
