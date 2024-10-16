@@ -3,9 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_dotenv/flutter_dotenv.dart' show dotenv;
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-// import 'package:get_storage/get_storage.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:hung/app/app.bottomsheets.dart';
 import 'package:hung/app/app.dialogs.dart';
@@ -49,10 +47,7 @@ void main() async {
   setupDialogUi(); // Assuming this is a function from your first app
   setupBottomSheetUi(); // Assuming this is a function from your first app
   runApp(
-    WillPopScope(
-      onWillPop: () async => false,
-      child: const MyApp(),
-    ),
+    const MyApp(),
   );
   configLoading();
 }

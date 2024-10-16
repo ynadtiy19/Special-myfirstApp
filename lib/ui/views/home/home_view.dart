@@ -5,10 +5,10 @@ import 'package:hung/ui/widgets/common/bottom_navigation_bar/bottom_navigation_b
 import 'package:stacked/stacked.dart';
 
 import '../../utils/hero-icons-outline_icons.dart';
-import '../../webviewsite/shopsite.dart';
 import '../../widgets/common/sider_bar_page/sider_bar_page.dart';
 import '../chatsity/chatsity_view.dart';
 import '../pinterest/pinterest_view.dart';
+import '../profile/profile_view.dart';
 import '../prompt_to_real/prompt_to_real_view.dart';
 import 'home_viewmodel.dart';
 
@@ -138,7 +138,8 @@ class HomeView extends StackedView<HomeViewModel> {
           ),
           const ArticleView(), // 传递 jsonCache
           const PinterestView(),
-          const ShopWebView(),
+          // const ShopWebView(),
+          const ProfileView(),
           // 其他视图...
         ],
       ),
