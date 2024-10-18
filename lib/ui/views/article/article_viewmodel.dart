@@ -197,7 +197,7 @@ class ArticleViewModel extends ReactiveViewModel {
   String? get avatarImagePathValue => ImageRepository.avatarImagePathValue;
 
   static const storylyToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NfaWQiOjEyMTM2LCJhcHBfaWQiOjE3OTQwLCJpbnNfaWQiOjIxMDgyfQ.zf3MeCKnKUaE6m1216mlDpP5BvqF5z6Hhk1UumwcLb4";
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NfaWQiOjc2MCwiYXBwX2lkIjo0MDUsImluc19pZCI6NDA0fQ.1AkqOy_lsiownTBNhVOUKc91uc9fDcAxfQZtpm3nj40";
 
   static const storylyUserId =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NfaWQiOjEyMTM2LCJhcHBfaWQiOjE4NzU4LCJpbnNfaWQiOjIxMDgzfQ.Z1-47m5pTa3NiLNKpVcGJUw1N9ANOfxOS_QsKKIK1AA";
