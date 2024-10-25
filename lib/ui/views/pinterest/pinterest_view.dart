@@ -29,6 +29,7 @@ class PinterestView extends StackedView<PinterestViewModel> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        backgroundColor: const Color.fromARGB(100, 255, 219, 205),
         appBar: AppBar(
           backgroundColor: kcRiceYellowColor,
           title: Text('Gallery Pinterest',
@@ -56,203 +57,25 @@ class PinterestView extends StackedView<PinterestViewModel> {
             ),
           ],
         ),
-        body: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 4.0,
-            crossAxisSpacing: 4.0,
-            childAspectRatio: 0.32,
-          ),
+        body: ListView.builder(
           itemCount: viewModel.imageUrls.length,
           itemBuilder: (context, index) {
             final imageId = viewModel.imageUrls[index];
-            final width = imageId['width'] as int;
-            final height = imageId['height'] as int;
-            final url = imageId['url'] as String; // 提取 URL
-            final originalUrl = imageId['original'] as String;
-            final title = imageId['title'] as String;
-            // final Segment? segment =
-            //     PinterestViewModel.segments[index];
-            final List<Segment>? segmentsForImage = PinterestViewModel
-                .segments[index]; // 对应index下面的值，转换成{[segment]}
+            final deviceWidth = MediaQuery.of(context).size.width;
+            final segmentsForImage = PinterestViewModel.segments[index];
 
-            // 获取屏幕宽度
-            final screenWidth = MediaQuery.of(context).size.width;
-
-            // 计算每个网格项的宽度（屏幕宽度的1/2，因为crossAxisCount = 2）
-            final itemWidth = (screenWidth - 6.0 * 2) / 2; // 减去spacing后除以2
-
-            // 依据 childAspectRatio 计算高度
-            final itemHeight = itemWidth / 0.85;
-
-            return Material(
-              borderRadius: BorderRadius.circular(15.0),
-              child: InkWell(
-                onTap: () {
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => Scaffold(
-                  //     extendBody: true,
-                  //     body: GestureDetector(
-                  //       onTap: () => Navigator.of(context).pop(),
-                  //       child: FullScreenWidget(
-                  //         disposeLevel: full_screen_image.DisposeLevel.High,
-                  //         child: SafeArea(
-                  //           child: Card(
-                  //             elevation: 4,
-                  //             child: Container(
-                  //               height: 350,
-                  //               padding: const EdgeInsets.all(8.0),
-                  //               child: Column(
-                  //                 children: <Widget>[
-                  //                   Hero(
-                  //                     tag: "customWidget",
-                  //                     child: ClipRRect(
-                  //                       borderRadius: BorderRadius.circular(16),
-                  //                       child: Image.asset(
-                  //                         "images/coca.jpg",
-                  //                         fit: BoxFit.cover,
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                   SizedBox(
-                  //                     height: 16,
-                  //                   ),
-                  //                   Text(
-                  //                     'Lorem text',
-                  //                     style: TextStyle(
-                  //                         color: Colors.black,
-                  //                         fontWeight: FontWeight.bold),
-                  //                   ),
-                  //                   SizedBox(
-                  //                     height: 16,
-                  //                   ),
-                  //                   Expanded(
-                  //                     child: Text(
-                  //                       'uuu',
-                  //                     ),
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ));
-                },
-                child: Container(
-                  margin: const EdgeInsets.all(5.0),
-                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        blurRadius: 10.0,
-                        spreadRadius: 1.0,
-                      ),
-                    ],
-                  ),
-                  // 根据屏幕宽度适配卡片宽度
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // 标题和描述
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Flexible(
-                            // 限制Text宽度为屏幕宽度的70%
-                            child: FractionallySizedBox(
-                              widthFactor: 0.7, // 占屏幕宽度的70%
-                              child: GestureDetector(
-                                onTap: () {
-                                  viewModel.translatetitleText(index, title);
-                                },
-                                onDoubleTap: () {
-                                  viewModel.changetoBack(index);
-                                },
-                                child: AutoSizeText(
-                                  title, // 显示原始标题
-                                  style: const TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  maxLines: 4, // 限制文本最多显示3行
-                                  overflow: TextOverflow.ellipsis, // 超出部分显示省略号
-                                ),
-                              ),
-                            ),
-                          ),
-                          const Icon(
-                            Hero_icons_outline.check_badge,
-                            color: Color.fromRGBO(255, 192, 23, 1),
-                          ),
-                        ],
-                      ),
-                      PrimerProgressBar(
-                        segments: segmentsForImage ?? [],
-                      ),
-                      ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight: itemHeight, // 设置最大高度
-                        ),
-                        child: AspectRatio(
-                          aspectRatio: width / height,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(5.0), // 圆角
-                            child: InstaImageViewer(
-                              uonTap: (bool value) async {
-                                print(originalUrl);
-                                await viewModel.saveCachedImageToGallery(url);
-                                toastification.show(
-                                  context: context,
-                                  type: ToastificationType.success,
-                                  style: ToastificationStyle.flatColored,
-                                  title: const Text("这张图片已经添加进相册"),
-                                  description: const Text(
-                                      "This picture has been added to the album."),
-                                  alignment: Alignment.bottomCenter,
-                                  autoCloseDuration:
-                                      const Duration(milliseconds: 2350),
-                                  primaryColor: Colors.green,
-                                  icon: const Icon(
-                                      Hero_icons_outline.check_badge),
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  applyBlurEffect: true,
-                                );
-                                return true;
-                              },
-                              ufavoriteIcon: Hero_icons_outline.heart,
-                              ucloseIcon: Hero_icons_outline.x_mark,
-                              disableSwipeToDismiss: true,
-                              backgroundColor:
-                                  const Color.fromARGB(255, 216, 219, 231),
-                              child: CachedNetworkImage(
-                                imageUrl: url,
-                                fit: BoxFit.contain,
-                                placeholder: (context, url) => const Center(
-                                    child: CircularProgressIndicator(
-                                  color: Colors.green,
-                                )), // 加载中占位符
-                                errorWidget: (context, url, error) =>
-                                    const Center(
-                                        child: Icon(Icons.error)), // 加载失败占位符
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 1.5,
-                        color: Colors.brown.shade300,
-                      ),
-                    ],
-                  ),
-                ),
+            return Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 14.0, vertical: 10.0),
+              child: ImageGridItem(
+                imageId: imageId,
+                index: index,
+                deviceWidth: deviceWidth,
+                segmentsForImage: segmentsForImage,
+                onTitleTap: viewModel.translatetitleText,
+                onTitleDoubleTap: viewModel.changetoBack,
+                onImageSave: viewModel.saveCachedImageToGallery,
+                viewModel: viewModel,
               ),
             );
           },
@@ -486,4 +309,167 @@ class PinterestView extends StackedView<PinterestViewModel> {
     BuildContext context,
   ) =>
       PinterestViewModel();
+}
+
+class ImageGridItem extends StatelessWidget {
+  final Map<String, dynamic> imageId;
+  final int index;
+  final double deviceWidth;
+  final List<Segment>? segmentsForImage;
+  final Function(int, String) onTitleTap;
+  final Function(int) onTitleDoubleTap;
+  final Function(String) onImageSave;
+  final PinterestViewModel viewModel;
+
+  const ImageGridItem({
+    Key? key,
+    required this.imageId,
+    required this.index,
+    required this.deviceWidth,
+    this.segmentsForImage,
+    required this.onTitleTap,
+    required this.onTitleDoubleTap,
+    required this.onImageSave,
+    required this.viewModel,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final String url = imageId['url'] as String;
+    final String originalUrl = imageId['original'] as String;
+    final String title = imageId['title'] as String;
+
+    return Material(
+      color: const Color.fromARGB(255, 221, 233, 233), // 设置Material背景颜色
+      borderRadius: BorderRadius.circular(15.0),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(15.0), // 使 InkWell 的点击效果也有圆角
+        splashColor: const Color.fromARGB(255, 230, 194, 180), // 点击水波纹颜色
+        highlightColor: const Color.fromARGB(255, 196, 208, 208), // 点击高亮颜色
+        focusColor: const Color.fromARGB(255, 200, 165, 206), // 聚焦颜色
+        onLongPress: () {
+          // 点击事件
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              // 标题和描述
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: FractionallySizedBox(
+                      widthFactor: 0.7,
+                      child: GestureDetector(
+                        onTap: () => onTitleTap(index, title),
+                        onDoubleTap: () => onTitleDoubleTap(index),
+                        child: AutoSizeText(
+                          title,
+                          style: const TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLines: 4,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Icon(
+                    Hero_icons_outline.check_badge,
+                    color: Color.fromRGBO(255, 192, 23, 1),
+                  ),
+                ],
+              ),
+              PrimerProgressBar(
+                barStyle: SegmentedBarStyle(
+                  backgroundColor: Colors.grey.shade300,
+                  padding: EdgeInsets.all(4.0),
+                  gap: 1.0,
+                ),
+                segments: segmentsForImage ?? [],
+                showLegend: true,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 24),
+                child: InstaImageViewer(
+                  uonTap: (bool value) async {
+                    print(originalUrl);
+                    await onImageSave(url);
+                    if (value) {
+                      // 只有当 value 为 false 时执行保存逻辑
+                      print(originalUrl);
+                      await onImageSave(url);
+
+                      // 显示成功的 Toast 消息
+                      toastification.show(
+                        context: context,
+                        type: ToastificationType.success,
+                        style: ToastificationStyle.flatColored,
+                        title: const Text("Pin图已经保存到相册中"),
+                        description: const Text("Pin image has been saved."),
+                        alignment: Alignment.bottomCenter,
+                        autoCloseDuration: const Duration(milliseconds: 2350),
+                        primaryColor: Colors.green,
+                        icon: const Icon(Hero_icons_outline.check_badge),
+                        borderRadius: BorderRadius.circular(15.0),
+                        applyBlurEffect: true,
+                      );
+                      // 返回 true 表示保存成功
+                      return true;
+                    } else {
+                      // 如果 value 为 true，表示按钮已填充，则不执行保存逻辑
+                      print('按钮已填充，不执行保存');
+                      return false; // 返回 false
+                    }
+                    return true;
+                  },
+                  ufavoriteIcon: Hero_icons_outline.heart,
+                  ucloseIcon: Hero_icons_outline.x_mark,
+                  disableSwipeToDismiss: true,
+                  backgroundColor: const Color.fromARGB(255, 216, 219, 231),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15.0),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        final double containerWidth = constraints.maxWidth;
+                        final double containerHeight = containerWidth * 0.85;
+
+                        return Container(
+                          height: containerHeight.clamp(containerWidth * 0.6,
+                              containerWidth * 1.2), // 限制高度
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.0),
+                            color: Colors.transparent,
+                          ),
+                          child: CachedNetworkImage(
+                            imageUrl: url,
+                            fit: BoxFit.contain, // 使用 BoxFit.cover 填充图像
+                            placeholder: (context, url) => const Center(
+                              child: CircularProgressIndicator(
+                                  color: Colors.green),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Center(child: Icon(Icons.error)),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8.0),
+              Container(
+                height: 1.5,
+                color: Colors.brown.shade300,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }

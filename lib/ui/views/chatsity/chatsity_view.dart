@@ -7,6 +7,7 @@ import 'package:chat_bubbles/bubbles/bubble_normal_image.dart';
 import 'package:chat_bubbles/message_bars/message_bar.dart';
 import 'package:device_scan_animation/device_scan_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:listview_screenshot/listview_screenshot.dart';
@@ -60,22 +61,23 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
               ? Positioned.fill(
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        top:
-                            8.0), // Adjust padding to avoid overlap with AppBar
+                        top: 8.0,
+                        bottom:
+                            10), // Adjust padding to avoid overlap with AppBar
                     child: ValueListenableBuilder(
                       valueListenable: viewModel.chatBox.listenable(),
                       builder: (context, Box<ChatMessage> box, _) {
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
-                          viewModel
-                              .scrollToBottom(); // Ensure the scroll occurs after each new build
-                        });
+                        // WidgetsBinding.instance.addPostFrameCallback((_) {
+                        //   viewModel
+                        //       .scrollToBottom(); // Ensure the scroll occurs after each new build
+                        // });
                         return WidgetShot(
                           key: viewModel.shotKey,
                           controller: viewModel.scrollController,
                           child: ListView.builder(
                             controller: viewModel
                                 .scrollController, // 绑定 ScrollController
-                            physics: const BouncingScrollPhysics(),
+                            physics: const AlwaysScrollableScrollPhysics(),
                             itemCount: box.length,
                             itemBuilder: (context, index) {
                               final message = box.getAt(index)!;
@@ -89,7 +91,7 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                                 seenStatus = true;
                               }
                               return Column(
-                                mainAxisSize: MainAxisSize.min,
+                                mainAxisSize: MainAxisSize.max,
                                 children: [
                                   if (message.imagePath != null)
                                     BubbleNormalImage(
@@ -350,269 +352,265 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                     ],
                   ),
                 ),
-          viewModel.changeUI
-              ? Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: SafeArea(
-                    child: Material(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          MessageBar(
-                            textController: viewModel.textController,
-                            replyingTo: viewModel.listenText,
-                            ureplyactions: [
-                              const Text(
-                                '截图',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                              InkWell(
-                                child: Icon(Hero_icons_outline.rectangle_stack),
-                                onTap: () {
-                                  viewModel.onScreenshot();
-                                  print('最后截图成功');
-                                },
-                              )
-                            ],
-                            onTapCloseReply: () {
-                              viewModel.ureplychange(); //关闭回复框
-                            },
-                            replying:
-                                viewModel.openreply, //openreply为true时候，显示回复框
-                            messageBarColor: viewModel.animating
-                                ? Color.fromARGB(
-                                    255,
-                                    viewModel.dominantColor.r,
-                                    viewModel.dominantColor.g,
-                                    viewModel.dominantColor.b)
-                                : Colors.white,
-                            messageBarHitText: '消息',
-                            messageBarHintStyle: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.black87,
-                            ),
-                            infliiColor:
-                                const Color.fromARGB(255, 216, 219, 231),
-                            sendButtonIcon: viewModel.chatImage
-                                ? Hero_icons_outline.arrow_small_up //图像对话
-                                : viewModel.chatwithHistory
-                                    ? Hero_icons_outline.rocket_launch //多轮聊天
-                                    : Hero_icons_outline.paper_airplane, //谷歌聊天
-                            sendButtonColor:
-                                Colors.orangeAccent.withOpacity(0.68),
-                            onSend: (text) async {
-                              viewModel.UchangeUI();
-                              FocusScope.of(context).unfocus();
-                              print(viewModel.changeUI);
-                              viewModel.chatImage
-                                  ? await viewModel.chatwithImage(text, context)
-                                  : viewModel.chatwithHistory
-                                      ? await viewModel.UchatwithHistory(text)
-                                      : await viewModel.sendmessage(text);
-                            }, //文本框中信息为_
-                            actions: [
-                              InkWell(
-                                child: AnimatedSwitcher(
-                                  duration: const Duration(milliseconds: 300),
-                                  transitionBuilder: (Widget child,
-                                      Animation<double> animation) {
-                                    return ScaleTransition(
-                                      scale: animation,
-                                      child: AnimatedBuilder(
-                                        animation: animation,
-                                        builder: (context, child) {
-                                          return ColorFiltered(
-                                            colorFilter: ColorFilter.mode(
-                                              Colors.black
-                                                  .withOpacity(animation.value),
-                                              BlendMode.srcIn,
-                                            ),
-                                            child: child,
-                                          );
-                                        },
-                                        child: child,
-                                      ),
-                                    );
-                                  },
-                                  child: viewModel.exchange
-                                      ? const Icon(Hero_icons_outline.swatch,
-                                          key: ValueKey('swatchIcon'),
-                                          color: Colors.black,
-                                          size: 26)
-                                      : const Icon(
-                                          Hero_icons_outline.bars_3,
-                                          key: ValueKey('bars3Icon'),
-                                          color: Colors.black,
-                                          size: 26,
-                                        ),
-                                ),
-                                onTap: () {
-                                  viewModel.uexchange();
-                                },
-                              ),
-                              InkWell(
-                                child: viewModel.chatwithHistory
-                                    ? const Icon(Hero_icons_outline.bell_alert,
-                                        color: Colors.green, size: 24)
-                                    : const Icon(
-                                        Hero_icons_outline.bell,
-                                        color: Colors.black,
-                                        size: 24,
-                                      ),
-                                onTap: () {
-                                  viewModel.changechatwithHistory();
-                                },
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 8, right: 8),
-                                child: InkWell(
-                                  onTap: () {
-                                    viewModel.choosechatmodel(context);
-                                  },
-                                  onDoubleTap: () {
-                                    viewModel.choosepicker(context);
-                                  },
-                                  child: viewModel.pickermodel
-                                      ? Icon(
-                                          Hero_icons_outline.camera,
-                                          color: viewModel.chatImage
-                                              ? Colors.green
-                                              : Colors.black,
-                                          size: 24,
-                                        )
-                                      : Icon(Hero_icons_outline.photo,
-                                          color: viewModel.chatImage
-                                              ? Colors.green
-                                              : Colors.black,
-                                          size: 24),
-                                ),
-                              ),
-                            ],
+        ],
+      ),
+      bottomNavigationBar: viewModel.changeUI
+          ? SafeArea(
+              child: Material(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    KeyboardListener(
+                      // 监听键盘事件的焦点节点
+                      focusNode: FocusNode(),
+                      onKeyEvent: (KeyEvent event) {
+                        // 检查是否是放下按钮（一般是“返回”键）
+                        if (event is KeyDownEvent &&
+                            event.logicalKey == LogicalKeyboardKey.escape) {
+                          // 关闭输入框的焦点
+                          FocusScope.of(context).unfocus();
+                        }
+                      },
+                      child: MessageBar(
+                        textController: viewModel.textController,
+                        replyingTo: viewModel.listenText,
+                        ureplyactions: [
+                          const Text(
+                            '截图',
+                            style: TextStyle(color: Colors.black),
                           ),
-                          AnimatedCrossFade(
-                            firstChild: viewModel.isgoingpickImage
-                                ? Container(
-                                    color: Color.fromRGBO(239, 220, 220, 0.8),
-                                    height: 240,
-                                    width: double.infinity,
-                                    child: ListView.separated(
-                                      padding: const EdgeInsets.all(8),
-                                      physics:
-                                          const AlwaysScrollableScrollPhysics(),
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: viewModel.itemsList.length,
-                                      itemBuilder: (_, index) {
-                                        File? imageFile = File(
-                                            viewModel.itemsList[index].path);
-                                        if (viewModel.itemsList[index].type ==
-                                            "video") {
-                                          imageFile = viewModel.itemsList[index]
-                                                      .thumbnail !=
-                                                  null
-                                              ? File(viewModel
-                                                  .itemsList[index].thumbnail!)
-                                              : null;
-                                        }
-                                        return imageFile != null
-                                            ? InkWell(
-                                                // onTap:
-                                                //     viewModel.itemsList[index].type ==
-                                                //             "video"
-                                                //         ? () {}
-                                                //         : null,
-                                                onTap: () {
-                                                  // 在这里处理图片点击事件
-                                                  viewModel
-                                                      .uimagePath(imageFile);
-                                                  print(imageFile);
-                                                },
-                                                child: Image.file(imageFile))
-                                            : Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.grey[300],
-                                                  borderRadius:
-                                                      BorderRadius.circular(4),
-                                                ),
-                                                alignment: Alignment.center,
-                                                width: 320,
-                                                height: double.infinity,
-                                                child:
-                                                    const Text('No thumbnail'));
-                                      },
-                                      separatorBuilder:
-                                          (BuildContext context, int index) =>
-                                              const SizedBox(width: 8.0),
-                                    ),
-                                  )
-                                : Container(
-                                    color: const Color.fromARGB(
-                                        255, 216, 219, 231),
-                                    height: 80,
-                                    child: GridView.builder(
-                                      physics: const BouncingScrollPhysics(),
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount:
-                                          viewModel.imagePathsList.length,
-                                      gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 1, // 每行显示两张图片
-                                        crossAxisSpacing: 4.0, // 设置图片之间的横向间距
-                                        mainAxisSpacing: 4.0,
-                                      ), // 设置图片之间的纵向间距),
-                                      itemBuilder: (context, index) {
-                                        final imagePath =
-                                            viewModel.imagePathsList[index];
-                                        return InkWell(
-                                          onTap: () {
-                                            // 提取图像路径并更新 _image
-                                            File imageFile = File(imagePath);
-                                            print(imagePath);
-                                            viewModel.uimagePath(imageFile);
-                                          },
-                                          child: Stack(
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color:
-                                                          Colors.greenAccent),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  child: Image.file(
-                                                    File(
-                                                        imagePath), // 从文件路径中加载图像
-                                                    fit: BoxFit.contain,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    ),
+                          InkWell(
+                            child: Icon(Hero_icons_outline.rectangle_stack),
+                            onTap: () {
+                              viewModel.onScreenshot();
+                              print('最后截图成功');
+                            },
+                          )
+                        ],
+                        onTapCloseReply: () {
+                          viewModel.ureplychange(); //关闭回复框
+                        },
+                        replying: viewModel.openreply, //openreply为true时候，显示回复框
+                        messageBarColor: viewModel.animating
+                            ? Color.fromARGB(
+                                255,
+                                viewModel.dominantColor.r,
+                                viewModel.dominantColor.g,
+                                viewModel.dominantColor.b)
+                            : Colors.white,
+                        messageBarHitText: '消息',
+                        messageBarHintStyle: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
+                        infliiColor: const Color.fromARGB(255, 216, 219, 231),
+                        sendButtonIcon: viewModel.chatImage
+                            ? Hero_icons_outline.arrow_small_up //图像对话
+                            : viewModel.chatwithHistory
+                                ? Hero_icons_outline.rocket_launch //多轮聊天
+                                : Hero_icons_outline.paper_airplane, //谷歌聊天
+                        sendButtonColor: Colors.orangeAccent.withOpacity(0.68),
+                        onSend: (text) async {
+                          viewModel.UchangeUI();
+                          FocusScope.of(context).unfocus();
+                          print(viewModel.changeUI);
+                          viewModel.chatImage
+                              ? await viewModel.chatwithImage(text, context)
+                              : viewModel.chatwithHistory
+                                  ? await viewModel.UchatwithHistory(text)
+                                  : await viewModel.sendmessage(text);
+                        }, //文本框中信息为_
+                        actions: [
+                          InkWell(
+                            child: AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 300),
+                              transitionBuilder:
+                                  (Widget child, Animation<double> animation) {
+                                return ScaleTransition(
+                                  scale: animation,
+                                  child: AnimatedBuilder(
+                                    animation: animation,
+                                    builder: (context, child) {
+                                      return ColorFiltered(
+                                        colorFilter: ColorFilter.mode(
+                                          Colors.black
+                                              .withOpacity(animation.value),
+                                          BlendMode.srcIn,
+                                        ),
+                                        child: child,
+                                      );
+                                    },
+                                    child: child,
                                   ),
-                            secondChild: const SizedBox(),
-                            crossFadeState: viewModel.exchange
-                                ? CrossFadeState.showFirst
-                                : CrossFadeState.showSecond,
-                            duration: const Duration(milliseconds: 350),
+                                );
+                              },
+                              child: viewModel.exchange
+                                  ? const Icon(Hero_icons_outline.swatch,
+                                      key: ValueKey('swatchIcon'),
+                                      color: Colors.black,
+                                      size: 26)
+                                  : const Icon(
+                                      Hero_icons_outline.bars_3,
+                                      key: ValueKey('bars3Icon'),
+                                      color: Colors.black,
+                                      size: 26,
+                                    ),
+                            ),
+                            onTap: () {
+                              viewModel.uexchange();
+                            },
+                          ),
+                          InkWell(
+                            child: viewModel.chatwithHistory
+                                ? const Icon(Hero_icons_outline.bell_alert,
+                                    color: Colors.green, size: 24)
+                                : const Icon(
+                                    Hero_icons_outline.bell,
+                                    color: Colors.black,
+                                    size: 24,
+                                  ),
+                            onTap: () {
+                              viewModel.changechatwithHistory();
+                            },
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8, right: 8),
+                            child: InkWell(
+                              onTap: () {
+                                viewModel.choosechatmodel(context);
+                              },
+                              onDoubleTap: () {
+                                viewModel.choosepicker(context);
+                              },
+                              child: viewModel.pickermodel
+                                  ? Icon(
+                                      Hero_icons_outline.camera,
+                                      color: viewModel.chatImage
+                                          ? Colors.green
+                                          : Colors.black,
+                                      size: 24,
+                                    )
+                                  : Icon(Hero_icons_outline.photo,
+                                      color: viewModel.chatImage
+                                          ? Colors.green
+                                          : Colors.black,
+                                      size: 24),
+                            ),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                )
-              : const SizedBox.shrink(),
-        ],
-      ),
+                    AnimatedCrossFade(
+                      firstChild: viewModel.isgoingpickImage
+                          ? Container(
+                              color: Color.fromRGBO(239, 220, 220, 0.8),
+                              height: 240,
+                              width: double.infinity,
+                              child: ListView.separated(
+                                padding: const EdgeInsets.all(8),
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: viewModel.itemsList.length,
+                                itemBuilder: (_, index) {
+                                  File? imageFile =
+                                      File(viewModel.itemsList[index].path);
+                                  if (viewModel.itemsList[index].type ==
+                                      "video") {
+                                    imageFile =
+                                        viewModel.itemsList[index].thumbnail !=
+                                                null
+                                            ? File(viewModel
+                                                .itemsList[index].thumbnail!)
+                                            : null;
+                                  }
+                                  return imageFile != null
+                                      ? InkWell(
+                                          // onTap:
+                                          //     viewModel.itemsList[index].type ==
+                                          //             "video"
+                                          //         ? () {}
+                                          //         : null,
+                                          onTap: () {
+                                            // 在这里处理图片点击事件
+                                            viewModel.uimagePath(imageFile);
+                                            print(imageFile);
+                                          },
+                                          child: Image.file(imageFile))
+                                      : Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[300],
+                                            borderRadius:
+                                                BorderRadius.circular(4),
+                                          ),
+                                          alignment: Alignment.center,
+                                          width: 320,
+                                          height: double.infinity,
+                                          child: const Text('No thumbnail'));
+                                },
+                                separatorBuilder:
+                                    (BuildContext context, int index) =>
+                                        const SizedBox(width: 8.0),
+                              ),
+                            )
+                          : Container(
+                              color: const Color.fromARGB(255, 216, 219, 231),
+                              height: 80,
+                              child: GridView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: viewModel.imagePathsList.length,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 1, // 每行显示两张图片
+                                  crossAxisSpacing: 4.0, // 设置图片之间的横向间距
+                                  mainAxisSpacing: 4.0,
+                                ), // 设置图片之间的纵向间距),
+                                itemBuilder: (context, index) {
+                                  final imagePath =
+                                      viewModel.imagePathsList[index];
+                                  return InkWell(
+                                    onTap: () {
+                                      // 提取图像路径并更新 _image
+                                      File imageFile = File(imagePath);
+                                      print(imagePath);
+                                      viewModel.uimagePath(imageFile);
+                                    },
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.greenAccent),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: Image.file(
+                                              File(imagePath), // 从文件路径中加载图像
+                                              fit: BoxFit.contain,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                      secondChild: const SizedBox(),
+                      crossFadeState: viewModel.exchange
+                          ? CrossFadeState.showFirst
+                          : CrossFadeState.showSecond,
+                      duration: const Duration(milliseconds: 350),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          : const SizedBox.shrink(),
     );
   }
 

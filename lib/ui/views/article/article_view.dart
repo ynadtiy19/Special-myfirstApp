@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hung/ui/animationartical/models/models.dart';
 import 'package:hung/ui/animationartical/passport.dart';
 import 'package:hung/ui/animationartical/passport_dialog.dart';
@@ -244,38 +245,32 @@ class ArticleView extends StackedView<ArticleViewModel> {
                                 ),
                                 Row(
                                   children: [
-                                    ClipRRect(
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(20.0),
-                                        bottomLeft: Radius.circular(20.0),
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.rectangle,
                                       ),
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.rectangle,
-                                        ),
-                                        child: ClipRRect(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                            20.0), // 保留这一个
+                                        child: Material(
                                           borderRadius: BorderRadius.circular(
-                                              20.0), // 保留这一个
-                                          child: Material(
-                                            borderRadius: BorderRadius.circular(
-                                                20.0), //也可考虑去掉
-                                            child: viewModel
-                                                        .avatarImagePathValue ==
-                                                    null
-                                                ? Image.asset(
-                                                    'images/dev.png',
-                                                    width: 60.0,
-                                                    height: 60.0,
-                                                    fit: BoxFit.cover,
-                                                  )
-                                                : Image.file(
-                                                    File(viewModel
-                                                        .avatarImagePathValue!),
-                                                    width: 60.0,
-                                                    height: 60.0,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                          ),
+                                              20.0), //也可考虑去掉
+                                          child:
+                                              viewModel.avatarImagePathValue ==
+                                                      null
+                                                  ? Image.asset(
+                                                      'images/dev.png',
+                                                      width: 60.0,
+                                                      height: 60.0,
+                                                      fit: BoxFit.cover,
+                                                    )
+                                                  : Image.file(
+                                                      File(viewModel
+                                                          .avatarImagePathValue!),
+                                                      width: 60.0,
+                                                      height: 60.0,
+                                                      fit: BoxFit.cover,
+                                                    ),
                                         ),
                                       ),
                                     ),
@@ -285,44 +280,58 @@ class ArticleView extends StackedView<ArticleViewModel> {
                               ],
                             ),
                             const SizedBox(height: 20),
-                            TextField(
-                              controller: viewModel.controller,
-                              decoration: InputDecoration(
-                                hintText: '搜索文章',
-                                prefixIcon: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: IconButton(
-                                    icon: const Icon(
-                                        color: Colors.lightGreen,
-                                        Hero_icons_outline.magnifying_glass),
-                                    onPressed: () {
-                                      FocusManager.instance.primaryFocus
-                                          ?.unfocus();
-                                      String query = viewModel.controller.text;
-                                      if (query.isNotEmpty) {
-                                        FocusScope.of(context).unfocus();
-                                        viewModel
-                                            .fetchData(query)
-                                            .then((uuudata) {
-                                          viewModel.changeColor();
-                                        }).catchError((error) {
-                                          print('Error fetching data: $error');
-                                        });
-                                      }
-                                    },
+                            KeyboardListener(
+                              focusNode: FocusNode(),
+                              onKeyEvent: (KeyEvent event) {
+                                // 检查是否是放下按钮（一般是“返回”键）
+                                if (event is KeyDownEvent &&
+                                    event.logicalKey ==
+                                        LogicalKeyboardKey.escape) {
+                                  // 关闭输入框的焦点
+                                  FocusScope.of(context).unfocus();
+                                }
+                              },
+                              child: TextField(
+                                controller: viewModel.controller,
+                                decoration: InputDecoration(
+                                  hintText: '搜索文章',
+                                  prefixIcon: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: IconButton(
+                                      icon: const Icon(
+                                          color: Colors.lightGreen,
+                                          Hero_icons_outline.magnifying_glass),
+                                      onPressed: () {
+                                        FocusManager.instance.primaryFocus
+                                            ?.unfocus();
+                                        String query =
+                                            viewModel.controller.text;
+                                        if (query.isNotEmpty) {
+                                          FocusScope.of(context).unfocus();
+                                          viewModel
+                                              .fetchData(query)
+                                              .then((uuudata) {
+                                            viewModel.changeColor();
+                                          }).catchError((error) {
+                                            print(
+                                                'Error fetching data: $error');
+                                          });
+                                        }
+                                      },
+                                    ),
                                   ),
-                                ),
-                                filled: true,
-                                fillColor: Colors.grey[200],
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                  borderSide: BorderSide.none,
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                  borderSide: const BorderSide(
-                                    color: Colors.lightGreen, // 聚焦时的粉橙色边框
-                                    width: 2.0,
+                                  filled: true,
+                                  fillColor: Colors.grey[200],
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                    borderSide: const BorderSide(
+                                      color: Colors.lightGreen, // 聚焦时的粉橙色边框
+                                      width: 2.0,
+                                    ),
                                   ),
                                 ),
                               ),

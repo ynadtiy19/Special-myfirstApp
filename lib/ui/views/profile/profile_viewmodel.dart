@@ -1,9 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:easy_popover/easy_popover.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:json_cache/json_cache.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 
@@ -32,6 +36,36 @@ class ProfileViewModel extends BaseViewModel {
   void dispose() {
     _popoverController.dispose();
     super.dispose();
+  }
+
+  Future<void> saveCachedImageToGallery(String url) async {
+    try {
+      // 从缓存中获取图片文件
+      File? cachedImageFile = await DefaultCacheManager().getSingleFile(url);
+      if (!cachedImageFile.existsSync()) {
+        print('No cached image found for URL: $url');
+        return;
+      }
+
+      // 请求存储权限
+      var status = await Permission.storage.request();
+      if (status.isGranted) {
+        // 读取缓存图片的字节数据
+        final bytes = await cachedImageFile.readAsBytes();
+
+        // 保存图片到相册
+        await ImageGallerySaverPlus.saveImage(
+          bytes,
+          quality: 100,
+          name: '云雨之洲✨✨✨_${DateTime.now().millisecondsSinceEpoch}',
+        );
+        print('Image saved to gallery from cache');
+      } else {
+        print("Permission Denied");
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
   // 异步初始化方法

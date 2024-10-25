@@ -50,54 +50,66 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                   ),
                   const SizedBox(width: 10),
                   Expanded(
-                    child: TextFormField(
-                      maxLength: 1000,
-                      controller: viewModel.query,
-                      maxLines: 2,
-                      keyboardType: TextInputType.multiline,
-                      textInputAction: TextInputAction.send,
-                      onFieldSubmitted: (value) async {
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        await viewModel.generateImagesFromMultipleSources(
-                            context, viewModel.query.text);
+                    child: KeyboardListener(
+                      focusNode: FocusNode(),
+                      onKeyEvent: (KeyEvent event) {
+                        // 检查是否是放下按钮（一般是“返回”键）
+                        if (event is KeyDownEvent &&
+                            event.logicalKey == LogicalKeyboardKey.escape) {
+                          // 关闭输入框的焦点
+                          FocusScope.of(context).unfocus();
+                        }
                       },
-                      decoration: InputDecoration(
-                        isDense: true,
-                        filled: true,
-                        fillColor: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withAlpha(100),
-                        hintText: '输入提示文本...',
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(
-                            20,
+                      child: TextFormField(
+                        maxLength: 1000,
+                        controller: viewModel.query,
+                        maxLines: 2,
+                        keyboardType: TextInputType.multiline,
+                        textInputAction: TextInputAction.send,
+                        onFieldSubmitted: (value) async {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          await viewModel.generateImagesFromMultipleSources(
+                              context, viewModel.query.text);
+                        },
+                        decoration: InputDecoration(
+                          isDense: true,
+                          filled: true,
+                          fillColor: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withAlpha(100),
+                          hintText: '输入提示文本...',
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              20,
+                            ),
+                            borderSide: const BorderSide(color: Colors.grey),
                           ),
-                          borderSide: const BorderSide(color: Colors.grey),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: const BorderSide(color: Colors.green),
-                        ),
-                        suffixIcon: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: IconButton.outlined(
-                            tooltip: '生成图像',
-                            onPressed: viewModel.isGenerating
-                                ? null
-                                : () async {
-                                    FocusScope.of(context).unfocus();
-                                    print(PromptToRealViewModel.isloading);
-                                    // viewModel.isloadingT();
-                                    print(PromptToRealViewModel.isloading);
-                                    await viewModel
-                                        .generateImagesFromMultipleSources(
-                                            context, viewModel.query.text);
-                                    // viewModel.isloadingF(); // 重置加载状态
-                                  },
-                            iconSize: 27.0,
-                            color: Colors.black87,
-                            icon: const Icon(Hero_icons_outline.rocket_launch),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: const BorderSide(color: Colors.green),
+                          ),
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: IconButton.outlined(
+                              tooltip: '生成图像',
+                              onPressed: viewModel.isGenerating
+                                  ? null
+                                  : () async {
+                                      FocusScope.of(context).unfocus();
+                                      print(PromptToRealViewModel.isloading);
+                                      // viewModel.isloadingT();
+                                      print(PromptToRealViewModel.isloading);
+                                      await viewModel
+                                          .generateImagesFromMultipleSources(
+                                              context, viewModel.query.text);
+                                      // viewModel.isloadingF(); // 重置加载状态
+                                    },
+                              iconSize: 27.0,
+                              color: Colors.black87,
+                              icon:
+                                  const Icon(Hero_icons_outline.rocket_launch),
+                            ),
                           ),
                         ),
                       ),

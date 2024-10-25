@@ -288,11 +288,15 @@ class ChatsityViewModel extends BaseViewModel {
 
   void scrollToBottom() {
     if (_scrollController.hasClients) {
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
+      final position = _scrollController.position;
+      if (position.pixels < position.maxScrollExtent - 50) {
+        // 添加阈值
+        _scrollController.animateTo(
+          position.maxScrollExtent,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
     }
   }
 
@@ -745,10 +749,17 @@ class ChatsityViewModel extends BaseViewModel {
   // 读取背景图片
   Future<void> loadbackgroundImage() async {
     if (_imageBackground != null) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? storedName = prefs.getString('backgroundImage'); // 获取存储的数据
-      _imageBackground = File(storedName!);
+      print('现在有背景图片'); //如果通过，则表示已经有背景图片
+      return;
     }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? storedName = prefs.getString('backgroundImage'); // 获取存储的数据
+    if (storedName != null) {
+      _imageBackground = File(storedName);
+    } else {
+      print('没有找到存储的背景图片');
+    }
+
     notifyListeners();
   }
 

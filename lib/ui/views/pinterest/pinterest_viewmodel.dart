@@ -71,12 +71,21 @@ class PinterestViewModel extends BaseViewModel with WidgetsBindingObserver {
         List<Segment> currentSegments = segments[urlIndex]!;
 
         // 只添加新提取的颜色，保持原有的颜色不变
+        String getHexColor(Color color) {
+          return '#${color.value.toRadixString(16).substring(2).toUpperCase()}';
+        }
+
         for (CgColor color in colorList) {
           if (currentSegments.length < 10) {
+            Color segmentColor = Color.fromARGB(255, color.r, color.g, color.b);
+
+            // 获取十六进制颜色代码
+            String hexColor = getHexColor(segmentColor);
+
             currentSegments.add(Segment(
               value: 10, // 根据需要调整这个值
-              color: Color.fromARGB(255, color.r, color.g, color.b),
-              label: Text("Color ${currentSegments.length + 1}"), // 添加标签
+              color: segmentColor,
+              label: Text("$hexColor"), // 将颜色代码添加到标签中
             ));
           } else {
             break; // 如果已经有10个颜色，则停止添加
@@ -314,7 +323,7 @@ class PinterestViewModel extends BaseViewModel with WidgetsBindingObserver {
 
   Future<void> cacheImages(List<dynamic> imageUrls) async {
     for (String url in imageUrls) {
-      await DefaultCacheManager().getSingleFile(url);
+      await DefaultCacheManager().getSingleFile(url); //获取所有缓存url
     }
   }
 
@@ -358,10 +367,11 @@ class PinterestViewModel extends BaseViewModel with WidgetsBindingObserver {
 
   Future<void> clearBeautify14Images() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
+    segments.clear();
     // 清除 'beautify14Images' 的所有数据
     await prefs.remove('beautify14Images');
     uimageUrls.clear();
+    notifyListeners();
 
     print('已清除 beautify14Images 数据');
   }
