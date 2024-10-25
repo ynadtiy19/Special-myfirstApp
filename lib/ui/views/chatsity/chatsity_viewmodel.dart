@@ -59,7 +59,20 @@ class ChatsityViewModel extends BaseViewModel {
     getAllImagePaths();
     loadData();
     loadbackgroundImage();
+    if (isfetchingUpdateVersion) {
+      FetchUpdatedata();
+    } else {
+      print('不用更新版本');
+    }
     _textController.addListener(initState);
+  }
+
+  static bool _isfetchingUpdateVersion = true;
+  bool get isfetchingUpdateVersion => _isfetchingUpdateVersion;
+  Future<void> FetchUpdatedata() async {
+    await Future.delayed(Duration(seconds: 5));
+    _isfetchingUpdateVersion = false;
+    notifyListeners();
   }
 
   Future<void> routeTotextPage(String text, BuildContext context) async {
@@ -156,6 +169,12 @@ class ChatsityViewModel extends BaseViewModel {
     await _chatBox.clear();
   }
 
+  Future<void> clearSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear(); // 清除所有缓存数据
+    print('所有缓存数据已被清除');
+  }
+
   Map<String, dynamic> jsonMessages = {
     "history": [
       {"role": "user", "content": "地球有多大"},
@@ -186,6 +205,11 @@ class ChatsityViewModel extends BaseViewModel {
 
   static File? _imageBackground;
   File? get imageBackground => _imageBackground;
+
+  void clearImageBackground() async {
+    _imageBackground = null;
+    notifyListeners();
+  }
 
   final picker = ImagePicker();
   final _picker = HLImagePickerAndroid();
@@ -241,7 +265,9 @@ class ChatsityViewModel extends BaseViewModel {
   bool get exchange => _exchange;
 
   void UchangeUI() {
-    _changeUI = true;
+    if (_changeUI == false) {
+      _changeUI = true;
+    }
     notifyListeners();
   }
 
@@ -472,8 +498,7 @@ class ChatsityViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void initState() {
-    // 监听 _textController 的文本变化
+  Future<void> initState() async {
     _listenText = _textController.text;
     // 监听滚动事件
     // scrollController.addListener(() {
@@ -719,9 +744,11 @@ class ChatsityViewModel extends BaseViewModel {
 
   // 读取背景图片
   Future<void> loadbackgroundImage() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? storedName = prefs.getString('backgroundImage'); // 获取存储的数据
-    _imageBackground = File(storedName!);
+    if (_imageBackground != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? storedName = prefs.getString('backgroundImage'); // 获取存储的数据
+      _imageBackground = File(storedName!);
+    }
     notifyListeners();
   }
 

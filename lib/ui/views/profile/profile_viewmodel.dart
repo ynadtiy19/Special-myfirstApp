@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:easy_popover/easy_popover.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:json_cache/json_cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,12 +11,27 @@ class ProfileViewModel extends BaseViewModel {
   final jsonCacheMem = JsonCacheMem();
   JsonCacheMem get jsonCacheKey => jsonCacheMem;
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey;
+
+  final GlobalKey _key = GlobalKey();
+  GlobalKey get key => _key;
+
+  final _popoverController = PopoverController();
+  get popoverController => _popoverController;
+
   static bool hasProfile = false;
 
   @override
   ProfileViewModel() {
     initialize();
     print('初始化ProfileViewModel');
+  }
+
+  @override
+  void dispose() {
+    _popoverController.dispose();
+    super.dispose();
   }
 
   // 异步初始化方法
@@ -82,6 +99,7 @@ class ProfileViewModel extends BaseViewModel {
       body: jsonEncode(payload),
     );
 
+    print(response.body);
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       final nfts = data['data']['account']['ERC721tokens']['nodes'] as List;

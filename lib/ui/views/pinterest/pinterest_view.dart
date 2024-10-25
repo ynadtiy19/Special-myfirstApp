@@ -347,12 +347,12 @@ class PinterestView extends StackedView<PinterestViewModel> {
   void _ushowSearchBar(BuildContext context, PinterestViewModel viewModel) {
     showDialog(
       context: context,
-      builder: (BuildContext dialogContext) {
+      builder: (BuildContext context) {
         return GestureDetector(
           behavior: HitTestBehavior.opaque, // 允许空白区域的点击
           onTap: () {
-            FocusScope.of(dialogContext).unfocus(); // 收起键盘
-            Navigator.of(dialogContext).pop(); // 点击空白区域关闭对话框
+            FocusScope.of(context).unfocus(); // 收起键盘
+            Navigator.of(context).pop(); // 点击空白区域关闭对话框
           },
           child: Align(
             alignment: Alignment.topCenter, // 对齐到顶部
@@ -442,14 +442,14 @@ class PinterestView extends StackedView<PinterestViewModel> {
                           ),
                           searchHintText: 'Pinterest关键词',
                           trailingClearIcon: const Icon(
-                            Icons.delete,
+                            Hero_icons_outline.trash,
                             color: Colors.green,
                           ),
                           searchDelayDuration: const Duration(seconds: 4),
                           leadingIcon: IconButton(
                             onPressed: () {
-                              FocusScope.of(dialogContext).unfocus(); // 收起键盘
-                              Navigator.of(dialogContext).pop(); // 关闭弹窗
+                              FocusScope.of(context).unfocus(); // 收起键盘
+                              Navigator.of(context).pop(); // 关闭弹窗
                               viewModel.fetchAndParseData(
                                   viewModel.uquery); // 执行搜索逻辑
                               print('搜索');

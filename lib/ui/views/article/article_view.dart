@@ -300,6 +300,7 @@ class ArticleView extends StackedView<ArticleViewModel> {
                                           ?.unfocus();
                                       String query = viewModel.controller.text;
                                       if (query.isNotEmpty) {
+                                        FocusScope.of(context).unfocus();
                                         viewModel
                                             .fetchData(query)
                                             .then((uuudata) {

@@ -86,9 +86,7 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                             onPressed: viewModel.isGenerating
                                 ? null
                                 : () async {
-                                    // 更新状态，显示进度条
-                                    FocusManager.instance.primaryFocus
-                                        ?.unfocus();
+                                    FocusScope.of(context).unfocus();
                                     print(PromptToRealViewModel.isloading);
                                     // viewModel.isloadingT();
                                     print(PromptToRealViewModel.isloading);
