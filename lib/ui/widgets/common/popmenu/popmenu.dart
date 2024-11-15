@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
+
+import '../../../utils/hero-icons-outline_icons.dart';
 
 class MyPopupMenu extends StatefulWidget {
   final Widget child;
@@ -160,7 +161,7 @@ class _PopupMenuContentState extends State<PopupMenuContent>
                                       borderRadius: BorderRadius.circular(24),
                                     ),
                                     child: Icon(
-                                      LineIcons.syncIcon,
+                                      Hero_icons_outline.x_mark,
                                       color: Colors.red,
                                     ),
                                   ),
@@ -193,7 +194,7 @@ class _PopupMenuContentState extends State<PopupMenuContent>
                                       borderRadius: BorderRadius.circular(24),
                                     ),
                                     child: Icon(
-                                      LineIcons.editAlt,
+                                      Hero_icons_outline.x_mark,
                                       color: Color(0xFF3840A2),
                                     ),
                                   ),
@@ -225,7 +226,7 @@ class _PopupMenuContentState extends State<PopupMenuContent>
                                       borderRadius: BorderRadius.circular(24),
                                     ),
                                     child: Icon(
-                                      LineIcons.share,
+                                      Hero_icons_outline.x_mark,
                                       color: Color.fromARGB(255, 4, 5, 6),
                                     ),
                                   ),
@@ -262,7 +263,7 @@ class _PopupMenuContentState extends State<PopupMenuContent>
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Icon(
-                                        LineIcons.envelope,
+                                        Hero_icons_outline.x_mark,
                                         color: Color(0xff1e93ad),
                                         size: 44,
                                       ),

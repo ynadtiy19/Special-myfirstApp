@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:insta_image_viewer/insta_image_viewer.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:stacked/stacked.dart';
 import 'package:toastification/toastification.dart';
 
@@ -63,7 +62,7 @@ class TravelcardView extends StackedView<TravelcardViewModel> {
                         alignment: Alignment.bottomCenter,
                         autoCloseDuration: const Duration(milliseconds: 1600),
                         primaryColor: Colors.green,
-                        icon: const Icon(LineIcons.checkCircleAlt),
+                        icon: const Icon(Hero_icons_outline.check_circle),
                         borderRadius: BorderRadius.circular(15.0),
                         applyBlurEffect: true,
                       );
@@ -82,7 +81,7 @@ class TravelcardView extends StackedView<TravelcardViewModel> {
                         alignment: Alignment.bottomCenter,
                         autoCloseDuration: const Duration(milliseconds: 1600),
                         primaryColor: Colors.yellowAccent,
-                        icon: const Icon(LineIcons.pagelines),
+                        icon: const Icon(Hero_icons_outline.trash),
                         borderRadius: BorderRadius.circular(15.0),
                         applyBlurEffect: true,
                       );

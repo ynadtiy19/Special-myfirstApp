@@ -9,7 +9,6 @@ import 'package:device_scan_animation/device_scan_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:listview_screenshot/listview_screenshot.dart';
 import 'package:pretty_animated_buttons/widgets/pretty_shadow_button.dart';
 import 'package:stacked/stacked.dart';
@@ -49,7 +48,7 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
             child: viewModel.imageBackground == null
                 ? CachedNetworkImage(
                     imageUrl:
-                        'https://utfs.io/f/e9rePmZszdcggeM8MQCWNvzYhT0uG6ItRQFsEZryc9UPmkAj', // 替换为你的图片URL
+                        'https://utfs.io/f/e9rePmZszdcgCYSAVwB68En15KMm7CcRVx0pUrehv3OJqtXi', // 替换为你的图片URL
                     fit: BoxFit.cover, // 确保图片覆盖整个背景
                   )
                 : Image.file(
@@ -60,84 +59,19 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
           viewModel.changeUI
               ? Positioned.fill(
                   child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 8.0,
-                        bottom:
-                            10), // Adjust padding to avoid overlap with AppBar
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 10),
                     child: ValueListenableBuilder(
                       valueListenable: viewModel.chatBox.listenable(),
                       builder: (context, Box<ChatMessage> box, _) {
-                        // WidgetsBinding.instance.addPostFrameCallback((_) {
-                        //   viewModel
-                        //       .scrollToBottom(); // Ensure the scroll occurs after each new build
-                        // });
-                        return WidgetShot(
-                          key: viewModel.shotKey,
-                          controller: viewModel.scrollController,
-                          child: ListView.builder(
-                            controller: viewModel
-                                .scrollController, // 绑定 ScrollController
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            itemCount: box.length,
-                            itemBuilder: (context, index) {
-                              final message = box.getAt(index)!;
-                              bool seenStatus;
-                              if (index >= box.length - 1 &&
-                                  !viewModel.isfetching) {
-                                // 最新的一条消息使用 isfetching
-                                seenStatus = viewModel.isfetching;
-                              } else {
-                                // 之前的消息都设置为 seen: true
-                                seenStatus = true;
-                              }
-                              return Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  if (message.imagePath != null)
-                                    BubbleNormalImage(
-                                      id: 'id',
-                                      image: Image.file(File(
-                                          message.imagePath!)), // 使用存储的图像路径加载图像
-                                      color: Colors.purpleAccent,
-                                      // tail: true,
-                                      // sent: true,
-                                      seen: seenStatus,
-                                      delivered: true,
-                                    ),
-                                  Column(
-                                    children: [
-                                      Material(
-                                        color: Colors.transparent,
-                                        child: InkWell(
-                                          onDoubleTap: () async {
-                                            viewModel.routeTotextPage(
-                                                message.text, context);
-                                          },
-                                          child: BubbleSpecial(
-                                            isAnimated: seenStatus,
-                                            seen: seenStatus,
-                                            text: message.text,
-                                            isSender: message.isSender,
-                                            color: message.isSender
-                                                ? const Color.fromRGBO(
-                                                    225, 190, 231, 1)
-                                                : const Color.fromRGBO(
-                                                    255, 219, 205, 1),
-                                            textStyle: TextStyle(
-                                              fontSize: 16,
-                                              color: message.isSender
-                                                  ? Colors.purple
-                                                  : Colors.black,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
+                        return ChatListView(
+                          chatsityViewModel: viewModel,
+                          chatBox: box,
+                          scrollController: viewModel.scrollController,
+                          isFetching: viewModel.isfetching,
+                          isNeedTypingIndicator:
+                              viewModel.uuuisNeedTypingIndicator,
+                          shotKey: viewModel.shotKey,
+                          routeToTextPage: viewModel.routeTotextPage,
                         );
                       },
                     ),
@@ -256,8 +190,9 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                                       autoCloseDuration:
                                           const Duration(milliseconds: 1600),
                                       primaryColor: Colors.green,
-                                      icon:
-                                          const Icon(LineIcons.checkCircleAlt),
+                                      icon: const Icon(
+                                        Hero_icons_outline.check_badge,
+                                      ),
                                       borderRadius: BorderRadius.circular(15.0),
                                       applyBlurEffect: true,
                                     );
@@ -283,12 +218,12 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                       // 使用自定义的 CustomGridColumn 部件
                       CustomGridColumn(
                         imageUrls: [
-                          'https://utfs.io/f/e9rePmZszdcgwy6ZUXxljTK0wBMhorbsm3vy79YS84EqQP6x',
-                          'https://utfs.io/f/e9rePmZszdcgwy6ZUXxljTK0wBMhorbsm3vy79YS84EqQP6x',
-                          'https://utfs.io/f/e9rePmZszdcgwy6ZUXxljTK0wBMhorbsm3vy79YS84EqQP6x',
-                          'https://utfs.io/f/e9rePmZszdcgwy6ZUXxljTK0wBMhorbsm3vy79YS84EqQP6x',
-                          'https://utfs.io/f/e9rePmZszdcgwy6ZUXxljTK0wBMhorbsm3vy79YS84EqQP6x',
-                          'https://utfs.io/f/e9rePmZszdcgwy6ZUXxljTK0wBMhorbsm3vy79YS84EqQP6x',
+                          'https://utfs.io/f/e9rePmZszdcgcNfK53MfPredhvoHpLy5a2Oi1Un9VBj4YSZI',
+                          'https://utfs.io/f/e9rePmZszdcgcNfK53MfPredhvoHpLy5a2Oi1Un9VBj4YSZI',
+                          'https://utfs.io/f/e9rePmZszdcgcNfK53MfPredhvoHpLy5a2Oi1Un9VBj4YSZI',
+                          'https://utfs.io/f/e9rePmZszdcgcNfK53MfPredhvoHpLy5a2Oi1Un9VBj4YSZI',
+                          'https://utfs.io/f/e9rePmZszdcgcNfK53MfPredhvoHpLy5a2Oi1Un9VBj4YSZI',
+                          'https://utfs.io/f/e9rePmZszdcgcNfK53MfPredhvoHpLy5a2Oi1Un9VBj4YSZI',
                         ],
                         items: [
                           'Rectangle 1',
@@ -306,8 +241,8 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                         buttonText: '浏览全部',
                         imageUrls: [
                           'https://sjbz-fd.zol-img.com.cn/t_s1080x1920c/g5/M00/00/02/ChMkJ1fJVACIOcDTAAmrpgi1J2QAAU9uQETzP4ACau-914.jpg',
-                          'https://utfs.io/f/e9rePmZszdcgwy6ZUXxljTK0wBMhorbsm3vy79YS84EqQP6x',
-                          'https://utfs.io/f/e9rePmZszdcgwy6ZUXxljTK0wBMhorbsm3vy79YS84EqQP6x',
+                          'https://utfs.io/f/e9rePmZszdcgET7tYDSeQbHLKAarSm17Rl6j2dw3g0IcCYNP',
+                          'https://utfs.io/f/e9rePmZszdcgET7tYDSeQbHLKAarSm17Rl6j2dw3g0IcCYNP',
                         ],
                         cardTitles: [
                           'Top 50 Global',
@@ -332,8 +267,8 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                         buttonText: '浏览全部',
                         imageUrls: [
                           'https://sjbz-fd.zol-img.com.cn/t_s1080x1920c/g5/M00/00/02/ChMkJ1fJVACIOcDTAAmrpgi1J2QAAU9uQETzP4ACau-914.jpg',
-                          'https://utfs.io/f/e9rePmZszdcgwy6ZUXxljTK0wBMhorbsm3vy79YS84EqQP6x',
-                          'https://utfs.io/f/e9rePmZszdcgwy6ZUXxljTK0wBMhorbsm3vy79YS84EqQP6x',
+                          'https://utfs.io/f/e9rePmZszdcgCYSAVwB68En15KMm7CcRVx0pUrehv3OJqtXi',
+                          'https://utfs.io/f/e9rePmZszdcgCYSAVwB68En15KMm7CcRVx0pUrehv3OJqtXi',
                         ],
                         cardTitles: [
                           'Top 50 Global',
@@ -413,8 +348,6 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                         sendButtonColor: Colors.orangeAccent.withOpacity(0.68),
                         onSend: (text) async {
                           viewModel.UchangeUI();
-                          FocusScope.of(context).unfocus();
-                          print(viewModel.changeUI);
                           viewModel.chatImage
                               ? await viewModel.chatwithImage(text, context)
                               : viewModel.chatwithHistory
@@ -1141,6 +1074,166 @@ class CustomSection extends StatelessWidget {
                   ),
                 );
               },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class ChatListView extends StatefulWidget {
+  final Box<ChatMessage> chatBox;
+  final ScrollController scrollController;
+  final bool isFetching;
+  final bool isNeedTypingIndicator;
+  final GlobalKey shotKey;
+  final ChatsityViewModel chatsityViewModel;
+  final Function(String, BuildContext) routeToTextPage;
+
+  const ChatListView({
+    super.key,
+    required this.chatBox,
+    required this.scrollController,
+    required this.isFetching,
+    required this.isNeedTypingIndicator,
+    required this.shotKey,
+    required this.routeToTextPage,
+    required this.chatsityViewModel,
+  });
+
+  @override
+  ChatListViewState createState() => ChatListViewState();
+}
+
+class ChatListViewState extends State<ChatListView> {
+  bool _isAtBottom = true; // 用于跟踪是否在列表底部
+
+  @override
+  void initState() {
+    super.initState();
+    // 监听滚动事件
+    widget.scrollController.addListener(_scrollListener);
+  }
+
+  @override
+  void dispose() {
+    // 移除监听器
+    widget.scrollController.removeListener(_scrollListener);
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    // 检测滚动位置
+    if (widget.scrollController.offset <
+        widget.scrollController.position.maxScrollExtent - 25) {
+      setState(() {
+        _isAtBottom = false; // 离开底部
+      });
+    } else {
+      setState(() {
+        _isAtBottom = true; // 回到底部
+      });
+    }
+  }
+
+  void _scrollToBottom() {
+    // 平滑滚动到列表底部
+    widget.scrollController
+        .animateTo(widget.scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 1300),
+            // curve: Curves.easeInOut,
+            curve: Curves.easeInCirc);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        WidgetShot(
+          key: widget.shotKey,
+          controller: widget.scrollController,
+          child: ListView.builder(
+            controller: widget.scrollController,
+            physics: const AlwaysScrollableScrollPhysics(),
+            itemCount: widget.chatBox.length,
+            itemBuilder: (context, index) {
+              final message = widget.chatBox.getAt(index)!;
+              bool seenStatus;
+              bool isNeedTypingIndicator;
+              if (index >= widget.chatBox.length &&
+                  widget.isNeedTypingIndicator) {
+                isNeedTypingIndicator = true;
+              } else {
+                isNeedTypingIndicator = false;
+              }
+
+              if (index >= widget.chatBox.length - 1 && !widget.isFetching) {
+                //最后一条消息两种情况{发送时候为true(不满足)，接收到时候为false(满足)==《此时恰巧显示流式输出》}
+                seenStatus = widget.isFetching;
+              } else {
+                seenStatus = true;
+              }
+
+              return _buildMessageItem(message, seenStatus,
+                  isNeedTypingIndicator, widget.chatsityViewModel, index);
+            },
+          ),
+        ),
+        if (!_isAtBottom) // 当不在底部时显示按钮
+          Positioned(
+            bottom: 16,
+            right: 16,
+            child: FloatingActionButton(
+              onPressed: _scrollToBottom,
+              child: Icon(Icons.arrow_downward),
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildMessageItem(
+      ChatMessage message,
+      bool seenStatus,
+      bool isNeedTypingIndicator,
+      ChatsityViewModel chatsityViewModel,
+      int index) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        if (message.imagePath != null)
+          BubbleNormalImage(
+            id: 'image_$index', // 使用索引生成唯一 ID
+            image: Image.file(File(message.imagePath!)),
+            color: Colors.purpleAccent,
+            seen: seenStatus,
+            delivered: true,
+          ),
+        Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onDoubleTap: () async {
+              widget.routeToTextPage(message.text, context);
+            },
+            child: BubbleSpecial(
+              // isNeedTypingIndicator: isNeedTypingIndicator,
+              onComplete: (text) {
+                chatsityViewModel.Eisfetching(); //当显示完成之后更改bool值完成显示
+              },
+              isAnimated: seenStatus,
+              seen: seenStatus,
+              text: message.text,
+              isSender: message.isSender,
+              color: message.isSender
+                  ? const Color.fromRGBO(225, 190, 231, 1)
+                  : const Color.fromRGBO(255, 219, 205, 1),
+              textStyle: TextStyle(
+                fontFamily: 'ShantellSans-Medium',
+                fontSize: 14,
+                letterSpacing: 0.1,
+                color: message.isSender ? Colors.purple : Colors.black,
+              ),
             ),
           ),
         ),

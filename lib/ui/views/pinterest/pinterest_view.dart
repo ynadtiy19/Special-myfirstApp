@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:auto_size_text_plus/auto_size_text_plus.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:high_q_paginated_drop_down/high_q_paginated_drop_down.dart';
 import 'package:http/http.dart' as http;
 import 'package:insta_image_viewer/insta_image_viewer.dart';
@@ -24,62 +23,60 @@ class PinterestView extends StackedView<PinterestViewModel> {
     PinterestViewModel viewModel,
     Widget? child,
   ) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
-        backgroundColor: const Color.fromARGB(100, 255, 219, 205),
-        appBar: AppBar(
-          backgroundColor: kcRiceYellowColor,
-          title: Text('Gallery Pinterest',
-              style: GoogleFonts.sacramento().copyWith(
-                color: teaGreen,
-                fontWeight: FontWeight.w700,
-                fontSize: 25,
-              )),
-          actions: [
-            IconButton(
-                icon: const Icon(Hero_icons_outline.archive_box_x_mark),
-                onPressed: () {
-                  viewModel.deleteGalleryImage(context);
-                }),
-            const SizedBox(width: 10),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: IconButton(
-                icon: const Icon(
-                  Hero_icons_outline.magnifying_glass,
-                  color: Colors.lightGreenAccent,
-                ),
-                onPressed: () => _ushowSearchBar(context, viewModel),
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(100, 255, 219, 205),
+      appBar: AppBar(
+        backgroundColor: kcRiceYellowColor,
+        title: const Text(
+          '爱上PIN图',
+          style: TextStyle(
+            fontFamily: 'Roboto', // 使用自定义字体
+            color: teaGreen,
+            fontWeight: FontWeight.w700,
+            fontSize: 25,
+          ),
+        ),
+        actions: [
+          IconButton(
+              icon: const Icon(Hero_icons_outline.archive_box_x_mark),
+              onPressed: () {
+                viewModel.deleteGalleryImage(context);
+              }),
+          const SizedBox(width: 10),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+              icon: const Icon(
+                Hero_icons_outline.magnifying_glass,
+                color: Colors.lightGreenAccent,
               ),
+              onPressed: () => _ushowSearchBar(context, viewModel),
             ),
-          ],
-        ),
-        body: ListView.builder(
-          itemCount: viewModel.imageUrls.length,
-          itemBuilder: (context, index) {
-            final imageId = viewModel.imageUrls[index];
-            final deviceWidth = MediaQuery.of(context).size.width;
-            final segmentsForImage = PinterestViewModel.segments[index];
-
-            return Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 14.0, vertical: 10.0),
-              child: ImageGridItem(
-                imageId: imageId,
-                index: index,
-                deviceWidth: deviceWidth,
-                segmentsForImage: segmentsForImage,
-                onTitleTap: viewModel.translatetitleText,
-                onTitleDoubleTap: viewModel.changetoBack,
-                onImageSave: viewModel.saveCachedImageToGallery,
-                viewModel: viewModel,
-              ),
-            );
-          },
-        ),
+          ),
+        ],
+      ),
+      body: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
+        itemCount: viewModel.imageUrls.length,
+        itemBuilder: (context, index) {
+          final imageId = viewModel.imageUrls[index];
+          final deviceWidth = MediaQuery.of(context).size.width;
+          final segmentsForImage = PinterestViewModel.segments[index];
+          return Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 14.0, vertical: 10.0),
+            child: ImageGridItem(
+              imageId: imageId,
+              index: index,
+              deviceWidth: deviceWidth,
+              segmentsForImage: segmentsForImage,
+              onTitleTap: viewModel.translatetitleText,
+              onTitleDoubleTap: viewModel.changetoBack,
+              onImageSave: viewModel.saveCachedImageToGallery,
+              viewModel: viewModel,
+            ),
+          );
+        },
       ),
     );
   }
@@ -397,8 +394,6 @@ class ImageGridItem extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 24),
                 child: InstaImageViewer(
                   uonTap: (bool value) async {
-                    print(originalUrl);
-                    await onImageSave(url);
                     if (value) {
                       // 只有当 value 为 false 时执行保存逻辑
                       print(originalUrl);
@@ -427,7 +422,7 @@ class ImageGridItem extends StatelessWidget {
                     }
                     return true;
                   },
-                  ufavoriteIcon: Hero_icons_outline.heart,
+                  ufavoriteIcon: Icons.favorite,
                   ucloseIcon: Hero_icons_outline.x_mark,
                   disableSwipeToDismiss: true,
                   backgroundColor: const Color.fromARGB(255, 216, 219, 231),

@@ -3,9 +3,9 @@ import 'package:hung/ui/common/bottom_nav_btn.dart';
 import 'package:hung/ui/common/clipper.dart';
 import 'package:hung/ui/common/constants.dart';
 import 'package:hung/ui/common/size_config.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../utils/hero-icons-outline_icons.dart';
 import 'bottom_nav_model.dart';
 
 class BottomNav extends StackedView<BottomNavModel> {
@@ -47,7 +47,7 @@ class BottomNav extends StackedView<BottomNavModel> {
                           onTabSelectedNav(val);
                           viewModel.setCurrentIndex(val);
                         },
-                        icon: LineIcons.home,
+                        icon: Hero_icons_outline.x_mark,
                         currentIndex: viewModel.currentIndex,
                         index: 0,
                       ),
@@ -56,7 +56,7 @@ class BottomNav extends StackedView<BottomNavModel> {
                           onTabSelectedNav(val);
                           viewModel.setCurrentIndex(val);
                         },
-                        icon: LineIcons.search,
+                        icon: Hero_icons_outline.x_mark,
                         currentIndex: viewModel.currentIndex,
                         index: 1,
                       ),
@@ -65,7 +65,7 @@ class BottomNav extends StackedView<BottomNavModel> {
                           onTabSelectedNav(val);
                           viewModel.setCurrentIndex(val);
                         },
-                        icon: LineIcons.apple,
+                        icon: Hero_icons_outline.x_mark,
                         currentIndex: viewModel.currentIndex,
                         index: 2,
                       ),
@@ -74,7 +74,7 @@ class BottomNav extends StackedView<BottomNavModel> {
                           onTabSelectedNav(val);
                           viewModel.setCurrentIndex(val);
                         },
-                        icon: LineIcons.shoppingBag,
+                        icon: Hero_icons_outline.x_mark,
                         currentIndex: viewModel.currentIndex,
                         index: 3,
                       ),

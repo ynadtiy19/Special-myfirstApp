@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:lottie/lottie.dart';
 import 'package:stacked/stacked.dart';
@@ -26,7 +28,6 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      // backgroundColor: Theme.of(context).colorScheme.surface,
       backgroundColor: const Color.fromARGB(255, 216, 219, 231),
       body: Padding(
         padding: EdgeInsets.only(
@@ -45,7 +46,7 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                     icon: const Icon(Hero_icons_outline.light_bulb),
                     color: Colors.grey,
                     onPressed: () {
-                      showCustomDialog(context);
+                      _showCustomDialog(context);
                     },
                   ),
                   const SizedBox(width: 10),
@@ -61,6 +62,7 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                         }
                       },
                       child: TextFormField(
+                        focusNode: viewModel.focusNode,
                         maxLength: 1000,
                         controller: viewModel.query,
                         maxLines: 2,
@@ -96,14 +98,14 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                               onPressed: viewModel.isGenerating
                                   ? null
                                   : () async {
-                                      FocusScope.of(context).unfocus();
-                                      print(PromptToRealViewModel.isloading);
-                                      // viewModel.isloadingT();
-                                      print(PromptToRealViewModel.isloading);
-                                      await viewModel
-                                          .generateImagesFromMultipleSources(
-                                              context, viewModel.query.text);
-                                      // viewModel.isloadingF(); // 重置加载状态
+                                      if (viewModel.query.text.isEmpty) {
+                                        print('is empty');
+                                        _showCustomDialog2(context);
+                                      } else {
+                                        await viewModel
+                                            .generateImagesFromMultipleSources(
+                                                context, viewModel.query.text);
+                                      }
                                     },
                               iconSize: 27.0,
                               color: Colors.black87,
@@ -198,7 +200,7 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(12)),
                           onTap: () {
-                            viewModel.deleteImage(context);
+                            deleteImage(context, viewModel);
                           },
                           child: const Padding(
                             padding: EdgeInsets.all(8.0),
@@ -341,120 +343,68 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                     ? const SizedBox(
                         height: 250, width: 250, child: Text('原始图像为空'))
                     : !PromptToRealViewModel.isInitialLoading
-                        ? Expanded(
-                            child: GridView.builder(
-                              physics: const BouncingScrollPhysics(),
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3, // 每行显示两张图片
-                                crossAxisSpacing: 4.0, // 设置图片之间的横向间距
-                                mainAxisSpacing: 4.0,
-                              ), // 设置图片之间的纵向间距),
-                              itemCount: viewModel.uuimageBox.length,
-                              itemBuilder: (context, index) {
-                                var image = viewModel.uuimageBox.getAt(index);
-                                return Stack(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.greenAccent),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: InstaImageViewer(
-                                          uonTap: (bool value) async {
-                                            if (value) {
-                                              // 如果 value 为 false，执行保存操作
-                                              await viewModel
-                                                  .saveImageFromBase64(
-                                                      context, image.data);
-                                              return viewModel.instaAction1 ??
-                                                  true;
-                                            } else {
-                                              toastification.show(
-                                                context: context,
-                                                type:
-                                                    ToastificationType.success,
-                                                style: ToastificationStyle
-                                                    .flatColored,
-                                                title: const Text(
-                                                    "取消保存，这张图片已经存在于收藏中"),
-                                                description: const Text(
-                                                    "Cancel save, this image already exists in favorites."),
-                                                alignment:
-                                                    Alignment.bottomCenter,
-                                                autoCloseDuration:
-                                                    const Duration(
-                                                        milliseconds: 2350),
-                                                primaryColor: Colors.green,
-                                                icon: const Icon(
-                                                    Hero_icons_outline
-                                                        .check_badge),
-                                                borderRadius:
-                                                    BorderRadius.circular(15.0),
-                                                applyBlurEffect: true,
-                                              );
-                                              return false; // 返回 true
-                                            }
-                                          },
-                                          ufavoriteIcon:
-                                              Hero_icons_outline.heart,
-                                          ucloseIcon: Hero_icons_outline.x_mark,
-                                          disableSwipeToDismiss: true,
-                                          backgroundColor: const Color.fromARGB(
-                                              255, 216, 219, 231),
-                                          child: Image.memory(
-                                            base64Decode(image!.data),
-                                            fit: BoxFit.contain,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                        ? ImageGridView(
+                            imageData: viewModel.uuimageBox.values
+                                .map((image) => image.data)
+                                .toList(),
+                            onImageTap: (context, imageData, value) async {
+                              if (value) {
+                                // 如果 value 为 true，执行保存操作
+                                await viewModel.saveImageFromBase64(
+                                    context, imageData);
+                                return true; // 返回 true 表示保存成功
+                              } else {
+                                // 显示取消保存的提示
+                                toastification.show(
+                                  context: context,
+                                  type: ToastificationType.success,
+                                  style: ToastificationStyle.flatColored,
+                                  title: const Text("取消保存，这张图片已经存在于收藏中"),
+                                  description: const Text(
+                                      "Cancel save, this image already exists in favorites."),
+                                  alignment: Alignment.bottomCenter,
+                                  autoCloseDuration:
+                                      const Duration(milliseconds: 2350),
+                                  primaryColor: Colors.green,
+                                  icon: const Icon(
+                                      Hero_icons_outline.check_badge),
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  applyBlurEffect: true,
                                 );
-                              },
-                            ),
+                                return false; // 返回 false
+                              }
+                            },
+                            crossAxisCount: 3, // 设置为 3 列
                           )
-                        : Expanded(
-                            child: GridView.builder(
-                              physics: const BouncingScrollPhysics(),
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2, // 每行显示两张图片
-                                crossAxisSpacing: 4.0, // 设置图片之间的横向间距
-                                mainAxisSpacing: 4.0,
-                              ), // 设置图片之间的纵向间距),
-                              itemCount: PromptToRealViewModel.images.length,
-                              itemBuilder: (context, index) {
-                                return Stack(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.greenAccent),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: InstaImageViewer(
-                                          ucloseIcon: Hero_icons_outline.x_mark,
-                                          disableSwipeToDismiss: true,
-                                          backgroundColor: const Color.fromARGB(
-                                              255, 216, 219, 231),
-                                          child: Image.memory(
-                                            base64Decode(PromptToRealViewModel
-                                                .images[index]),
-                                            fit: BoxFit.contain,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                        : ImageGridView(
+                            imageData: PromptToRealViewModel.images,
+                            onImageTap: (context, imageData, value) async {
+                              // 处理点击事件...
+                              if (value) {
+                                await viewModel.saveImageFromBase64(
+                                    context, imageData);
+                                return true; // 表示保存成功
+                              } else {
+                                toastification.show(
+                                  context: context,
+                                  type: ToastificationType.success,
+                                  style: ToastificationStyle.flatColored,
+                                  title: const Text("取消保存，这张图片已经存在于收藏中"),
+                                  description: const Text(
+                                      "Cancel save, this image already exists in favorites."),
+                                  alignment: Alignment.bottomCenter,
+                                  autoCloseDuration:
+                                      const Duration(milliseconds: 2350),
+                                  primaryColor: Colors.green,
+                                  icon: const Icon(
+                                      Hero_icons_outline.check_badge),
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  applyBlurEffect: true,
                                 );
-                              },
-                            ),
+                                return false; // 返回 false
+                              }
+                            },
+                            crossAxisCount: 2,
                           )
                 : Center(
                     child: Column(
@@ -484,13 +434,69 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
     );
   }
 
-  @override
-  PromptToRealViewModel viewModelBuilder(
-    BuildContext context,
-  ) =>
-      PromptToRealViewModel();
+  void deleteImage(BuildContext context, PromptToRealViewModel viewModel) {
+    if (viewModel.uuimageBox.isEmpty) {
+      // 如果数据库已经为空，提示用户
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: const Text('无图片可删除'),
+            content: const Text('当前没有任何图片可以删除。'),
+            actions: [
+              CupertinoDialogAction(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  '确定',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: const Text('确认删除图片'),
+          content:
+              const Text('您正在尝试删除一张重要的图片。此操作不可撤销，删除后将无法恢复。请确认您是否真的要删除这张图片。'),
+          actions: [
+            CupertinoDialogAction(
+              onPressed: () {
+                viewModel.ImageRepository.deleteImages();
+                if (PromptToRealViewModel.images.isNotEmpty) {
+                  PromptToRealViewModel.images.clear();
+                }
+                viewModel.setInitialLoading();
+                Navigator.of(context).pop(); // 关闭对话框
+              },
+              child: const Text(
+                '确定',
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop(); // 关闭对话框
+              },
+              child: const Text(
+                '取消',
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  } //删除所有图片
 
-  void showCustomDialog(BuildContext context) {
+  void _showCustomDialog(BuildContext context) {
     showDialog(
       context: context,
       barrierDismissible: true, // 点击对话框外部区域可以关闭
@@ -514,6 +520,46 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
       },
     );
   }
+
+  void _showCustomDialog2(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: const Text('请输入内容'),
+        content: GestureDetector(
+          onTap: () async {
+            Clipboard.setData(
+              const ClipboardData(
+                  text:
+                      '薄雾轻盈地笼罩在翠绿的山峦之间，露珠在晨光的照耀下闪闪发光。小道旁的野花盛开，散发出淡淡的清香。鸟儿在树梢上欢快地唱着歌，仿佛在迎接新的一天。远处的山顶上，一缕阳光正透过云层，洒下温暖的金色光芒'),
+            );
+            await Haptics.vibrate(HapticsType.soft);
+          },
+          child: const Text(
+              '例如：薄雾轻盈地笼罩在翠绿的山峦之间，露珠在晨光的照耀下闪闪发光。小道旁的野花盛开，散发出淡淡的清香。鸟儿在树梢上欢快地唱着歌，仿佛在迎接新的一天。远处的山顶上，一缕阳光正透过云层，洒下温暖的金色光芒。'),
+        ),
+        actions: [
+          CupertinoDialogAction(
+            onPressed: () async {
+              FocusScope.of(context).unfocus();
+              Navigator.of(context).pop(); // 关闭对话框
+            },
+            child: const Text(
+              '取消',
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  PromptToRealViewModel viewModelBuilder(
+    BuildContext context,
+  ) =>
+      PromptToRealViewModel();
 }
 
 class CustomTabBar extends StatelessWidget {
@@ -609,6 +655,64 @@ class CustomTabButton extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ImageGridView extends StatelessWidget {
+  final List<String> imageData; // 用于传递 Base64 图像数据的列表
+  final Function(BuildContext, String, bool) onImageTap; // 图片点击的回调函数
+  final int crossAxisCount; // 用于设置每行显示的图片数量
+
+  const ImageGridView({
+    Key? key,
+    required this.imageData,
+    required this.onImageTap,
+    this.crossAxisCount = 3, // 默认值为 3
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: GridView.builder(
+        physics: const BouncingScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: crossAxisCount, // 使用传递的参数
+          crossAxisSpacing: 4.0,
+          mainAxisSpacing: 4.0,
+        ),
+        itemCount: imageData.length,
+        itemBuilder: (context, index) {
+          final imageBase64 = imageData[index];
+          return Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.greenAccent),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: InstaImageViewer(
+                    uonTap: (bool value) async {
+                      await onImageTap(context, imageBase64, value);
+                      return value; // 根据需要返回 true 或 false
+                    },
+                    ucloseIcon: Hero_icons_outline.x_mark,
+                    ufavoriteIcon: Hero_icons_outline.heart,
+                    disableSwipeToDismiss: true,
+                    backgroundColor: const Color.fromARGB(255, 216, 219, 231),
+                    child: Image.memory(
+                      base64Decode(imageBase64),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../utils/hero-icons-outline_icons.dart';
 import 'prompt_to_translate_viewmodel.dart';
 
 class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
@@ -77,7 +77,7 @@ class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
                           child: Tooltip(
                             message: 'Paste from clipboard',
                             child: Icon(
-                              LineIcons.swatchbook,
+                              Hero_icons_outline.language,
                               color: Colors.black87,
                             ),
                           ),
@@ -197,7 +197,7 @@ class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
                                       child: Tooltip(
                                         message: '语音转文字',
                                         child: Icon(
-                                          LineIcons.microphone,
+                                          Hero_icons_outline.microphone,
                                           color: Colors.black87,
                                         ),
                                       ),
@@ -233,7 +233,8 @@ class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
                                       child: Tooltip(
                                         message: '从剪切板复制文字',
                                         child: Icon(
-                                          LineIcons.paste,
+                                          Hero_icons_outline
+                                              .clipboard_document_check,
                                           color: Colors.black87,
                                         ),
                                       ),
@@ -267,7 +268,7 @@ class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
                                   child: Tooltip(
                                     message: '翻译',
                                     child: Icon(
-                                      LineIcons.telegramPlane,
+                                      Hero_icons_outline.rocket_launch,
                                       color: Colors.black87,
                                     ),
                                   ),
@@ -337,7 +338,7 @@ class PromptToTranslateView extends StackedView<PromptToTranslateViewModel> {
                                 // viewModel.query.text = clipboardData!.text!;
                               },
                               icon: const Icon(
-                                LineIcons.copy,
+                                Hero_icons_outline.clipboard_document_list,
                                 color: Colors.black87,
                               ),
                             ),

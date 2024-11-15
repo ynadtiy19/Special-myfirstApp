@@ -13,7 +13,6 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as h2;
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:listview_screenshot/listview_screenshot.dart';
 import 'package:mime/mime.dart';
 import 'package:path_provider/path_provider.dart';
@@ -28,7 +27,7 @@ import '../../utils/BackgroundAnimation.dart';
 import '../../utils/hero-icons-outline_icons.dart';
 
 class ChatsityViewModel extends BaseViewModel {
-  final ScrollController _scrollController = ScrollController();
+  late final ScrollController _scrollController = ScrollController();
   ScrollController get scrollController => _scrollController;
 
   final ImageRepository = locator<ImageRepositoryService>();
@@ -106,7 +105,7 @@ class ChatsityViewModel extends BaseViewModel {
                             autoCloseDuration:
                                 const Duration(milliseconds: 2000),
                             primaryColor: Colors.green,
-                            icon: const Icon(LineIcons.checkCircleAlt),
+                            icon: const Icon(Hero_icons_outline.check_badge),
                             borderRadius: BorderRadius.circular(15.0),
                             applyBlurEffect: true,
                           );
@@ -164,9 +163,35 @@ class ChatsityViewModel extends BaseViewModel {
     }
   }
 
-  void clearChatBox() async {
-    // 清除所有数据
-    await _chatBox.clear();
+  Future<void> showDeleteConfirmationSheet(BuildContext context) async {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoActionSheet(
+          title: const Text('确定要删除聊天记录吗？'),
+          message: const Text('此操作将清空所有聊天记录，无法恢复。'),
+          actions: <Widget>[
+            CupertinoActionSheetAction(
+              onPressed: () async {
+                await _chatBox.clear(); // 清空聊天记录
+                Navigator.of(context).pop(); // 关闭操作表单
+              },
+              isDestructiveAction: true,
+              child: const Text('删除'),
+            ),
+          ],
+          cancelButton: CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.of(context).pop(); // 关闭操作表单
+            },
+            child: const Text(
+              '取消',
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   Future<void> clearSharedPreferences() async {
@@ -231,8 +256,16 @@ class ChatsityViewModel extends BaseViewModel {
   static bool _isgoingpickImage = false;
   bool get isgoingpickImage => _isgoingpickImage; //保证每次打开都是选择后的相片
 
-  bool _isfetching = true;
+  bool _isfetching = true; //开始声明为true是因为不让所有消息六四输出
   bool get isfetching => _isfetching;
+
+  bool isNeedTypingIndicator = false;
+  bool get uuuisNeedTypingIndicator => isNeedTypingIndicator;
+
+  void Eisfetching() {
+    _isfetching = true;
+    notifyListeners();
+  }
 
   static bool _animating = false;
   bool get animating => _animating;
@@ -324,11 +357,25 @@ class ChatsityViewModel extends BaseViewModel {
                     child: CircleAvatar(
                       radius: 30.0,
                       backgroundColor: Colors.grey.shade200,
-                      child: const Icon(Hero_icons_outline.plus, size: 30),
+                      child: const Icon(Hero_icons_outline.plus,
+                          color: Colors.black, size: 30),
                     ),
                   ),
                   GestureDetector(
                     onTap: () {
+                      Navigator.pop(context);
+                      showDeleteConfirmationSheet(context);
+                    }, // Pass context her
+                    child: CircleAvatar(
+                      radius: 30.0,
+                      backgroundColor: Colors.grey.shade200,
+                      child: const Icon(Hero_icons_outline.backspace,
+                          color: Colors.black, size: 30),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      FocusScope.of(context).unfocus();
                       _isfetching = true;
                       if (!isBottomNavVisibleValue) {
                         ImageRepository.setBottomNavVisible();
@@ -342,7 +389,8 @@ class ChatsityViewModel extends BaseViewModel {
                     child: CircleAvatar(
                       radius: 30.0,
                       backgroundColor: Colors.grey.shade200,
-                      child: const Icon(Hero_icons_outline.chart_bar, size: 30),
+                      child: const Icon(Hero_icons_outline.arrow_uturn_right,
+                          color: Colors.black, size: 30),
                     ),
                   ),
                 ],
@@ -568,6 +616,7 @@ class ChatsityViewModel extends BaseViewModel {
   Future<void> UchatwithHistory(String text) async {
     final url = Uri.parse('https://delve.a9.io/retrieve');
     _isfetching = true;
+    isNeedTypingIndicator = true;
 
     final message = ChatMessage(isSender: true, text: text, imagePath: null);
     // 将发送的消息构建为 JSON 格式并存储到 Hive
@@ -622,10 +671,12 @@ class ChatsityViewModel extends BaseViewModel {
         // 将接收到的消息存储到 Hive
         _chatBox.add(message);
         _isfetching = false;
+        isNeedTypingIndicator = false;
         notifyListeners();
         print('Response data: $responseBody');
       } else {
         _isfetching = false;
+        isNeedTypingIndicator = false;
         notifyListeners();
         // 请求失败
         print('Request failed with status: ${response.statusCode}.');
@@ -665,6 +716,7 @@ class ChatsityViewModel extends BaseViewModel {
   Future<Map<String, dynamic>?> sendmessage(
       [String query = 'How are you doing today?']) async {
     _isfetching = true;
+    isNeedTypingIndicator = true;
     final message = ChatMessage(isSender: true, text: query, imagePath: null);
     // 将发送的消息构建为 JSON 格式并存储到 Hive
     _chatBox.add(message);
@@ -720,6 +772,7 @@ class ChatsityViewModel extends BaseViewModel {
           );
           _chatBox.add(message);
           _isfetching = false;
+          isNeedTypingIndicator = false;
         } else {
           // 处理纯文本响应
           final message = ChatMessage(
@@ -730,15 +783,18 @@ class ChatsityViewModel extends BaseViewModel {
           print(response.body);
           _chatBox.add(message);
           _isfetching = false;
+          isNeedTypingIndicator = false;
         }
         notifyListeners();
       } else {
         _isfetching = false; // Reset fetching state in case of error
+        isNeedTypingIndicator = false;
         notifyListeners();
         throw Exception('Failed to load data: ${response.statusCode}');
       }
     } catch (e) {
       _isfetching = false; // Reset fetching state in case of exception
+      isNeedTypingIndicator = false;
       notifyListeners();
       print('An error occurred: $e');
       throw Exception('Failed to load data: $e');
@@ -804,6 +860,7 @@ class ChatsityViewModel extends BaseViewModel {
       return; // 在这里结束执行
     }
     _isfetching = true;
+    isNeedTypingIndicator = true;
     final message = ChatMessage(
         isSender: true, text: text, imagePath: _image?.path); // 存储图像路径
     // 将发送的消息构建为 JSON 格式并存储到 Hive
@@ -862,10 +919,12 @@ class ChatsityViewModel extends BaseViewModel {
       // 将接收到的消息存储到 Hive
       _chatBox.add(message);
       _isfetching = false;
+      isNeedTypingIndicator = false;
       _image = null;
       notifyListeners();
     } else {
       _isfetching = false; // Reset fetching state in case of error
+      isNeedTypingIndicator = false;
       notifyListeners();
       print('Upload failed with status: ${response.statusCode}');
     }

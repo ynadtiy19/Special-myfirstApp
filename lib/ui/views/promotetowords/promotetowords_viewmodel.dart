@@ -4,7 +4,6 @@ import 'package:brotli/brotli.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:line_icons/line_icons.dart';
 import 'package:stacked/stacked.dart';
 import 'package:toastification/toastification.dart';
 
@@ -144,10 +143,10 @@ class PromotetowordsViewModel extends BaseViewModel {
     isfetching = true;
     // 设置请求 URL
     final url = Uri.parse('https://labs.writingmate.ai/api/chat/public');
-    print(text);
-    print(model);
-    print(number);
-    print(Ratio);
+    // print(text);
+    // print(model);
+    // print(number);
+    // print(Ratio);
     prompts = [];
 
     // 构建请求头
@@ -208,7 +207,7 @@ class PromotetowordsViewModel extends BaseViewModel {
         {
           "role": "user",
           "content":
-              "Create $number captivating image prompts tailored for $model. Each prompt should:\n            1. Begin with an engaging verb like \"Imagine\", \"Illustrate\", \"Capture\", etc.\n            2. Range between 85 and 120 words, weaving a tapestry of visual storytelling.\n            3. Clearly express the image ratio as \"square ($Ratio)\" at the forefront of each prompt.\n            4. Highlight the style: photorealistic, to evoke realism and depth.\n            5. Include the enchanting theme: $text, symbolizing serenity and flow.\n            6. Utilize clear, straightforward language to ensure understanding.\n            7. Emphasize key elements and details that resonate with beauty and thoughtfulness.\n            8. Adhere to best practices for Midjourney prompts, crafting images that inspire awe."
+              "Create $number captivating image prompts tailored for $model. Each prompt should:\n            1. Begin with an engaging verb like \"Imagine\", \"Illustrate\", \"Capture\", etc.\n            2. Range between 30 and 50 words, weaving a tapestry of visual storytelling.\n            3. Clearly express the image ratio as \"square ($Ratio)\" at the forefront of each prompt.\n            4. Highlight the style: photorealistic, to evoke realism and depth.\n            5. Include the enchanting theme: $text, symbolizing serenity and flow.\n            6. Utilize clear, straightforward language to ensure understanding.\n            7. Emphasize key elements and details that resonate with beauty and thoughtfulness.\n            8. Adhere to best practices for Midjourney prompts, crafting images that inspire awe."
         }
       ]
     });
@@ -227,6 +226,7 @@ class PromotetowordsViewModel extends BaseViewModel {
           final decodedString = utf8.decode(decodedBytes);
           // 解析 JSON
           final jsonResponse = jsonDecode(decodedString);
+          print(jsonResponse);
           // // 访问 prompts 列表
           if (usureTotranslate) {
             List<Future<void>> translationFutures = [];
@@ -237,7 +237,7 @@ class PromotetowordsViewModel extends BaseViewModel {
           } else {
             prompts = jsonResponse['prompts'];
           }
-          print(prompts);
+          // print(prompts);
         } else {
           print('Response body: ${response.body}');
         }
@@ -282,7 +282,7 @@ class PromotetowordsViewModel extends BaseViewModel {
                             autoCloseDuration:
                                 const Duration(milliseconds: 2000),
                             primaryColor: Colors.green,
-                            icon: const Icon(LineIcons.checkCircleAlt),
+                            icon: const Icon(Hero_icons_outline.check_badge),
                             borderRadius: BorderRadius.circular(15.0),
                             applyBlurEffect: true,
                           );

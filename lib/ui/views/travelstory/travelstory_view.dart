@@ -4,10 +4,9 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hung/ui/common/app_colors.dart';
-import 'package:hung/ui/widgets/common/translation/translation.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../utils/hero-icons-outline_icons.dart';
 import 'travelstory_viewmodel.dart';
 
 class TravelstoryView extends StackedView<TravelstoryViewModel> {
@@ -311,9 +310,9 @@ class TravelstoryView extends StackedView<TravelstoryViewModel> {
                                             .withOpacity(0.72),
                                       ),
                                       //修饰后的boxshadown可能会超过DottedBorder边界
-                                      child: const Align(
+                                      child: Align(
                                           alignment: Alignment.center,
-                                          child: Translation()),
+                                          child: Container()),
                                     ),
                                   ),
                                 ),
@@ -573,7 +572,7 @@ class DestinationItem extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Icon(
-                      LineIcons.starAlt,
+                      Hero_icons_outline.fire,
                       color: Color(0xFFFFD600),
                       size: 20,
                     ),
@@ -614,7 +613,7 @@ class DestinationItem extends StatelessWidget {
                 height: 48,
                 color: kSecondaryColor.withOpacity(0.4),
                 child: const Icon(
-                  LineIcons.heart,
+                  Hero_icons_outline.heart,
                   color: kPrimaryColor,
                 ),
               ),
@@ -642,7 +641,7 @@ class DestinationItem extends StatelessWidget {
                 child: Row(
                   children: [
                     const Icon(
-                      LineIcons.locationArrow,
+                      Hero_icons_outline.globe_europe_africa,
                       color: kPrimaryColor,
                     ),
                     const SizedBox(width: 4),

@@ -11,9 +11,6 @@ class PromptToTranslateViewModel extends BaseViewModel {
   String _highlightedText = '';
   String get highlightedText => _highlightedText;
 
-  int _highlightStartIndex = 0;
-  int _highlightEndIndex = 0;
-
   late String _targetLanguage = 'en';
   String get targetLanguage => _targetLanguage;
 
@@ -31,12 +28,6 @@ class PromptToTranslateViewModel extends BaseViewModel {
     rebuildUi();
   }
 
-  @override
-  void dispose() {
-    _query.dispose();
-    super.dispose();
-  }
-
   void changeTargetLanguage(BuildContext context) {
     String? selectedLanguage = _targetLanguage;
 
@@ -49,30 +40,29 @@ class PromptToTranslateViewModel extends BaseViewModel {
             value: selectedLanguage,
             onChanged: (String? newValue) {
               selectedLanguage = newValue!;
-
               _targetLanguage = selectedLanguage!;
               notifyListeners();
               Navigator.of(context).pop();
             },
             items: <String>[
-              'en',
-              'es',
-              'fr',
-              'de',
-              'ja',
-              'ko',
-              'ru',
-              'zh-CN',
-              'hi',
-              'ar',
-              'pt',
-              'it',
-              'nl',
-              'pl',
-              'vi'
+              'en (英语)',
+              'es (西班牙语)',
+              'fr (法语)',
+              'de (德语)',
+              'ja (日语)',
+              'ko (韩语)',
+              'ru (俄语)',
+              'zh-CN (简体中文)',
+              'hi (印地语)',
+              'ar (阿拉伯语)',
+              'pt (葡萄牙语)',
+              'it (意大利语)',
+              'nl (荷兰语)',
+              'pl (波兰语)',
+              'vi (越南语)',
             ].map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
-                value: value,
+                value: value.split(' ')[0], // Extract language code
                 child: Text(value),
               );
             }).toList(),
@@ -124,31 +114,5 @@ class PromptToTranslateViewModel extends BaseViewModel {
     } else {
       _translation = "Failed to get translation";
     }
-  }
-
-  //词汇匹配
-
-  PromptToTranslateViewModel() {
-    _query.addListener(initState);
-  }
-
-  void initState() {
-    // 获取选中的文本
-    final selection = _query.value.selection;
-    if (selection.isValid) {
-      final selectedText = _query.text.substring(
-        selection.start,
-        selection.end,
-      );
-      highlightText(selectedText, selection.start, selection.end);
-      // print(selectedText);
-    }
-  }
-
-  void highlightText(String selectedText, int start, int end) {
-    _highlightedText = selectedText;
-    _highlightStartIndex = start;
-    _highlightEndIndex = end;
-    notifyListeners();
   }
 }

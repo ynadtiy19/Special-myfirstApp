@@ -289,14 +289,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.0"
-  easy_popover:
-    dependency: "direct main"
-    description:
-      name: easy_popover
-      sha256: afbb6bf777d55b27b23c81d088b315c0f259adf0c45bdbc72126813ede2bb6fd
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.0.6"
   equatable:
     dependency: transitive
     description:
@@ -523,6 +515,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_typing_indicator:
+    dependency: "direct main"
+    description:
+      name: flutter_typing_indicator
+      sha256: a6f5582c8ebf74ceb9031068e962b6d45989f6367edfee125a09c80640fa2634
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.4"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -896,14 +896,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.5"
-  line_icons:
-    dependency: "direct main"
-    description:
-      name: line_icons
-      sha256: "249d781d922f5437ac763d9c8f5a02cf5b499a6dc3f85e4b92e074cff0a932ab"
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "2.0.3"
   lints:
     dependency: transitive
     description:
@@ -1368,6 +1360,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.0.5"
+  simple_icons:
+    dependency: "direct main"
+    description:
+      name: simple_icons
+      sha256: "30067d70a9d72923fbc80e142e17fa46085dfa970e66bc4bede3be4819d05901"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "10.1.3"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -1729,10 +1729,10 @@ packages:
     dependency: transitive
     description:
       name: web
-      sha256: d43c1d6b787bf0afad444700ae7f4db8827f701bc61c255ac8d328c6f4d52062
+      sha256: cd3543bd5798f6ad290ea73d210f423502e71900302dde696f8bff84bf89a1cb
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.0"
+    version: "1.1.0"
   web_socket:
     dependency: transitive
     description:
@@ -1815,4 +1815,4 @@ packages:
     version: "3.1.2"
 sdks:
   dart: ">=3.5.0 <4.0.0"
-  flutter: ">=3.22.2"
+  flutter: ">=3.22.0"

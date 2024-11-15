@@ -1,7 +1,7 @@
 name: hung
 description: A new Flutter project.
 publish_to: 'none'
-version: 0.3.3
+version: 0.3.6
 
 environment:
   sdk: '>=3.0.3 <4.0.0'
@@ -21,7 +21,6 @@ dependencies:
   hive: ^2.2.3
   image_picker: ^1.1.2
   like_button: ^2.0.5
-  line_icons: ^2.0.3
   sensors_plus: ^6.0.1
   shared_preferences: ^2.2.3
   side_rail: ^0.0.5
@@ -68,7 +67,8 @@ dependencies:
   flutter_svg: ^2.0.10+1
   primer_progress_bar: ^0.5.0
   auto_size_text_plus: ^3.0.2
-  easy_popover: ^0.0.6
+  flutter_typing_indicator: ^0.0.4
+  simple_icons: ^10.1.3
 
 
 dev_dependencies:
@@ -101,6 +101,9 @@ flutter:
           weight: 600
         - asset: fonts/GabrielaStencil-Light.ttf
           weight: 300
-    - family: Roboto
+    - family: Lato_Italic
       fonts:
-        - asset: fonts/Roboto.ttf
+        - asset: fonts/Lato-Italic.ttf
+    - family: ShantellSans-Medium
+      fonts:
+        - asset: fonts/ShantellSans-Medium.ttf

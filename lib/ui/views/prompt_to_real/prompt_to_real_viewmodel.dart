@@ -6,13 +6,10 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
-// import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:intl/intl.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:toastification/toastification.dart';
@@ -21,6 +18,7 @@ import 'package:typeid/typeid.dart';
 import '../../../app/app.locator.dart';
 import '../../../services/image_data.dart';
 import '../../../services/image_repository_service.dart';
+import '../../utils/hero-icons-outline_icons.dart';
 
 class PromptToRealViewModel extends ReactiveViewModel {
   final TextEditingController _query = TextEditingController();
@@ -43,12 +41,23 @@ class PromptToRealViewModel extends ReactiveViewModel {
   String singleimgPath = '';
   get singleimgPath1 => singleimgPath;
 
+  final FocusNode _focusNode = FocusNode();
+  FocusNode get focusNode => _focusNode;
+
   @override
   PromptToRealViewModel() {
+    _focusNode.unfocus();
     print('初始化PromptToRealViewModel');
     ImageRepository.getFolderNames();
     print(_folderNames);
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    // 销毁FocusNode，防止内存泄漏
+    _focusNode.dispose();
+    super.dispose();
   }
 
   final String apiUrl = 'https://api-key.fusionbrain.ai/';
@@ -63,6 +72,11 @@ class PromptToRealViewModel extends ReactiveViewModel {
 
   static bool _isInitialLoading = false; // 初始加载标志位
   static bool get isInitialLoading => _isInitialLoading;
+
+  void setInitialLoading() {
+    _isInitialLoading = false;
+    notifyListeners();
+  }
 
   static bool _isLoading = false;
   static bool get isloading => _isLoading;
@@ -83,71 +97,6 @@ class PromptToRealViewModel extends ReactiveViewModel {
     _currentIndex = index;
     notifyListeners(); // 通知监听器数据已更新
   }
-
-  @override
-  void dispose() {
-    _query.dispose();
-    super.dispose();
-  }
-
-  void deleteImage(BuildContext context) {
-    if (uuimageBox.isEmpty) {
-      // 如果数据库已经为空，提示用户
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return CupertinoAlertDialog(
-            title: const Text('无图片可删除'),
-            content: const Text('当前没有任何图片可以删除。'),
-            actions: [
-              CupertinoDialogAction(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  '确定',
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-            ],
-          );
-        },
-      );
-      return;
-    }
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: const Text('确认删除图片'),
-          content:
-              const Text('您正在尝试删除一张重要的图片。此操作不可撤销，删除后将无法恢复。请确认您是否真的要删除这张图片。'),
-          actions: [
-            CupertinoDialogAction(
-              onPressed: () {
-                ImageRepository.deleteImages();
-                notifyListeners();
-                Navigator.of(context).pop(); // 关闭对话框
-              },
-              child: const Text(
-                '确定',
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-            CupertinoDialogAction(
-              onPressed: () {
-                Navigator.of(context).pop(); // 关闭对话框
-              },
-              child: const Text(
-                '取消',
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  } //删除所有图片
 
   void initThree() {
     _isGenerating = true;
@@ -301,7 +250,7 @@ class PromptToRealViewModel extends ReactiveViewModel {
                         alignment: Alignment.bottomCenter,
                         autoCloseDuration: const Duration(milliseconds: 2350),
                         primaryColor: Colors.green,
-                        icon: const Icon(LineIcons.checkCircleAlt),
+                        icon: const Icon(Hero_icons_outline.check_circle),
                         borderRadius: BorderRadius.circular(15.0),
                         applyBlurEffect: true,
                       );
@@ -361,47 +310,7 @@ class PromptToRealViewModel extends ReactiveViewModel {
   }
 
   Future generateImagesFromMultipleSources(context, query) async {
-    //  如果query为空，则直接返回
-    if (query.isEmpty) {
-      print('is empty');
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) => CupertinoAlertDialog(
-          title: const Text('请输入内容'),
-          content: GestureDetector(
-            onTap: () async {
-              Clipboard.setData(
-                const ClipboardData(
-                    text:
-                        '薄雾轻盈地笼罩在翠绿的山峦之间，露珠在晨光的照耀下闪闪发光。小道旁的野花盛开，散发出淡淡的清香。鸟儿在树梢上欢快地唱着歌，仿佛在迎接新的一天。远处的山顶上，一缕阳光正透过云层，洒下温暖的金色光芒'),
-              );
-              await Haptics.vibrate(HapticsType.soft);
-            },
-            child: const Text(
-                '例如：薄雾轻盈地笼罩在翠绿的山峦之间，露珠在晨光的照耀下闪闪发光。小道旁的野花盛开，散发出淡淡的清香。鸟儿在树梢上欢快地唱着歌，仿佛在迎接新的一天。远处的山顶上，一缕阳光正透过云层，洒下温暖的金色光芒。'),
-          ),
-          actions: [
-            // CupertinoDialogAction(
-            //   onPressed: () {
-            //     Navigator.of(context).pop(); // 关闭对话框
-            //   },
-            //   child: const Text('取消'),
-            // ),
-            CupertinoDialogAction(
-              onPressed: () async {
-                Navigator.of(context).pop(); // 关闭对话框
-              },
-              child: const Text(
-                '取消',
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-          ],
-        ),
-      );
-      return;
-    }
+    FocusScope.of(context).unfocus();
     isloadingT();
     initThree();
 

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:easy_popover/easy_popover.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:http/http.dart' as http;
@@ -21,21 +20,12 @@ class ProfileViewModel extends BaseViewModel {
   final GlobalKey _key = GlobalKey();
   GlobalKey get key => _key;
 
-  final _popoverController = PopoverController();
-  get popoverController => _popoverController;
-
   static bool hasProfile = false;
 
   @override
   ProfileViewModel() {
     initialize();
     print('初始化ProfileViewModel');
-  }
-
-  @override
-  void dispose() {
-    _popoverController.dispose();
-    super.dispose();
   }
 
   Future<void> saveCachedImageToGallery(String url) async {

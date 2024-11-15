@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:insta_image_viewer/insta_image_viewer.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../utils/hero-icons-outline_icons.dart';
@@ -31,7 +30,7 @@ class PromptToFavoPageView extends StackedView<PromptToFavoPageViewModel> {
               child: Tooltip(
                 message: 'Delete all picture',
                 child: Icon(
-                  LineIcons.artstation,
+                  Hero_icons_outline.trash,
                   color: Colors.black87,
                 ),
               ),
