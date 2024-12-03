@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:hung/ui/widgets/common/sider_bar_page/Donate.dart';
+import 'package:hung/ui/widgets/common/sider_bar_page/video.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
@@ -67,10 +69,9 @@ class SiderBarPageModel extends ReactiveViewModel {
         );
         break;
       case 2:
-        launchUrl(
-          Uri.parse(
-            'http://yunyuzhizhou.mlover.site/',
-          ),
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const uuuMyApp()),
         );
         break;
       case 3:
