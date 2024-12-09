@@ -54,8 +54,9 @@ Here’s a preview of the project in action:
 | ![Screenshot1](https://github.com/user-attachments/assets/98d30f63-9890-49ba-acc2-76cc757969af) | ![Screenshot2](https://github.com/user-attachments/assets/094d0214-303b-489f-9f5f-c3f1da270343) | ![Screenshot3](https://github.com/user-attachments/assets/d04cf534-5698-4104-a914-7d943676b760) |
 |---|---|---|
 | ![Screenshot4](https://github.com/user-attachments/assets/4403e6ea-dba7-4bae-a074-04e7a2c1aff6) | ![Screenshot5](https://github.com/user-attachments/assets/4085d97f-855c-4ced-a7b7-a26f78de8374) | ![Screenshot6](https://github.com/user-attachments/assets/ddb662e4-fd12-415f-a5ee-c42277e722bf) |
-| ![Screenshot7](https://github.com/user-attachments/assets/189abb5e-dad3-4ddf-b6c3-d8e52d7e791d) | ![Screenshot8](https://github.com/user-attachments/assets/c9c750ec-b69c-41dc-b76e-55cf20ffb548) | ![Screenshot_2024-09-19-23-05-05-706_com example hung](https://github.com/user-attachments/assets/ada036e0-1f65-4828-aa8b-7a10b96d7f31) | ![Screenshot_2024-09-19-23-13-00-364_com example hung](https://github.com/user-attachments/assets/dbcdfbc8-4444-405f-94c3-14f3c41f612c)
-
+| ![Screenshot7](https://github.com/user-attachments/assets/189abb5e-dad3-4ddf-b6c3-d8e52d7e791d) | ![Screenshot8](https://github.com/user-attachments/assets/c9c750ec-b69c-41dc-b76e-55cf20ffb548) | ![Screenshot_2024-09-19-23-05-05-706_com example hung](https://github.com/user-attachments/assets/ada036e0-1f65-4828-aa8b-7a10b96d7f31) | 
+![Screenshot_2024-12-09-00-30-18-845_com example hung](https://github.com/user-attachments/assets/7b742015-fcbd-4d03-8ae9-1ef432caf804)
+![Screenshot_2024-12-09-00-30-23-018_com example hung](https://github.com/user-attachments/assets/298a9a38-f0bc-4659-922b-f2b295a8737d)
 
 
 
