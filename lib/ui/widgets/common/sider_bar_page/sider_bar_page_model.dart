@@ -1,7 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:hung/ui/widgets/common/sider_bar_page/Donate.dart';
-import 'package:hung/ui/widgets/common/sider_bar_page/video.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
@@ -10,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../app/app.locator.dart';
 import '../../../../services/image_repository_service.dart';
 import '../../../webviewsite/shopsite.dart';
+import 'Donate.dart';
 
 class SiderBarPageModel extends ReactiveViewModel {
   final ImageRepository = locator<ImageRepositoryService>();
@@ -71,7 +69,7 @@ class SiderBarPageModel extends ReactiveViewModel {
       case 2:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const uuuMyApp()),
+          CupertinoPageRoute(builder: (context) => const ShopWebView()),
         );
         break;
       case 3:

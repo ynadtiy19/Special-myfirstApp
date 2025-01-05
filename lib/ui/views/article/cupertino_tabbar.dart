@@ -295,7 +295,7 @@ class _CupertinoTabBarState extends State<CupertinoTabBar>
       _globalKeys.add(GlobalKey());
     }
     _showSelf = false;
-    WidgetsBinding.instance!.addPostFrameCallback(onPostFrameCallback);
+    WidgetsBinding.instance.addPostFrameCallback(onPostFrameCallback);
   }
 
   @override

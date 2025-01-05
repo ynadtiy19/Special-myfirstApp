@@ -420,7 +420,6 @@ class ImageGridItem extends StatelessWidget {
                       print('按钮已填充，不执行保存');
                       return false; // 返回 false
                     }
-                    return true;
                   },
                   ufavoriteIcon: Icons.favorite,
                   ucloseIcon: Hero_icons_outline.x_mark,
