@@ -136,7 +136,7 @@ class HomeView extends StackedView<HomeViewModel> {
               ),
             ),
           ),
-          const ArticleView(), // 传递 jsonCache
+          const ArticleView(),
           const PinterestView(),
           // const ShopWebView(),
           const ProfileView(),

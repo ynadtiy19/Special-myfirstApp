@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:auto_size_text_plus/auto_size_text_plus.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:high_q_paginated_drop_down/high_q_paginated_drop_down.dart';
-import 'package:http/http.dart' as http;
 import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:primer_progress_bar/primer_progress_bar.dart';
 import 'package:stacked/stacked.dart';
@@ -26,6 +23,7 @@ class PinterestView extends StackedView<PinterestViewModel> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(100, 255, 219, 205),
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: kcRiceYellowColor,
         title: const Text(
           '爱上PIN图',
@@ -223,13 +221,11 @@ class PinterestView extends StackedView<PinterestViewModel> {
                             print('开始翻译：$query');
                             var q = await viewModel.translateText(query);
                             print('q: $q');
-                            final response = await http.get(Uri.parse(
-                                'https://mydiumtify.globeapp.dev/pinterestKeywords?query=$q&sortBy=relevance'));
-                            print(jsonDecode(response.body));
-                            if (response.statusCode == 200) {
-                              final List<dynamic> data =
-                                  jsonDecode(response.body);
-                              return data.map((item) {
+                            final List<Map<String, dynamic>> prompts =
+                                await viewModel.fetchPinterestPromoteData(q);
+
+                            if (prompts.isNotEmpty) {
+                              return prompts.map((item) {
                                 final scenery = Scenery.fromJson(item);
                                 return MenuItemModel<Scenery>(
                                   value: scenery,
@@ -243,7 +239,7 @@ class PinterestView extends StackedView<PinterestViewModel> {
                                 );
                               }).toList();
                             } else {
-                              throw Exception('Failed to load data');
+                              return [];
                             }
                           },
                           padding: const EdgeInsets.all(8),

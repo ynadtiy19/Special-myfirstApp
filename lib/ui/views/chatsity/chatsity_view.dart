@@ -334,18 +334,18 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                                 viewModel.dominantColor.g,
                                 viewModel.dominantColor.b)
                             : Colors.white,
-                        messageBarHitText: '消息',
+                        messageBarHintText: '消息',
                         messageBarHintStyle: const TextStyle(
                           fontSize: 16,
                           color: Colors.black87,
                         ),
-                        infliiColor: const Color.fromARGB(255, 216, 219, 231),
+                        infillColor: const Color.fromARGB(255, 216, 219, 231),
                         sendButtonIcon: viewModel.chatImage
                             ? Hero_icons_outline.arrow_small_up //图像对话
                             : viewModel.chatwithHistory
                                 ? Hero_icons_outline.rocket_launch //多轮聊天
                                 : Hero_icons_outline.paper_airplane, //谷歌聊天
-                        sendButtonColor: Colors.orangeAccent.withOpacity(0.68),
+                        sendButtonColor: Colors.orangeAccent.withGreen(100),
                         onSend: (text) async {
                           viewModel.UchangeUI();
                           viewModel.chatImage

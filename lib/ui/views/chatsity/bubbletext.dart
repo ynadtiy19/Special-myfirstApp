@@ -130,7 +130,7 @@ class BubbleSpecial extends StatelessWidget {
                             : const EdgeInsets.symmetric(
                                 vertical: 0, horizontal: 0),
                         child: isAnimated // 根据 isAnimated 参数选择文本组件
-                            ? TexMarkdown(
+                            ? GptMarkdown(
                                 text,
                                 style: textStyle,
                                 textAlign: TextAlign.left,

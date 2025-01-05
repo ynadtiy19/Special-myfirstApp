@@ -33,7 +33,6 @@ class ChatsityViewModel extends BaseViewModel {
   final ImageRepository = locator<ImageRepositoryService>();
   void setBottomNavVisible() => ImageRepository.setBottomNavVisible();
 
-  @override
   List<ListenableServiceMixin> get listenableServices => [
         ImageRepository,
       ];

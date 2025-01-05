@@ -1,22 +1,43 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:lottie/lottie.dart';
+import 'package:path/path.dart';
 import 'package:stacked/stacked.dart';
 import 'package:toastification/toastification.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../utils/hero-icons-outline_icons.dart';
 import '../../webviewsite/ynadtiy19.dart';
+import '../../widgets/common/popmenu/gptdropdown.dart';
 import '../../widgets/common/sider_bar_page/sider_bar_page.dart';
 import 'profile_viewmodel.dart';
 
 class ProfileView extends StackedView<ProfileViewModel> {
   const ProfileView({Key? key}) : super(key: key);
+
+  FutureOr onPopupSelected(
+      TodoViewMenuDestination destination, Context context) {
+    return switch (destination) {
+      TodoViewMenuDestination.showCompleted => () {},
+      TodoViewMenuDestination.hideCompleted => () {},
+      TodoViewMenuDestination.deleteCompleted => () {},
+      TodoViewMenuDestination.settings => context.hash('/settings'),
+      TodoViewMenuDestination.feedback => context.hash('/feedback'),
+      TodoViewMenuDestination.update => context.hash('/update'),
+      TodoViewMenuDestination.deleteList => () {},
+      TodoViewMenuDestination.editList => () {},
+      TodoViewMenuDestination.export ||
+      TodoViewMenuDestination.divider ||
+      TodoViewMenuDestination.selectAll =>
+        null,
+    };
+  }
 
   @override
   Widget builder(
@@ -50,62 +71,106 @@ class ProfileView extends StackedView<ProfileViewModel> {
                       viewModel.scaffoldKey.currentState?.openDrawer(); // 打开侧边栏
                     },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 4.0),
-                    child: Ink(
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 255, 219, 205),
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                      ),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(12)),
-                          onTap: () async {
-                            // await DefaultCacheManager().emptyCache();
-                            print('清除缓存成功');
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Tooltip(
-                              message: '全部故事',
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 25, // 圆形容器的宽度
-                                    height: 25, // 圆形容器的高度
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                          170, 206, 96, 96), // 背景颜色
-                                      shape: BoxShape.circle, // 圆形
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey
-                                              .withOpacity(0.5), // 阴影颜色
-                                          spreadRadius: 2, // 阴影扩散范围
-                                          blurRadius: 4, // 模糊程度
-                                          offset: const Offset(0, 2), // 阴影偏移
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 4.0),
+                        child: Ink(
+                          decoration: const BoxDecoration(
+                            color: Color.fromARGB(255, 255, 219, 205),
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(12)),
+                              onTap: () async {
+                                // await DefaultCacheManager().emptyCache();
+                                print('清除缓存成功');
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Tooltip(
+                                  message: '搜索故事',
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        width: 25, // 圆形容器的宽度
+                                        height: 25, // 圆形容器的高度
+                                        decoration: BoxDecoration(
+                                          color: const Color.fromARGB(
+                                              170, 206, 96, 96), // 背景颜色
+                                          shape: BoxShape.circle, // 圆形
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey
+                                                  .withOpacity(0.5), // 阴影颜色
+                                              spreadRadius: 2, // 阴影扩散范围
+                                              blurRadius: 4, // 模糊程度
+                                              offset:
+                                                  const Offset(0, 2), // 阴影偏移
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                    child: const Center(
-                                      child: Icon(
-                                        Hero_icons_outline
-                                            .ellipsis_vertical, // 图标
-                                        size: 18, // 图标大小
-                                        color: Colors.black87, // 图标颜色
+                                        child: const Center(
+                                          child: Icon(
+                                            Hero_icons_outline.magnifying_glass, // 图标
+                                            size: 18, // 图标大小
+                                            color: Colors.black87, // 图标颜色
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
+                      const SizedBox(width: 12),
+                      TodoViewMenu(
+                        destinations: TodoViewMenuDestination.values.toList(),
+                        onSelected: (TodoViewMenuDestination destination) {
+                          // 处理菜单项选择
+                          switch (destination) {
+                            case TodoViewMenuDestination.showCompleted:
+                              // 执行显示已完成任务的操作
+                              print('Show Completed');
+                              break;
+                            case TodoViewMenuDestination.hideCompleted:
+                              // 执行隐藏已完成任务的操作
+                              print('Hide Completed');
+                              break;
+                            case TodoViewMenuDestination.deleteCompleted:
+                              // 执行删除已完成任务的操作
+                              print('Delete Completed');
+                              break;
+                            case TodoViewMenuDestination.settings:
+                              // 执行打开设置的操作
+                              print('Settings');
+                              break;
+                            case TodoViewMenuDestination.feedback:
+                              // 执行打开反馈页面的操作
+                              print('Feedback');
+                              break;
+                            case TodoViewMenuDestination.export:
+                              // 执行导出操作
+                              print('Export');
+                              break;
+                            case TodoViewMenuDestination.update:
+                              // 执行更新操作
+                              print('Update');
+                              break;
+                            default:
+                              print('Unknown Action');
+                              break;
+                          }
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -540,7 +605,7 @@ class ErrorWidgetWithRetry extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 12),
-                child: TexMarkdown(
+                child: GptMarkdown(
                   '[家乡的故事日记视频]($url)',
                   style: const TextStyle(
                     color: Colors.white,
@@ -567,13 +632,13 @@ class ErrorWidgetWithRetry extends StatelessWidget {
                   animate: true,
                 ),
               ),
-              TexMarkdown(
+              const GptMarkdown(
                 '''🎬 **发现一个精彩视频！** 🎉
                 点击整个的卡片即可开始浏览最新视频内容，不容错过哦！👇
                 [📺 **点击这里，开启视频之旅** 🎥](https://example.com) 
                 ✨ **准备好了吗？** 快来看看这个酷炫的内容吧！😎🍿
                 ''',
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.black87,
                   fontSize: 18,
                 ),

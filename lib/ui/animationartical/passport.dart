@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart'
+import 'package:flutter_inset_shadow/flutter_inset_shadow.dart'
     hide BoxDecoration;
 import 'package:hung/ui/animationartical/animation/animation.dart';
 import 'package:hung/ui/animationartical/box_decoration.dart';

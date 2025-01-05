@@ -4,7 +4,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/painting.dart' as painting;
 import 'package:flutter/painting.dart' hide BoxDecoration, BoxShadow;
-import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
+import 'package:flutter_inset_shadow/flutter_inset_shadow.dart';
 
 class BoxDecoration extends painting.BoxDecoration {
   const BoxDecoration({

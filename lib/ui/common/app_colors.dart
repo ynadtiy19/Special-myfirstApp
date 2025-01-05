@@ -9,7 +9,7 @@ const Color kcVeryLightGrey = Color(0xFFE3E3E3);
 
 const Color kcwaterGreenwithTeal = Color.fromARGB(255, 16, 196, 124);
 
-const Color kcRiceYellowColor = Color(0xffF6E7B0); //米黄色的英文
+const Color kcRiceYellowColor = Color(0xabe1c886); //米黄色的英文
 
 const Color kcHotPinkWithTealColor = Color(0xFFE03DAC);
 

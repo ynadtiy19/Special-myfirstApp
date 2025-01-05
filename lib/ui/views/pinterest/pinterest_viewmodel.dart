@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:brotli/brotli.dart';
 import 'package:colorgram/colorgram.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -195,6 +196,116 @@ class PinterestViewModel extends BaseViewModel with WidgetsBindingObserver {
   PinterestViewModel() {
     print('初始化PinterestViewModel');
     loadData();
+  }
+
+  Future<List<Map<String, dynamic>>> fetchPinterestPromoteData(String q) async {
+    final url = Uri.parse('https://labs.writingmate.ai/api/chat/public');
+
+    // 构建请求头
+    final headers = {
+      'accept': '*/*',
+      'accept-encoding': 'gzip, deflate, br, zstd',
+      'accept-language': 'zh-CN,zh;q=0.9',
+      'cache-control': 'no-cache',
+      'content-type': 'application/json',
+      'origin': 'https://labs.writingmate.ai',
+      'pragma': 'no-cache',
+      'referer': 'https://labs.writingmate.ai/share/WLPW?__show_banner=false',
+      'sec-ch-ua':
+          '"Chromium";v="130", "Microsoft Edge";v="130", "Not?A_Brand";v="99"',
+      'sec-ch-ua-mobile': '?0',
+      'sec-ch-ua-platform': '"Windows"',
+      'sec-fetch-dest': 'empty',
+      'sec-fetch-mode': 'cors',
+      'sec-fetch-site': 'same-origin',
+      'user-agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0',
+    };
+
+    // 构建请求体
+    final body = jsonEncode({
+      "response_format": {
+        "type": "json_schema",
+        "json_schema": {
+          "name": "prompt_response",
+          "strict": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "pinterestprompts": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+            },
+            "required": ["pinterestprompts"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "chatSettings": {
+        "model": "gpt-4o-mini",
+        "temperature": 0.8,
+        "contextLength": 16385,
+        "includeProfileContext": false,
+        "includeWorkspaceInstructions": false,
+        "embeddingsProvider": "openai"
+      },
+      "messages": [
+        {
+          "role": "system",
+          "content":
+              "You are tasked with providing a list of the top 15 trending Pinterest search keywords for the year 2025, based on the keyword provided by the user: \"$q\". The keywords should be relevant, attractive, and highly engaging for the platform users. The response should not exceed 15 keywords and should include their corresponding search volume. Please format the response in JSON with 'keyword' and 'volume' fields. Ensure the keywords are aligned with what users might search for in 2025.Please simulate the response like this:\n[\n  { \"keyword\": \"Mountain View\", \"volume\": \"15000\" },\n  { \"keyword\": \"Grand Canyon\", \"volume\": \"12000\" },\n  { \"keyword\": \"Yellowstone National Park\", \"volume\": \"9000\" },\n  { \"keyword\": \"Eiffel Tower\", \"volume\": \"20000\" }\n],And replace it in the array corresponding to the pinterestprompts key."
+        },
+        {
+          "role": "user",
+          "content":
+              "Provide a list of Pinterest's top 15 trending keywords for 2025 based on the keyword: \"$q\". Ensure that the keywords are engaging and highly relevant for the Pinterest platform."
+        }
+      ]
+    });
+
+    try {
+      final response = await http.post(url, headers: headers, body: body);
+
+      if (response.statusCode == 200) {
+        // 检查响应头以确定内容是否是 Brotli 编码
+        if (response.headers['content-encoding'] == 'br') {
+          // 解码 Brotli 编码的字节
+          final compressedBytes = response.bodyBytes;
+
+          // 使用 Brotli 包解压缩
+          final decodedBytes = brotli.decode(compressedBytes);
+          final decodedString = utf8.decode(decodedBytes);
+          // 解析 JSON
+          final jsonResponse = jsonDecode(decodedString);
+          final List<dynamic> prompts = jsonResponse['pinterestprompts'];
+          print(prompts);
+          final parsedPrompts = prompts.map((item) {
+            if (item is String) {
+              // 如果元素是 String 类型（JSON 格式），手动解析
+              return jsonDecode(item) as Map<String, dynamic>;
+            } else if (item is Map<String, dynamic>) {
+              // 如果已经是 Map 类型，直接返回
+              return item;
+            } else {
+              throw Exception('Invalid data type in pinterestprompts');
+            }
+          }).toList();
+
+          notifyListeners();
+          return parsedPrompts.cast<Map<String, dynamic>>();
+        } else {
+          return [];
+        }
+      } else {
+        print('Failed to send request: ${response.statusCode}');
+        return [];
+      }
+      // _isfetching = false;
+    } catch (e) {
+      print('Error: $e');
+      return [];
+    }
   }
 
   Future<String> translateText(String text) async {

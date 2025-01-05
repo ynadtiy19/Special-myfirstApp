@@ -107,7 +107,7 @@ class _TypewriterAnimatedMarkdownTextState
   @override
   Widget build(BuildContext context) {
     bool isCopied = false;
-    return TexMarkdown(
+    return GptMarkdown(
       _currentTextWithCursor, // Display the current typed text with cursor
       style: widget.textStyle,
       textAlign: widget.textAlign,
