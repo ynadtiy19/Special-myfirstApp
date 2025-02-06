@@ -71,6 +71,8 @@ dependencies:
   flutter_plugin_android_lifecycle: ^2.0.24
   material_symbols_icons: ^4.2801.1
   flutter_localization: ^0.3.0
+  vector_graphics: ^1.1.11+1
+  impulse_player_flutter: ^0.1.0
 
 
 dev_dependencies:
@@ -108,3 +110,7 @@ flutter:
     - family: ShantellSans-Medium
       fonts:
         - asset: fonts/ShantellSans-Medium.ttf
+
+flutter_native_splash:
+  color: '#9FE870'
+  image: 'images/logo.png'

@@ -8,12 +8,12 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:hung/app/app.bottomsheets.dart';
 import 'package:hung/app/app.dialogs.dart';
 import 'package:hung/app/app.locator.dart';
-import 'package:hung/app/app.router.dart';
 import 'package:hung/services/chat_message.dart';
 import 'package:hung/services/image_data.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stacked_services/stacked_services.dart';
+
+import 'app_loader.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,41 +47,9 @@ void main() async {
   setupDialogUi(); // Assuming this is a function from your first app
   setupBottomSheetUi(); // Assuming this is a function from your first app
   runApp(
-    const MyApp(),
+    const AppLoader(),
   );
   configLoading();
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "云宇之洲",
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: const Color(0xFFF6F1F1),
-        brightness: Brightness.light,
-        pageTransitionsTheme: const PageTransitionsTheme(
-          builders: {
-            TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-          },
-        ),
-        fontFamily: 'Poppins',
-      ),
-      // home: const SplashPage(),
-      initialRoute: Routes.homeView,
-      onGenerateRoute: StackedRouter().onGenerateRoute,
-      navigatorKey: StackedService.navigatorKey,
-      navigatorObservers: [
-        StackedService.routeObserver,
-      ],
-      builder: EasyLoading.init(),
-    );
-  }
 }
 
 Future<void> configLoading() async {

@@ -747,7 +747,7 @@ class ChatsityViewModel extends BaseViewModel {
                 "response_format": {"type": "text"},
                 "chatSettings": {
                   "model": "gpt-4o-mini",
-                  "temperature": 0.5,
+                  "temperature": 0.8,
                   "contextLength": 16385,
                   "includeProfileContext": false,
                   "includeWorkspaceInstructions": false,

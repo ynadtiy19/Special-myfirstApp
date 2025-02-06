@@ -52,7 +52,7 @@ class _MyPopupMenuState extends State<MyPopupMenu> {
                 widget.onPress!(x); // 使用回调
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  duration: Duration(seconds: 1),
+                  duration: const Duration(seconds: 1),
                   content: Text('Action => $x'),
                 ));
               }
@@ -82,8 +82,8 @@ class _PopupMenuContentState extends State<PopupMenuContent>
 
   @override
   void initState() {
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 200));
     _animation = Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(parent: _animationController, curve: Curves.easeOut));
     super.initState();
@@ -135,9 +135,9 @@ class _PopupMenuContentState extends State<PopupMenuContent>
                       onTap: () {},
                       child: Container(
                         width: double.maxFinite,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-                        margin: EdgeInsets.only(left: 64),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24, vertical: 24),
+                        margin: const EdgeInsets.only(left: 64),
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(24),
@@ -155,17 +155,17 @@ class _PopupMenuContentState extends State<PopupMenuContent>
                               child: Row(
                                 children: [
                                   Container(
-                                    padding: EdgeInsets.all(6),
+                                    padding: const EdgeInsets.all(6),
                                     decoration: BoxDecoration(
-                                      color: Color(0xFFFFF0E3),
+                                      color: const Color(0xFFFFF0E3),
                                       borderRadius: BorderRadius.circular(24),
                                     ),
-                                    child: Icon(
+                                    child: const Icon(
                                       Hero_icons_outline.x_mark,
                                       color: Colors.red,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 12,
                                   ),
                                   Text(
@@ -179,7 +179,7 @@ class _PopupMenuContentState extends State<PopupMenuContent>
                               ),
                             ),
                             //Edit workout
-                            SizedBox(
+                            const SizedBox(
                               height: 16,
                             ),
 
@@ -188,17 +188,17 @@ class _PopupMenuContentState extends State<PopupMenuContent>
                               child: Row(
                                 children: [
                                   Container(
-                                    padding: EdgeInsets.all(6),
+                                    padding: const EdgeInsets.all(6),
                                     decoration: BoxDecoration(
-                                      color: Color(0xFFE1E1FC),
+                                      color: const Color(0xFFE1E1FC),
                                       borderRadius: BorderRadius.circular(24),
                                     ),
-                                    child: Icon(
+                                    child: const Icon(
                                       Hero_icons_outline.x_mark,
                                       color: Color(0xFF3840A2),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 12,
                                   ),
                                   Text(
@@ -212,7 +212,7 @@ class _PopupMenuContentState extends State<PopupMenuContent>
                               ),
                             ),
                             //Share workout
-                            SizedBox(
+                            const SizedBox(
                               height: 16,
                             ),
                             GestureDetector(
@@ -220,17 +220,17 @@ class _PopupMenuContentState extends State<PopupMenuContent>
                               child: Row(
                                 children: [
                                   Container(
-                                    padding: EdgeInsets.all(6),
+                                    padding: const EdgeInsets.all(6),
                                     decoration: BoxDecoration(
-                                      color: Color(0xFFDDF3FD),
+                                      color: const Color(0xFFDDF3FD),
                                       borderRadius: BorderRadius.circular(24),
                                     ),
-                                    child: Icon(
+                                    child: const Icon(
                                       Hero_icons_outline.x_mark,
                                       color: Color.fromARGB(255, 4, 5, 6),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 12,
                                   ),
                                   Text(
@@ -244,7 +244,7 @@ class _PopupMenuContentState extends State<PopupMenuContent>
                               ),
                             ),
                             //Chat box
-                            SizedBox(
+                            const SizedBox(
                               height: 32,
                             ),
                             GestureDetector(
@@ -252,13 +252,13 @@ class _PopupMenuContentState extends State<PopupMenuContent>
                               child: Container(
                                 width: double.maxFinite,
                                 height: 150,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 16),
                                 decoration: BoxDecoration(
-                                  color: Color(0xFFC2E3F6),
+                                  color: const Color(0xFFC2E3F6),
                                   borderRadius: BorderRadius.circular(16),
                                 ),
-                                child: Center(
+                                child: const Center(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
