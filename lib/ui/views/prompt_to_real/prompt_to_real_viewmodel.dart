@@ -381,7 +381,18 @@ class PromptToRealViewModel extends ReactiveViewModel {
         headers: {
           'X-Key': 'Key $apiKey',
           'X-Secret': 'Secret $secretKey',
-          'User-Agent': 'Custom User-Agent ${random.nextInt(1000)}'
+          'Accept': '*/*',
+          'Accept-Encoding': 'gzip, deflate, br, zstd',
+          'Connection': 'keep-alive',
+          'Content-Type': 'application/json',
+          'User-Agent':
+              'Mozilla/5.0 (Linux; Android 11; Pixel 4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Mobile Safari/537.36',
+          'Origin': 'https://mydiumtify.globeapp.dev',
+          'Referer': 'https://mydiumtify.globeapp.dev/',
+          'sec-ch-ua':
+              '"Chromium";v="89", "Google Chrome";v="89", "Not:A-Brand";v="99"',
+          'sec-ch-ua-mobile': '?1',
+          'sec-ch-ua-platform': '"Android"',
         },
       );
 
@@ -420,7 +431,18 @@ class PromptToRealViewModel extends ReactiveViewModel {
         ..headers.addAll({
           'X-Key': 'Key $apiKey',
           'X-Secret': 'Secret $secretKey',
-          'User-Agent': 'Custom User-Agent ${random.nextInt(1000)}'
+          'Accept': '*/*',
+          'Accept-Encoding': 'gzip, deflate, br, zstd',
+          'Connection': 'keep-alive',
+          'Content-Type': 'application/json',
+          'User-Agent':
+              'Mozilla/5.0 (Linux; Android 11; Pixel 4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Mobile Safari/537.36',
+          'Origin': 'https://mydiumtify.globeapp.dev',
+          'Referer': 'https://mydiumtify.globeapp.dev/',
+          'sec-ch-ua':
+              '"Chromium";v="89", "Google Chrome";v="89", "Not:A-Brand";v="99"',
+          'sec-ch-ua-mobile': '?1',
+          'sec-ch-ua-platform': '"Android"',
         });
 
       final generateResponse = await request.send();
