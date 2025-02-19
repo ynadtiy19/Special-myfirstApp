@@ -72,7 +72,6 @@ dependencies:
   material_symbols_icons: ^4.2801.1
   flutter_localization: ^0.3.0
   vector_graphics: ^1.1.11+1
-  impulse_player_flutter: ^0.1.0
 
 
 dev_dependencies:
@@ -90,6 +89,9 @@ flutter:
     - images/avatars/
     - .env
     - riv/
+    - assets/at_talk.exe
+    - keys/@dolphin9interim_key.atKeys
+    - keys/@gemini2banana_key.atKeys
   fonts:
     - family: hero-icons-outline
       fonts:

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:brotli/brotli.dart';
 import 'package:colorgram/colorgram.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -723,7 +724,7 @@ class ChatsityViewModel extends BaseViewModel {
     // 根据 _isGeminichat 的值选择不同的 API
     final apiUrl = _isGeminichat
         ? 'https://mylinktoa.globeapp.dev/linka?q=${Uri.encodeComponent(query)}'
-        : 'https://labs.writingmate.ai/api/chat/public';
+        : 'https://ai-answer-generator-3.toolzflow.app/api/chat/public'; //https://labs.writingmate.ai/api/chat/public
 
     print(apiUrl);
 
@@ -736,18 +737,33 @@ class ChatsityViewModel extends BaseViewModel {
               headers: {
                 "Content-Type": "application/json",
                 "User-Agent":
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.5845.111 Safari/537.36",
-                "Referer": "https://labs.writingmate.ai",
-                "Accept":
-                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-                "Accept-Language": "en-US,en;q=0.9",
-                "X-Forwarded-For": "203.0.113.195", // 假设的IP地址
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0", // Updated User-Agent
+                "Referer":
+                    "https://ai-answer-generator-3.toolzflow.app/", // Updated Referer
+                "Accept": "*/*", // Updated Accept
+                "Accept-Encoding":
+                    "gzip, deflate, br, zstd", // Added Accept-Encoding
+                "Accept-Language": "zh-CN,zh;q=0.9", // Added Accept-Language
+                "Cache-Control": "no-cache", // Added Cache-Control
+                "Origin":
+                    "https://ai-answer-generator-3.toolzflow.app", // Added Origin
+                "Pragma": "no-cache", // Added Pragma
+                "Sec-Fetch-Dest": "empty", // Added Sec-Fetch-Dest
+                "Sec-Fetch-Mode": "cors", // Added Sec-Fetch-Mode
+                "Sec-Fetch-Site": "same-origin", // Added Sec-Fetch-Site
+                "Sec-Fetch-Storage-Access":
+                    "active", // Added Sec-Fetch-Storage-Access
+                "Priority": "u=1, i", // Added Priority
+                "Sec-CH-UA":
+                    '"Chromium";v="134", "Not:A-Brand";v="24", "Microsoft Edge";v="134"', // Added Sec-CH-UA
+                "Sec-CH-UA-Mobile": "?0", // Added Sec-CH-UA-Mobile
+                "Sec-CH-UA-Platform": '"Windows"', // Added Sec-CH-UA-Platform
               },
               body: jsonEncode({
                 "response_format": {"type": "text"},
                 "chatSettings": {
                   "model": "gpt-4o-mini",
-                  "temperature": 0.8,
+                  "temperature": 0.3, // 与浏览器保持一致
                   "contextLength": 16385,
                   "includeProfileContext": false,
                   "includeWorkspaceInstructions": false,
@@ -773,13 +789,18 @@ class ChatsityViewModel extends BaseViewModel {
           _isfetching = false;
           isNeedTypingIndicator = false;
         } else {
+          final compressedBytes = response.bodyBytes;
+
+          // 使用 Brotli 包解压缩
+          final decodedBytes = brotli.decode(compressedBytes);
+          final decodedString = utf8.decode(decodedBytes);
+          print(decodedString);
           // 处理纯文本响应
           final message = ChatMessage(
             isSender: false,
-            text: response.body, // 直接使用返回的纯文本
+            text: decodedString, // 直接使用返回的纯文本
             imagePath: null,
           );
-          print(response.body);
           _chatBox.add(message);
           _isfetching = false;
           isNeedTypingIndicator = false;
@@ -796,7 +817,6 @@ class ChatsityViewModel extends BaseViewModel {
       isNeedTypingIndicator = false;
       notifyListeners();
       print('An error occurred: $e');
-      throw Exception('Failed to load data: $e');
     }
     return null;
   }

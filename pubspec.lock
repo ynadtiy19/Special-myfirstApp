@@ -794,14 +794,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.2.1+1"
-  impulse_player_flutter:
-    dependency: "direct main"
-    description:
-      name: impulse_player_flutter
-      sha256: f9c93ea7d8658c8d31c5093d1e56b24789ee1995fb38c04ac982205dc015ccf0
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.1.0"
   insta_image_viewer:
     dependency: "direct main"
     description:

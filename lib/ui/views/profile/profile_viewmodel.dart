@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:json_cache/json_cache.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -67,122 +68,144 @@ class ProfileViewModel extends BaseViewModel {
 
   // 默认数据用[int index = 20]
   Future<void> profileImageFetch([int index = 100]) async {
-    final url = Uri.parse('https://clickapp.com/l2-subquery');
-    final headers = {
-      'Accept': '*/*',
-      'Accept-Encoding': 'gzip, deflate, br, zstd',
-      'Accept-Language': 'zh-CN,zh;q=0.9',
-      'Content-Type': 'application/json',
-      'Cookie':
-          'showHeader=true; _ga=GA1.1.1774880677.1728874557; cookies-analytics=true; cookies-functional=true; cookies-marketing=true; cookies-preferences=true; _ga_1JLP1XP916=GS1.1.1728878747.2.1.1728883504.0.0.0',
-      'Origin': 'https://clickapp.com',
-      'Referer':
-          'https://clickapp.com/zk/account/0x5c4cf941ca63ba5e20493a78b54c4dace099426b',
-      'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0',
-    };
+    try {
+      final ioClient = IOClient(HttpClient()
+        ..badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true); // 忽略证书错误
+      final url = Uri.parse('https://indexer.clickapp.com/');
+      final headers = {
+        'Content-Type': 'application/json',
+        'Accept': '*/*',
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+        'Origin': 'https://clickapp.com',
+        'Referer': 'https://clickapp.com/',
+        'Sec-Fetch-Dest': 'empty',
+        'Sec-Fetch-Mode': 'cors',
+        'Sec-Fetch-Site': 'same-site',
+        'User-Agent':
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0',
+      };
 
-    final payload = {
-      'operationName': 'nftsByOwner',
-      'variables': {
-        //0x5c4cf941ca63ba5e20493a78b54c4dace099426b
-        'account': '0x5c4cf941ca63ba5e20493a78b54c4dace099426b',
-        'limit': index,
-      },
-      'query': '''
-      query nftsByOwner(\$account: String!, \$limit: Int) {
-        account(id: \$account) {
-          ERC721tokens(first: \$limit, orderBy: TIMESTAMP_DESC) {
-            nodes {
-              id
-              identifier
-              uri
-              timestamp
-              ownerId
-              channel
-              content
-              transactionHash
-              __typename
-            }
-            pageInfo {
-              hasNextPage
-              endCursor
-              __typename
-            }
+      // 请求负载
+      final payload = {
+        "operationName": "nftsByOwner",
+        "variables": {
+          "account": "0x1d7baa90d63b79c4cbeaf3b40a7be53791158b1f",
+          "contentType": "",
+          "limit": index,
+        },
+        "query": """
+    query nftsByOwner(\$account: String!, \$limit: Int, \$contentType: String) {
+      eRC721Tokens(
+        filter: {ownerId: {equalToInsensitive: \$account}, contentType: {includes: \$contentType}}
+        first: \$limit
+        orderBy: TIMESTAMP_DESC
+      ) {
+        nodes {
+          id
+          identifier
+          uri
+          timestamp
+          ownerId
+          owner {
+            name
             __typename
           }
+          channel
+          content
+          transactionHash
+          contentType
+          thumbnail
           __typename
         }
-      }
-    ''',
-    };
-
-    final response = await http.post(
-      url,
-      headers: headers,
-      body: jsonEncode(payload),
-    );
-
-    print(response.body);
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      final nfts = data['data']['account']['ERC721tokens']['nodes'] as List;
-
-      // 合并生成 uri 和 content 的步骤
-      final transformedData = nfts.map((nft) {
-        final uriValue = (nft['uri'] as String).split('ipfs://').last;
-        final contentValue = (nft['content'] as String).split('ipfs://').last;
-
-        return {
-          'uri':
-              'https://mydiumtify.globeapp.dev/myfilebase?url=https://nodle-community-nfts.myfilebase.com/ipfs/$uriValue',
-          'content':
-              'https://mydiumtify.globeapp.dev/pinterestImage?isImage=true&url=https://nodle-community-nfts.myfilebase.com/ipfs/$contentValue',
-        };
-      }).toList();
-      print(transformedData);
-
-      // 使用 Future.wait 并行请求这些新 URL
-      final futures = transformedData.map((item) async {
-        final response = await http.get(Uri.parse(item['uri']!));
-        if (response.statusCode == 200) {
-          final responseData = jsonDecode(response.body);
-          return responseData; // 根据需要处理响应数据
-        } else {
-          print('请求失败，状态码：${response.statusCode}');
-          return null; // 返回 null 或其他处理
+        pageInfo {
+          hasNextPage
+          endCursor
+          __typename
         }
-      });
+        __typename
+      }
+    }
+    """
+      };
 
-      // 等待所有请求完成
-      final responses = await Future.wait(futures);
-      print(responses.length);
+      final response = await ioClient.post(
+        url,
+        headers: headers,
+        body: jsonEncode(payload),
+      );
+      print(response.body);
 
-      // 处理响应数据，构建最终的 mediaInfoMap
-      final mediaInfoMap = <String, Map<String, dynamic>>{};
+      if (response.statusCode == 200) {
+        print('响应200');
+        final data = jsonDecode(response.body);
+        final nfts = data['data']['account']['ERC721tokens']['nodes'] as List;
 
-      for (var i = 0; i < transformedData.length; i++) {
-        final contentUrl = transformedData[i]['content']; // 明确声明为可空字符串
-        final responseData = responses[i];
+        // 合并生成 uri 和 content 的步骤
+        final transformedData = nfts.map((nft) {
+          final uriValue = (nft['uri'] as String).split('ipfs://').last;
+          final contentValue = (nft['content'] as String).split('ipfs://').last;
 
-        if (contentUrl != null) {
-          // 只在 contentUrl 非空时添加到 map 中
-          mediaInfoMap[contentUrl] = {
-            'placeName': responseData['placeName'] ?? '未知地点',
-            'name': responseData['name'] ?? '未知名称',
+          return {
+            'uri':
+                'https://mydiumtify.globeapp.dev/myfilebase?url=https://nodle-community-nfts.myfilebase.com/ipfs/$uriValue',
+            'content':
+                'https://mydiumtify.globeapp.dev/pinterestImage?isImage=true&url=https://nodle-community-nfts.myfilebase.com/ipfs/$contentValue',
           };
-        } else {
-          print('contentUrl 为 null，跳过该条目'); // 可以选择打印警告或进行其他处理
-        }
-      }
+        }).toList();
+        print(transformedData);
 
-      // 存储数据到 JsonCacheMem
-      await jsonCacheMem.refresh('uuuprofile', mediaInfoMap);
-      notifyListeners();
-      //存储前面10条数据
-      await saveFirst10MediaInfo(mediaInfoMap);
-    } else {
-      print('请求失败，状态码：${response.statusCode}');
+        // 使用 Future.wait 并行请求这些新 URL
+        final futures = transformedData.map((item) async {
+          try {
+            final response = await http.get(Uri.parse(item['uri']!));
+            if (response.statusCode == 200) {
+              final responseData = jsonDecode(response.body);
+              return responseData; // 根据需要处理响应数据
+            } else {
+              print('请求失败，状态码：${response.statusCode}');
+              return null; // 返回 null 或其他处理
+            }
+          } catch (e) {
+            print('获取内容失败: $e');
+            return null;
+          }
+        });
+
+        // 等待所有请求完成
+        final responses = await Future.wait(futures);
+        print(responses.length);
+
+        // 处理响应数据，构建最终的 mediaInfoMap
+        final mediaInfoMap = <String, Map<String, dynamic>>{};
+
+        for (var i = 0; i < transformedData.length; i++) {
+          final contentUrl = transformedData[i]['content']; // 明确声明为可空字符串
+          final responseData = responses[i];
+
+          if (contentUrl != null && responseData != null) {
+            // 只在 contentUrl 非空时添加到 map 中
+            mediaInfoMap[contentUrl] = {
+              'placeName': responseData['placeName'] ?? '未知地点',
+              'name': responseData['name'] ?? '未知名称',
+            };
+          } else {
+            print('contentUrl 或响应数据 为 null，跳过该条目');
+          }
+        }
+
+        // 存储数据到 JsonCacheMem
+        await jsonCacheMem.refresh('uuuprofile', mediaInfoMap);
+        notifyListeners();
+
+        // 存储前面10条数据
+        await saveFirst10MediaInfo(mediaInfoMap);
+      } else {
+        print('请求失败，状态码：${response.statusCode}');
+      }
+    } catch (e) {
+      print('发生错误: $e');
     }
   }
 
