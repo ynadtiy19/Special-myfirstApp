@@ -410,11 +410,9 @@ class ImageGridItem extends StatelessWidget {
                         applyBlurEffect: true,
                       );
                       // 返回 true 表示保存成功
-                      return true;
                     } else {
                       // 如果 value 为 true，表示按钮已填充，则不执行保存逻辑
                       print('按钮已填充，不执行保存');
-                      return false; // 返回 false
                     }
                   },
                   ufavoriteIcon: Icons.favorite,

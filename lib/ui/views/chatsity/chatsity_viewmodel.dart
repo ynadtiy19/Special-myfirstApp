@@ -200,17 +200,15 @@ class ChatsityViewModel extends BaseViewModel {
     print('所有缓存数据已被清除');
   }
 
-  Map<String, dynamic> jsonMessages = {
-    "history": [
-      {"role": "user", "content": "地球有多大"},
-      {
-        "role": "assistant",
-        "content": ":item[地球]{ to=\"地球 \" }的直径大约为12,742千米(7,917英里)。"
-      },
-      {"role": "user", "content": "这个夏天我可以去哪里旅游"}
-    ]
-  };
-  Map<String, dynamic> get jsonMessagesList => jsonMessages;
+  List<Map<String, dynamic>> jsonMessages = [
+    {"role": "user", "content": "地球有多大"},
+    {
+      "role": "assistant",
+      "content": ":item[地球]{ to=\"地球 \" }的直径大约为12,742千米(7,917英里)。"
+    },
+    {"role": "user", "content": "这个夏天我可以去哪里旅游"}
+  ];
+  List<Map<String, dynamic>> get jsonMessagesList => jsonMessages;
 
   void imagePath(String imagePath) async {
     _image = File(imagePath);
@@ -614,9 +612,30 @@ class ChatsityViewModel extends BaseViewModel {
   }
 
   Future<void> UchatwithHistory(String text) async {
-    final url = Uri.parse('https://delve.a9.io/retrieve');
+    final url = Uri.parse('https://labs.writingmate.ai/api/chat/public');
     _isfetching = true;
     isNeedTypingIndicator = true;
+
+    final headers = {
+      'accept': '*/*',
+      'accept-encoding': 'gzip, deflate, br, zstd',
+      'accept-language': 'zh-CN,zh;q=0.9',
+      'cache-control': 'no-cache',
+      'content-type': 'application/json',
+      'origin': 'https://labs.writingmate.ai',
+      'pragma': 'no-cache',
+      'referer': 'https://labs.writingmate.ai/share/WLPW?__show_banner=false',
+      'sec-ch-ua':
+          '"Chromium";v="130", "Microsoft Edge";v="130", "Not?A_Brand";v="99"',
+      'sec-ch-ua-mobile': '?0',
+      'sec-ch-ua-platform': '"Windows"',
+      'sec-fetch-dest': 'empty',
+      'sec-fetch-mode': 'cors',
+      'sec-fetch-site': 'same-origin',
+      'user-agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0',
+    };
+    // 构建请求体
 
     final message = ChatMessage(isSender: true, text: text, imagePath: null);
     // 将发送的消息构建为 JSON 格式并存储到 Hive
@@ -626,46 +645,39 @@ class ChatsityViewModel extends BaseViewModel {
     List<ChatMessage> messages = _chatBox.values.toList();
     // 转换消息为 JSON 格式
     jsonMessages = convertMessagesToJsonWithHistory(messages);
+    print(jsonMessages);
 
-    // print(jsonMessages);
+    final body = jsonEncode({
+      "response_format": {"type": "text"},
+      "chatSettings": {
+        "model": "gpt-4o-mini",
+        "temperature": 0.8,
+        "contextLength": 16385,
+        "includeProfileContext": false,
+        "includeWorkspaceInstructions": false,
+        "embeddingsProvider": "openai"
+      },
+      "messages": jsonMessages,
+      "customModelId": ""
+    });
 
     // 发送POST请求
     try {
       final response = await http.post(
         url,
-        headers: {
-          'Content-Type': 'application/json',
-          'User-Agent': getRandomUserAgent(), // 伪装用户代理
-        },
-        body: jsonEncode(jsonMessages), // 将Dart对象转换为JSON字符串
+        headers: headers,
+        body: body, // 将Dart对象转换为JSON字符串
       );
 
       if (response.statusCode == 200) {
-        // 请求成功
-        final responseBody =
-            utf8.decode(response.bodyBytes); // 使用UTF-8解码,string类型
+        final compressedBytes = response.bodyBytes;
 
-        String cleanText(String input) {
-          // 处理 :item[...] { to="..." } 的情况
-          final pattern1 = RegExp(r':item\[(.*?)\]\{ to=".*?" \}');
-          String cleanedText = input.replaceAllMapped(pattern1, (match) {
-            return match.group(1)!;
-          });
-
-          // 处理 item[...] 的情况
-          final pattern2 = RegExp(r'item\[(.*?)\]');
-          cleanedText = cleanedText.replaceAllMapped(pattern2, (match) {
-            return match.group(1)!;
-          });
-
-          return cleanedText;
-        }
-
-        final cleanedResponse = cleanText(responseBody);
-
+        // 使用 Brotli 包解压缩
+        final decodedBytes = brotli.decode(compressedBytes);
+        final decodedString = utf8.decode(decodedBytes);
         final message = ChatMessage(
           isSender: false,
-          text: cleanedResponse,
+          text: decodedString,
           imagePath: null,
         );
         // 将接收到的消息存储到 Hive
@@ -673,7 +685,7 @@ class ChatsityViewModel extends BaseViewModel {
         _isfetching = false;
         isNeedTypingIndicator = false;
         notifyListeners();
-        print('Response data: $responseBody');
+        print('Response data: $decodedString');
       } else {
         _isfetching = false;
         isNeedTypingIndicator = false;
@@ -686,7 +698,7 @@ class ChatsityViewModel extends BaseViewModel {
     }
   }
 
-  Map<String, dynamic> convertMessagesToJsonWithHistory(
+  List<Map<String, dynamic>> convertMessagesToJsonWithHistory(
       List<ChatMessage> messages) {
     List<Map<String, dynamic>> jsonList = [];
 
@@ -700,7 +712,7 @@ class ChatsityViewModel extends BaseViewModel {
         };
       } else {
         jsonItem = {
-          "role": "assistant",
+          "role": "system",
           "content": message.text,
         };
       }
@@ -708,9 +720,7 @@ class ChatsityViewModel extends BaseViewModel {
       jsonList.add(jsonItem);
     }
 
-    return {
-      "history": jsonList,
-    };
+    return jsonList;
   }
 
   Future<Map<String, dynamic>?> sendmessage(

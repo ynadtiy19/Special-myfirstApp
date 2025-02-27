@@ -697,7 +697,6 @@ class ImageGridView extends StatelessWidget {
                   child: InstaImageViewer(
                     uonTap: (bool value) async {
                       await onImageTap(context, imageBase64, value);
-                      return value; // 根据需要返回 true 或 false
                     },
                     ucloseIcon: Hero_icons_outline.x_mark,
                     ufavoriteIcon: Hero_icons_outline.heart,

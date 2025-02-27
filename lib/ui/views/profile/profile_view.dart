@@ -116,7 +116,8 @@ class ProfileView extends StackedView<ProfileViewModel> {
                                         ),
                                         child: const Center(
                                           child: Icon(
-                                            Hero_icons_outline.magnifying_glass, // 图标
+                                            Hero_icons_outline
+                                                .magnifying_glass, // 图标
                                             size: 18, // 图标大小
                                             color: Colors.black87, // 图标颜色
                                           ),
@@ -524,13 +525,9 @@ class ImageCardWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15.0),
                       applyBlurEffect: true,
                     );
-
-                    // 返回 true 表示保存成功
-                    return true;
                   } else {
                     // 如果 value 为 true，表示按钮已填充，则不执行保存逻辑
                     print('按钮已填充，不执行保存');
-                    return false; // 返回 false
                   }
                 },
                 ufavoriteIcon: Icons.favorite, // 替换为您的图标

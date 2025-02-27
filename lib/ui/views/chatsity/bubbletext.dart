@@ -8,15 +8,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../utils/hero-icons-outline_icons.dart';
 
-///WhatsApp's chat bubble type
-///
-///chat bubble color can be customized using [color]
-///chat bubble tail can be customized  using [tail]
-///chat bubble display message can be changed using [text]
-///[text] is the only required parameter
-///message sender can be changed using [isSender]
-///chat bubble [TextStyle] can be customized using [textStyle]
-
 class BubbleSpecial extends StatelessWidget {
   final bool isSender;
   final String text;
@@ -134,7 +125,12 @@ class BubbleSpecial extends StatelessWidget {
                                 text,
                                 style: textStyle,
                                 textAlign: TextAlign.left,
-                                codeBuilder: (context, language, code) {
+                                codeBuilder: (
+                                  context,
+                                  language,
+                                  code,
+                                  isCopyable,
+                                ) {
                                   return Container(
                                     padding: const EdgeInsets.all(8),
                                     margin:

@@ -52,14 +52,14 @@ dependencies:
   hl_image_picker_android: ^1.2.11
   colorgram: ^2.0.0
   listview_screenshot: ^3.1.1
-  image_gallery_saver_plus: ^3.0.5
+  image_gallery_saver_plus: ^4.0.0-0.alpha
   path_provider: ^2.1.4
   typeid: ^1.0.1
   path: ^1.9.0
   high_q_paginated_drop_down: ^2.1.0
   full_screen_image: ^2.0.0
   brotli: ^0.6.0
-  gpt_markdown: ^1.0.3
+  gpt_markdown: ^1.0.11
   lottie: ^3.1.2
   smooth_page_indicator: ^1.2.0+3
   flutter_svg: ^2.0.10+1
@@ -70,7 +70,6 @@ dependencies:
 #  kode_view: ^0.1.0
   flutter_plugin_android_lifecycle: ^2.0.24
   material_symbols_icons: ^4.2801.1
-  flutter_localization: ^0.3.0
 
 
 

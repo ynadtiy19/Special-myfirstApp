@@ -4,7 +4,6 @@ import 'package:auto_size_text_plus/auto_size_text_plus.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_bubbles/bubbles/bubble_normal_image.dart';
-import 'package:chat_bubbles/message_bars/message_bar.dart';
 import 'package:device_scan_animation/device_scan_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,7 +16,9 @@ import 'package:user_profile_avatar/user_profile_avatar.dart';
 
 import '../../../services/chat_message.dart';
 import '../../utils/hero-icons-outline_icons.dart';
+import '../../widgets/common/popmenu/gptdropdown.dart';
 import 'bubbletext.dart';
+import 'chatmessagebar.dart';
 import 'chatsity_viewmodel.dart';
 
 class ChatsityView extends StackedView<ChatsityViewModel> {
@@ -307,21 +308,61 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                           FocusScope.of(context).unfocus();
                         }
                       },
-                      child: MessageBar(
+                      child: chatMessageBar(
                         textController: viewModel.textController,
                         replyingTo: viewModel.listenText,
                         ureplyactions: [
-                          const Text(
-                            '截图',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          InkWell(
-                            child: Icon(Hero_icons_outline.rectangle_stack),
-                            onTap: () {
-                              viewModel.onScreenshot();
-                              print('最后截图成功');
+                          TodoViewMenu(
+                            destinations:
+                                TodoViewMenuDestination.values.toList(),
+                            onSelected: (TodoViewMenuDestination destination) {
+                              // 处理菜单项选择
+                              switch (destination) {
+                                case TodoViewMenuDestination.showCompleted:
+                                  // 执行显示已完成任务的操作
+                                  print('Show Completed');
+                                  break;
+                                case TodoViewMenuDestination.hideCompleted:
+                                  // 执行隐藏已完成任务的操作
+                                  print('Hide Completed');
+                                  break;
+                                case TodoViewMenuDestination.deleteCompleted:
+                                  // 执行删除已完成任务的操作
+                                  print('Delete Completed');
+                                  break;
+                                case TodoViewMenuDestination.settings:
+                                  // 执行打开设置的操作
+                                  print('Settings');
+                                  break;
+                                case TodoViewMenuDestination.feedback:
+                                  // 执行打开反馈页面的操作
+                                  print('Feedback');
+                                  break;
+                                case TodoViewMenuDestination.export:
+                                  // 执行导出操作
+                                  print('Export');
+                                  break;
+                                case TodoViewMenuDestination.update:
+                                  // 执行更新操作
+                                  print('Update');
+                                  break;
+                                default:
+                                  print('Unknown Action');
+                                  break;
+                              }
                             },
-                          )
+                          ),
+                          // const Text(
+                          //   '截图',
+                          //   style: TextStyle(color: Colors.black),
+                          // ),
+                          // InkWell(
+                          //   child: Icon(Hero_icons_outline.rectangle_stack),
+                          //   onTap: () {
+                          //     viewModel.onScreenshot();
+                          //     print('最后截图成功');
+                          //   },
+                          // )
                         ],
                         onTapCloseReply: () {
                           viewModel.ureplychange(); //关闭回复框
@@ -339,13 +380,13 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                           fontSize: 16,
                           color: Colors.black87,
                         ),
-                        infillColor: const Color.fromARGB(255, 216, 219, 231),
+                        infillColor: const Color.fromARGB(100, 255, 219, 205),
                         sendButtonIcon: viewModel.chatImage
                             ? Hero_icons_outline.arrow_small_up //图像对话
                             : viewModel.chatwithHistory
                                 ? Hero_icons_outline.rocket_launch //多轮聊天
                                 : Hero_icons_outline.paper_airplane, //谷歌聊天
-                        sendButtonColor: Colors.orangeAccent.withGreen(100),
+                        sendButtonColor: Colors.green,
                         onSend: (text) async {
                           viewModel.UchangeUI();
                           viewModel.chatImage
@@ -355,81 +396,243 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                                   : await viewModel.sendmessage(text);
                         }, //文本框中信息为_
                         actions: [
-                          InkWell(
-                            child: AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 300),
-                              transitionBuilder:
-                                  (Widget child, Animation<double> animation) {
-                                return ScaleTransition(
-                                  scale: animation,
-                                  child: AnimatedBuilder(
-                                    animation: animation,
-                                    builder: (context, child) {
-                                      return ColorFiltered(
-                                        colorFilter: ColorFilter.mode(
-                                          Colors.black
-                                              .withOpacity(animation.value),
-                                          BlendMode.srcIn,
-                                        ),
-                                        child: child,
-                                      );
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Ink(
+                                decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 255, 219, 205),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                ),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(12)),
+                                    onTap: () {
+                                      viewModel.uexchange();
                                     },
-                                    child: child,
-                                  ),
-                                );
-                              },
-                              child: viewModel.exchange
-                                  ? const Icon(Hero_icons_outline.swatch,
-                                      key: ValueKey('swatchIcon'),
-                                      color: Colors.black,
-                                      size: 26)
-                                  : const Icon(
-                                      Hero_icons_outline.bars_3,
-                                      key: ValueKey('bars3Icon'),
-                                      color: Colors.black,
-                                      size: 26,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Tooltip(
+                                        message: viewModel.exchange
+                                            ? '切换图标'
+                                            : '切换图标', // 根据您的逻辑修改提示信息
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              width: 25,
+                                              height: 25,
+                                              decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
+                                                    170, 206, 96, 96),
+                                                shape: BoxShape.circle,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.5),
+                                                    spreadRadius: 2,
+                                                    blurRadius: 4,
+                                                    offset: const Offset(0, 2),
+                                                  ),
+                                                ],
+                                              ),
+                                              child: Center(
+                                                child: AnimatedSwitcher(
+                                                  duration: const Duration(
+                                                      milliseconds: 300),
+                                                  transitionBuilder:
+                                                      (Widget child,
+                                                          Animation<double>
+                                                              animation) {
+                                                    return ScaleTransition(
+                                                      scale: animation,
+                                                      child: AnimatedBuilder(
+                                                        animation: animation,
+                                                        builder:
+                                                            (context, child) {
+                                                          return ColorFiltered(
+                                                            colorFilter:
+                                                                ColorFilter
+                                                                    .mode(
+                                                              Colors.black
+                                                                  .withOpacity(
+                                                                      animation
+                                                                          .value),
+                                                              BlendMode.srcIn,
+                                                            ),
+                                                            child: child,
+                                                          );
+                                                        },
+                                                        child: child,
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: viewModel.exchange
+                                                      ? const Icon(
+                                                          Hero_icons_outline
+                                                              .swatch,
+                                                          key: ValueKey(
+                                                              'swatchIcon'),
+                                                          color: Colors.black,
+                                                          size:
+                                                              18) // 调整图标大小以适应容器
+                                                      : const Icon(
+                                                          Hero_icons_outline
+                                                              .bars_3,
+                                                          key: ValueKey(
+                                                              'bars3Icon'),
+                                                          color: Colors.black,
+                                                          size:
+                                                              18), // 调整图标大小以适应容器
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                            ),
-                            onTap: () {
-                              viewModel.uexchange();
-                            },
-                          ),
-                          InkWell(
-                            child: viewModel.chatwithHistory
-                                ? const Icon(Hero_icons_outline.bell_alert,
-                                    color: Colors.green, size: 24)
-                                : const Icon(
-                                    Hero_icons_outline.bell,
-                                    color: Colors.black,
-                                    size: 24,
                                   ),
-                            onTap: () {
-                              viewModel.changechatwithHistory();
-                            },
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8, right: 8),
-                            child: InkWell(
-                              onTap: () {
-                                viewModel.choosechatmodel(context);
-                              },
-                              onDoubleTap: () {
-                                viewModel.choosepicker(context);
-                              },
-                              child: viewModel.pickermodel
-                                  ? Icon(
-                                      Hero_icons_outline.camera,
-                                      color: viewModel.chatImage
-                                          ? Colors.green
-                                          : Colors.black,
-                                      size: 24,
-                                    )
-                                  : Icon(Hero_icons_outline.photo,
-                                      color: viewModel.chatImage
-                                          ? Colors.green
-                                          : Colors.black,
-                                      size: 24),
-                            ),
+                                ),
+                              ),
+                              Ink(
+                                decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 255, 219, 205),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                ),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(12)),
+                                    onTap: () {
+                                      viewModel.changechatwithHistory();
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Tooltip(
+                                        message: viewModel.chatwithHistory
+                                            ? '关闭通知'
+                                            : '打开通知', // 根据您的逻辑修改提示信息
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              width: 25,
+                                              height: 25,
+                                              decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
+                                                    170, 206, 96, 96),
+                                                shape: BoxShape.circle,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.5),
+                                                    spreadRadius: 2,
+                                                    blurRadius: 4,
+                                                    offset: const Offset(0, 2),
+                                                  ),
+                                                ],
+                                              ),
+                                              child: Center(
+                                                child: viewModel.chatwithHistory
+                                                    ? const Icon(
+                                                        Hero_icons_outline
+                                                            .bell_alert,
+                                                        color: Colors.green,
+                                                        size: 18) // 调整图标大小以适应容器
+                                                    : const Icon(
+                                                        Hero_icons_outline.bell,
+                                                        color: Colors.black,
+                                                        size:
+                                                            18), // 调整图标大小以适应容器
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Ink(
+                                decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 255, 219, 205),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                ),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(12)),
+                                    onTap: () {
+                                      viewModel.choosechatmodel(context);
+                                    },
+                                    onDoubleTap: () {
+                                      viewModel.choosepicker(context);
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Tooltip(
+                                        message: viewModel.pickermodel
+                                            ? '切换到相机'
+                                            : '切换到相册', // 根据您的逻辑修改提示信息
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              width: 25,
+                                              height: 25,
+                                              decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
+                                                    170, 206, 96, 96),
+                                                shape: BoxShape.circle,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.5),
+                                                    spreadRadius: 2,
+                                                    blurRadius: 4,
+                                                    offset: const Offset(0, 2),
+                                                  ),
+                                                ],
+                                              ),
+                                              child: Center(
+                                                child: viewModel.pickermodel
+                                                    ? Icon(
+                                                        Hero_icons_outline
+                                                            .camera,
+                                                        color:
+                                                            viewModel.chatImage
+                                                                ? Colors.green
+                                                                : Colors.black,
+                                                        size: 18) // 调整图标大小以适应容器
+                                                    : Icon(
+                                                        Hero_icons_outline
+                                                            .photo,
+                                                        color:
+                                                            viewModel.chatImage
+                                                                ? Colors.green
+                                                                : Colors.black,
+                                                        size:
+                                                            18), // 调整图标大小以适应容器
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
