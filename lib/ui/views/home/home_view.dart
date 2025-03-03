@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hung/ui/views/article/article_view.dart';
 import 'package:hung/ui/widgets/common/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:stacked/stacked.dart';
+import 'package:zenith_snack_bar/zenith_snack_bar.dart';
 
 import '../../utils/hero-icons-outline_icons.dart';
 import '../../widgets/common/sider_bar_page/sider_bar_page.dart';
@@ -21,127 +22,201 @@ class HomeView extends StackedView<HomeViewModel> {
     HomeViewModel viewModel,
     Widget? child,
   ) {
-    return Scaffold(
-      key: viewModel.scaffoldKey,
-      drawer: const Drawer(
-        child: Tooltip(message: '侧边栏', child: SiderBarPage()),
-      ), //此时没有APPbar,但是将Drawer放在主要Scaffold中
-      bottomNavigationBar: AnimatedCrossFade(
-        secondChild: const SizedBox.shrink(), // 隐藏底部导航栏
-        firstChild: MeBottomNavigationBar(
-          (index) {
-            // 处理底部导航栏按钮点击事件
-            viewModel.onTabChange(index);
-            print('Selected Index changed to: $index');
-          },
+    return ZenithSnackBarScope(
+      controller: viewModel.beautifulcontrollerValue,
+      child: Scaffold(
+        key: viewModel.scaffoldKey,
+        drawer: const Drawer(
+          child: Tooltip(message: '侧边栏', child: SiderBarPage()),
+        ), //此时没有APPbar,但是将Drawer放在主要Scaffold中
+        bottomNavigationBar: AnimatedCrossFade(
+          secondChild: const SizedBox.shrink(), // 隐藏底部导航栏
+          firstChild: MeBottomNavigationBar(
+            (index) {
+              // 处理底部导航栏按钮点击事件
+              viewModel.onTabChange(index);
+              print('Selected Index changed to: $index');
+            },
+          ),
+          crossFadeState: viewModel.isBottomNavVisibleValue
+              ? CrossFadeState.showFirst
+              : CrossFadeState.showSecond,
+          duration: const Duration(milliseconds: 300), // 动画持续时间
         ),
-        crossFadeState: viewModel.isBottomNavVisibleValue
-            ? CrossFadeState.showFirst
-            : CrossFadeState.showSecond,
-        duration: const Duration(milliseconds: 300), // 动画持续时间
-      ),
-      body: IndexedStack(
-        index: viewModel.uuuindex,
-        children: <Widget>[
-          DefaultTabController(
-            length: 2,
-            child: GestureDetector(
-              onTap: () {
-                FocusScope.of(context).unfocus();
-              },
-              child: Scaffold(
-                appBar: viewModel.isBottomNavVisibleValue
-                    ? PreferredSize(
-                        preferredSize: const Size.fromHeight(50 + 42.0),
-                        child: AppBar(
-                          leading: Builder(
-                            builder: (context) => IconButton(
-                              icon: const Icon(Hero_icons_outline
-                                  .bars_3_bottom_left), // 设置自定义图标
-                              onPressed: () {
-                                viewModel.scaffoldKey.currentState
-                                    ?.openDrawer(); // 打开侧边栏
-                              },
-                            ),
-                          ),
-                          toolbarHeight: 90,
-                          elevation: 0,
-                          backgroundColor: Colors.transparent,
-                          automaticallyImplyLeading: false,
-                          flexibleSpace: CustomPaint(
-                            size: Size.fromHeight(50 + 2 * 42.0),
-                            painter: DiagonalStripesPainter(),
-                          ),
-                          title: Text(
-                            'Chating Buddy',
-                            style: GoogleFonts.abhayaLibre(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                          bottom: TabBar(
-                            tabAlignment: TabAlignment.center,
-                            indicatorColor: Colors.lightGreen,
-                            indicatorSize: TabBarIndicatorSize.label,
-                            isScrollable: true,
-                            labelColor: Colors.black,
-                            labelStyle: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            unselectedLabelColor: Colors.white54,
-                            unselectedLabelStyle: const TextStyle(
-                              fontSize: 10,
-                            ),
-                            tabs: [
-                              Tab(
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  child: const Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text('Chating'),
-                                      SizedBox(width: 4),
-                                      Icon(Hero_icons_outline.sparkles),
-                                    ],
+        body: ValueListenableBuilder<String?>(
+          valueListenable: viewModel.username,
+          builder: (context, value, child) {
+            if (value != null && value != viewModel.previousValueValue) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                ZenithSnackBarScope.of(context).add(
+                  context: context,
+                  content: ZenithSnackBarTile(
+                    key: const Key('message_snack_bar'),
+                    priority: 1,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 0,
+                      horizontal: 0,
+                    ),
+                    child: Ink(
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 255, 219, 205),
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(12)),
+                          onTap: () {
+                            // 处理点击事件
+                            print('Button tapped');
+                          },
+                          child: Tooltip(
+                            message: '家乡的风景画',
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 25, // 圆形容器的宽度
+                                  height: 25, // 圆形容器的高度
+                                  decoration: const BoxDecoration(
+                                    color: Color.fromARGB(
+                                        245, 225, 190, 231), // 背景颜色
+                                    shape: BoxShape.circle, // 圆形
+                                  ),
+                                  child: const Icon(
+                                    textDirection: TextDirection.ltr,
+                                    weight: 50,
+                                    size: 18,
+                                    Hero_icons_outline.gift,
+                                    color: Colors.black87,
                                   ),
                                 ),
-                              ),
-                              Tab(
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  child: const Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text('Prompting'),
-                                      SizedBox(width: 4),
-                                      Icon(Hero_icons_outline.paint_brush),
-                                    ],
+                                Text(
+                                  value,
+                                  style: TextStyle(
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      )
-                    : null,
-                body: const TabBarView(
-                  physics: NeverScrollableScrollPhysics(), // 禁用滑动
-                  children: [
-                    ChatsityView(),
-                    PromptToRealView(),
-                  ],
+                      ),
+                    ),
+                  ),
+                );
+                viewModel.onPreviousValueChange(value); // 更新 previousValue
+              });
+            }
+            return IndexedStack(
+              index: viewModel.uuuindex,
+              children: <Widget>[
+                DefaultTabController(
+                  length: 2,
+                  child: GestureDetector(
+                    onTap: () {
+                      FocusScope.of(context).unfocus();
+                    },
+                    child: Scaffold(
+                      appBar: viewModel.isBottomNavVisibleValue
+                          ? PreferredSize(
+                              preferredSize: const Size.fromHeight(50 + 42.0),
+                              child: AppBar(
+                                leading: Builder(
+                                  builder: (context) => IconButton(
+                                    icon: const Icon(Hero_icons_outline
+                                        .bars_3_bottom_left), // 设置自定义图标
+                                    onPressed: () {
+                                      viewModel.scaffoldKey.currentState
+                                          ?.openDrawer(); // 打开侧边栏
+                                    },
+                                  ),
+                                ),
+                                toolbarHeight: 90,
+                                elevation: 0,
+                                backgroundColor: Colors.transparent,
+                                automaticallyImplyLeading: false,
+                                flexibleSpace: CustomPaint(
+                                  size: Size.fromHeight(50 + 2 * 42.0),
+                                  painter: DiagonalStripesPainter(),
+                                ),
+                                title: Text(
+                                  'Chating Buddy',
+                                  style: GoogleFonts.abhayaLibre(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                bottom: TabBar(
+                                  tabAlignment: TabAlignment.center,
+                                  indicatorColor: Colors.lightGreen,
+                                  indicatorSize: TabBarIndicatorSize.label,
+                                  isScrollable: true,
+                                  labelColor: Colors.black,
+                                  labelStyle: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  unselectedLabelColor: Colors.white54,
+                                  unselectedLabelStyle: const TextStyle(
+                                    fontSize: 10,
+                                  ),
+                                  tabs: [
+                                    Tab(
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        child: const Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text('Chating'),
+                                            SizedBox(width: 4),
+                                            Icon(Hero_icons_outline.sparkles),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Tab(
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        child: const Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text('Prompting'),
+                                            SizedBox(width: 4),
+                                            Icon(
+                                                Hero_icons_outline.paint_brush),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          : null,
+                      body: const TabBarView(
+                        physics: NeverScrollableScrollPhysics(), // 禁用滑动
+                        children: [
+                          ChatsityView(),
+                          PromptToRealView(),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
-          const ArticleView(),
-          const PinterestView(),
-          // const ShopWebView(),
-          const ProfileView(),
-          // 其他视图...
-        ],
+                const ArticleView(),
+                const PinterestView(),
+                const ProfileView(),
+                // 其他视图...
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -150,7 +225,7 @@ class HomeView extends StackedView<HomeViewModel> {
   HomeViewModel viewModelBuilder(
     BuildContext context,
   ) =>
-      HomeViewModel();
+      HomeViewModel(context);
 }
 
 class DiagonalStripesPainter extends CustomPainter {

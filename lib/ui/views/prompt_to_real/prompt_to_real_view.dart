@@ -5,12 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
-import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:lottie/lottie.dart';
 import 'package:stacked/stacked.dart';
-import 'package:toastification/toastification.dart';
 
 import '../../utils/hero-icons-outline_icons.dart';
+import '../../widgets/common/fullscreen/fullscreen_image_viewer.dart';
 import '../promotetowords/promotetowords_view.dart';
 import '../prompt_to_query_favorite/prompt_to_query_favorite_view.dart';
 import '../prompt_to_translate/prompt_to_translate_view.dart';
@@ -355,21 +354,29 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                                 return true; // 返回 true 表示保存成功
                               } else {
                                 // 显示取消保存的提示
-                                toastification.show(
-                                  context: context,
-                                  type: ToastificationType.success,
-                                  style: ToastificationStyle.flatColored,
-                                  title: const Text("取消保存，这张图片已经存在于收藏中"),
-                                  description: const Text(
-                                      "Cancel save, this image already exists in favorites."),
-                                  alignment: Alignment.bottomCenter,
-                                  autoCloseDuration:
-                                      const Duration(milliseconds: 2350),
-                                  primaryColor: Colors.green,
-                                  icon: const Icon(
-                                      Hero_icons_outline.check_badge),
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  applyBlurEffect: true,
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: const Row(
+                                      children: [
+                                        Icon(
+                                          Hero_icons_outline.check_badge,
+                                          color: Colors.white,
+                                        ),
+                                        SizedBox(width: 10),
+                                        Text(
+                                          '取消保存，这张图片已经存在于收藏中', // 中文部分
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ],
+                                    ),
+                                    backgroundColor: Colors.green, // 使用绿色
+                                    duration:
+                                        const Duration(milliseconds: 2350),
+                                    behavior: SnackBarBehavior.fixed,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                  ),
                                 );
                                 return false; // 返回 false
                               }
@@ -385,21 +392,29 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                                     context, imageData);
                                 return true; // 表示保存成功
                               } else {
-                                toastification.show(
-                                  context: context,
-                                  type: ToastificationType.success,
-                                  style: ToastificationStyle.flatColored,
-                                  title: const Text("取消保存，这张图片已经存在于收藏中"),
-                                  description: const Text(
-                                      "Cancel save, this image already exists in favorites."),
-                                  alignment: Alignment.bottomCenter,
-                                  autoCloseDuration:
-                                      const Duration(milliseconds: 2350),
-                                  primaryColor: Colors.green,
-                                  icon: const Icon(
-                                      Hero_icons_outline.check_badge),
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  applyBlurEffect: true,
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: const Row(
+                                      children: [
+                                        Icon(
+                                          Hero_icons_outline.check_badge,
+                                          color: Colors.white,
+                                        ),
+                                        SizedBox(width: 10),
+                                        Text(
+                                          '取消保存，这张图片已经存在于收藏中', // 中文标题
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ],
+                                    ),
+                                    backgroundColor: Colors.green, // 使用绿色
+                                    duration:
+                                        const Duration(milliseconds: 2350),
+                                    behavior: SnackBarBehavior.fixed,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                  ),
                                 );
                                 return false; // 返回 false
                               }
@@ -642,7 +657,7 @@ class CustomTabButton extends StatelessWidget {
           tabController.animateTo(index);
         },
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -694,14 +709,24 @@ class ImageGridView extends StatelessWidget {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: InstaImageViewer(
-                    uonTap: (bool value) async {
-                      await onImageTap(context, imageBase64, value);
+                  child: GestureDetector(
+                    onTap: () {
+                      FullscreenImageViewer.open(
+                        context: context,
+                        child: Image.memory(
+                          base64Decode(imageBase64),
+                          fit: BoxFit.contain,
+                        ),
+                        closeWidget:
+                            const Icon(Hero_icons_outline.x_mark), // 关闭按钮
+                        saveWidget: const Icon(
+                            Hero_icons_outline.heart), // 如果需要保存按钮可以传入
+                        onTap: () async {
+                          await onImageTap(context, imageBase64, false);
+                          print("图片被点击");
+                        },
+                      );
                     },
-                    ucloseIcon: Hero_icons_outline.x_mark,
-                    ufavoriteIcon: Hero_icons_outline.heart,
-                    disableSwipeToDismiss: true,
-                    backgroundColor: const Color.fromARGB(255, 216, 219, 231),
                     child: Image.memory(
                       base64Decode(imageBase64),
                       fit: BoxFit.contain,

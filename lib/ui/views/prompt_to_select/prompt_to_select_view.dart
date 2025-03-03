@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../utils/hero-icons-outline_icons.dart';
+import '../../widgets/common/fullscreen/fullscreen_image_viewer.dart';
 import 'prompt_to_select_viewmodel.dart';
 
 class PromptToSelectView extends StackedView<PromptToSelectViewModel> {
@@ -113,11 +113,24 @@ class PromptToSelectView extends StackedView<PromptToSelectViewModel> {
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: InstaImageViewer(
-                            ucloseIcon: Hero_icons_outline.x_mark,
-                            disableSwipeToDismiss: true,
-                            backgroundColor:
-                                const Color.fromARGB(255, 216, 219, 231),
+                          child: GestureDetector(
+                            onTap: () {
+                              FullscreenImageViewer.open(
+                                context: context,
+                                child: Image.file(
+                                  File(imagePath),
+                                  fit: BoxFit.contain,
+                                ),
+                                closeWidget: const Icon(
+                                    Hero_icons_outline.x_mark), // 关闭按钮
+                                saveWidget: const Icon(Hero_icons_outline
+                                    .arrow_down_tray), // 如果需要保存按钮可以传入
+                                onTap: () async {
+                                  // 在图片点击时触发的自定义回调逻辑
+                                  print("图片被点击");
+                                },
+                              );
+                            },
                             child: Image.file(
                               File(imagePath), // 从文件路径中加载图像
                               fit: BoxFit.contain,

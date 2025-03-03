@@ -15,7 +15,8 @@ class StringsZh extends Strings {
   String get aboutDescription => '关于本应用的信息';
 
   @override
-  String get aboutOSInfo => '源代码：[codeberg/flutter-doable](https://www.codeberg.org/florian-obernberger/flutter-doable)\n隐私政策：[codeberg/flutter-doable/privacy](https://codeberg.org/florian-obernberger/flutter-doable/src/branch/main/PRIVACY.md)\nF-Droid 存储库：[codeberg/fdroid-repo](https://codeberg.org/florian-obernberger/fdroid-repo)\nMastodon: [@doable@floss.social](https://floss.social/@doable)';
+  String get aboutOSInfo =>
+      '源代码：[codeberg/flutter-doable](https://www.codeberg.org/florian-obernberger/flutter-doable)\n隐私政策：[codeberg/flutter-doable/privacy](https://codeberg.org/florian-obernberger/flutter-doable/src/branch/main/PRIVACY.md)\nF-Droid 存储库：[codeberg/fdroid-repo](https://codeberg.org/florian-obernberger/fdroid-repo)\nMastodon: [@doable@floss.social](https://floss.social/@doable)';
 
   @override
   String get aboutToCancelChanges => '放弃更改？';
@@ -36,7 +37,6 @@ class StringsZh extends Strings {
   String aboutToDeleteNSelected(int count) {
     final intl.NumberFormat countNumberFormat = intl.NumberFormat.compact(
       locale: localeName,
-      
     );
     final String countString = countNumberFormat.format(count);
 
@@ -83,7 +83,8 @@ class StringsZh extends Strings {
   String get cancel => '取消';
 
   @override
-  String get chooseFeedbackExtrasDescription => '我建议包括以下所有内容，可以帮助我解决您的问题，其中不包括个人信息。';
+  String get chooseFeedbackExtrasDescription =>
+      '我建议包括以下所有内容，可以帮助我解决您的问题，其中不包括个人信息。';
 
   @override
   String get chooseFeedbackExtrasTitle => '您想包括哪些额外信息？';
@@ -121,7 +122,6 @@ class StringsZh extends Strings {
   String deletedNTodos(int count) {
     final intl.NumberFormat countNumberFormat = intl.NumberFormat.compact(
       locale: localeName,
-      
     );
     final String countString = countNumberFormat.format(count);
 
@@ -221,7 +221,6 @@ class StringsZh extends Strings {
   String importedNTodos(int count) {
     final intl.NumberFormat countNumberFormat = intl.NumberFormat.compact(
       locale: localeName,
-      
     );
     final String countString = countNumberFormat.format(count);
 
@@ -242,10 +241,12 @@ class StringsZh extends Strings {
   String get introDoubleTap => '双击';
 
   @override
-  String get introDoubleTapDescription => '您可以双击带有描述的待办事项来展开它们。展开后，将显示完整描述，然后您可以与链接进行交互等。\n\n您可以在此处通过示例进行尝试！';
+  String get introDoubleTapDescription =>
+      '您可以双击带有描述的待办事项来展开它们。展开后，将显示完整描述，然后您可以与链接进行交互等。\n\n您可以在此处通过示例进行尝试！';
 
   @override
-  String get introDoubleTapTodoDescription => 'The cake is a lie!\n\n在此处了解更多信息：\nhttps://theportalwiki.com/wiki/Cake';
+  String get introDoubleTapTodoDescription =>
+      'The cake is a lie!\n\n在此处了解更多信息：\nhttps://theportalwiki.com/wiki/Cake';
 
   @override
   String get introDoubleTapTodoTitle => 'Buy new cake';
@@ -254,25 +255,29 @@ class StringsZh extends Strings {
   String get introLinks => '链接、电话号码、电子邮件';
 
   @override
-  String get introLinksDescription => '当您在描述中添加链接、电话号码或电子邮件地址时，它们将自动突出显示，并且您可以与它们进行交互。';
+  String get introLinksDescription =>
+      '当您在描述中添加链接、电话号码或电子邮件地址时，它们将自动突出显示，并且您可以与它们进行交互。';
 
   @override
   String get introNextcloud => 'Nextcloud';
 
   @override
-  String get introNextcloudDescription => '您还可以将待办事项与 Nextcloud 实例同步。如果您愿意，您可以在此处登录！';
+  String get introNextcloudDescription =>
+      '您还可以将待办事项与 Nextcloud 实例同步。如果您愿意，您可以在此处登录！';
 
   @override
   String get introStar => '星号';
 
   @override
-  String get introStarDescription => '为待办事项添加一颗星号，\n让它在众多待办事项中脱颖而出。\n\n点击下面的星号即可尝试！';
+  String get introStarDescription =>
+      '为待办事项添加一颗星号，\n让它在众多待办事项中脱颖而出。\n\n点击下面的星号即可尝试！';
 
   @override
   String get introTodos => '待办事项';
 
   @override
-  String get introTodosDescription => '创建新的待办事项时，您可以添加各种内容。例如，您可以添加与待办事项相关的日期，或者为待办事项添加星号，使其在其他待办事项中脱颖而出！您还可以添加带有链接的描述或其他与待办事项相关的信息。';
+  String get introTodosDescription =>
+      '创建新的待办事项时，您可以添加各种内容。例如，您可以添加与待办事项相关的日期，或者为待办事项添加星号，使其在其他待办事项中脱颖而出！您还可以添加带有链接的描述或其他与待办事项相关的信息。';
 
   @override
   String get introWelcome => '欢迎使用 Doable！';
@@ -328,7 +333,8 @@ class StringsZh extends Strings {
   String get mdCheatSheet => 'https://www.markdownguide.org/cheat-sheet/';
 
   @override
-  String get mdHelpMessage => '在待办事项的描述和标题中添加对基本 Markdown 语法的支持。\n\n有关语法选项的完整列表，您可以查看\nhttps://www.markdownguide.org/cheat-sheet/ 。\n\n然而，此应用 **不** 支持整个 Markdown 规范。支持的元素有：\n\n- **文本样式：**\n  - **加粗**\n  - *倾斜*\n  - ~~删除线~~\n  - __下划线__ (`__下划线__`)\n  - ==高亮==\n  - [链接](https://www.markdownguide.org/cheat-sheet/)\n  - `内联代码`\n- **列表：**\n  1. 有序列表\n  2. 无序列表\n  3. 任务列表\n- **块：**\n  - 围栏代码块\n  - 块引用';
+  String get mdHelpMessage =>
+      '在待办事项的描述和标题中添加对基本 Markdown 语法的支持。\n\n有关语法选项的完整列表，您可以查看\nhttps://www.markdownguide.org/cheat-sheet/ 。\n\n然而，此应用 **不** 支持整个 Markdown 规范。支持的元素有：\n\n- **文本样式：**\n  - **加粗**\n  - *倾斜*\n  - ~~删除线~~\n  - __下划线__ (`__下划线__`)\n  - ==高亮==\n  - [链接](https://www.markdownguide.org/cheat-sheet/)\n  - `内联代码`\n- **列表：**\n  1. 有序列表\n  2. 无序列表\n  3. 任务列表\n- **块：**\n  - 围栏代码块\n  - 块引用';
 
   @override
   String get moveImportantToTop => '将重要事项移至顶部';
@@ -639,7 +645,8 @@ class StringsZh extends Strings {
   String get introExtensions => '扩展？扩展！';
 
   @override
-  String get introExtensionsDescription => '扩展允许您扩展和扩大 Doable 的功能集。让您能够准确选择如何使用 Doable。如果您想查看所有可用的扩展，只需单击下方按钮！';
+  String get introExtensionsDescription =>
+      '扩展允许您扩展和扩大 Doable 的功能集。让您能够准确选择如何使用 Doable。如果您想查看所有可用的扩展，只需单击下方按钮！';
 
   @override
   String get introExtensionsButton => '查看扩展！';
@@ -693,7 +700,8 @@ class StringsZh extends Strings {
   String get lists => '列表';
 
   @override
-  String get listsDescription => '创建列表并用它们对待办事项进行排序。您可以创建无限数量的列表，可以通过主屏幕上的抽屉访问。';
+  String get listsDescription =>
+      '创建列表并用它们对待办事项进行排序。您可以创建无限数量的列表，可以通过主屏幕上的抽屉访问。';
 
   @override
   String aboutToDeleteList(String listName) {
@@ -748,7 +756,8 @@ class StringsZh extends Strings {
   String get includeBranding => '包括软件推广';
 
   @override
-  String get doableBrandingText => '分享自简单、现代、易于使用的待办事项应用 Doable。\n您可以在此处获得 Doable：https://codeberg.org/florian-obernberger/flutter-doable';
+  String get doableBrandingText =>
+      '分享自简单、现代、易于使用的待办事项应用 Doable。\n您可以在此处获得 Doable：https://codeberg.org/florian-obernberger/flutter-doable';
 
   @override
   String get chooseTodoShareType => '选择您如何分享您的待办事项';
@@ -784,7 +793,8 @@ class StringsZh extends Strings {
   String get sharedTextAsTitle => '分享文本作为标题';
 
   @override
-  String get sharedTextAsTitleDescription => '使用分享到 Doable 的文本作为新待办事项的标题，而不是其描述';
+  String get sharedTextAsTitleDescription =>
+      '使用分享到 Doable 的文本作为新待办事项的标题，而不是其描述';
 
   @override
   String get noTodoLists => '您当前没有任何列表。\n创建一个新的开始吧！';
@@ -837,7 +847,8 @@ class StringsZh extends Strings {
   String get whatWentWrong => '出了什么问题？';
 
   @override
-  String get fixCorruptBackupFile => '无法读取 Doable 的备份文件，并且似乎已损坏。Doable 可以尝试通过删除当前备份文件并创建新文件来解决此问题。这将删除使用同一备份文件在其他 Doable 实例中所做的所有更改。';
+  String get fixCorruptBackupFile =>
+      '无法读取 Doable 的备份文件，并且似乎已损坏。Doable 可以尝试通过删除当前备份文件并创建新文件来解决此问题。这将删除使用同一备份文件在其他 Doable 实例中所做的所有更改。';
 
   @override
   String get initializingNextcloud => '正在初始化 Nextcloud…';
@@ -867,13 +878,15 @@ class StringsZh extends Strings {
   String get createSummaryForBugReport => '创建摘要';
 
   @override
-  String get createSummaryForBugReportDetails => '创建包含系统信息、Doable 设置和所有日志的报告。这对于错误报告很有用，并有助于排除故障。';
+  String get createSummaryForBugReportDetails =>
+      '创建包含系统信息、Doable 设置和所有日志的报告。这对于错误报告很有用，并有助于排除故障。';
 
   @override
   String get bugReport => '错误报告';
 
   @override
-  String get bugReportSupportingText => '请选择您想要在错误报告中包括的内容。您提供的信息越多，就越容易找出问题所在。**不会分享任何个人信息。**';
+  String get bugReportSupportingText =>
+      '请选择您想要在错误报告中包括的内容。您提供的信息越多，就越容易找出问题所在。**不会分享任何个人信息。**';
 
   @override
   String get shareBugReport => '分享错误报告';
@@ -933,7 +946,8 @@ class StringsZh extends Strings {
   String get deletedCustomColorTheme => '已删除自定义颜色主题。';
 
   @override
-  String get customThemeInfo => '在此处，您可以随心所欲地更改每个颜色标记。您还可以将颜色导入/导出到 `json` 文件，并在其中进行编辑！\n\n如果您想了解每个标记的作用，请访问以下网站：https://m3.material.io/foundations/design-tokens';
+  String get customThemeInfo =>
+      '在此处，您可以随心所欲地更改每个颜色标记。您还可以将颜色导入/导出到 `json` 文件，并在其中进行编辑！\n\n如果您想了解每个标记的作用，请访问以下网站：https://m3.material.io/foundations/design-tokens';
 
   @override
   String get import => '导入';
@@ -963,7 +977,8 @@ class StringsZh extends Strings {
   String get fediRememberInstance => '记住我的实例';
 
   @override
-  String get fediDoablePost => '多亏了 @Doable@floss.social，我才完成了所有待办事项！\n\n听起来很有趣？您可以通过访问 https://repo.doable.at 了解有关 #Doable 的更多信息！';
+  String get fediDoablePost =>
+      '多亏了 @Doable@floss.social，我才完成了所有待办事项！\n\n听起来很有趣？您可以通过访问 https://repo.doable.at 了解有关 #Doable 的更多信息！';
 
   @override
   String get doable => 'Doable — 现代而简单的待办事项应用';
@@ -1038,7 +1053,8 @@ class StringsZh extends Strings {
   String get recurringTodos => '重复待办事项';
 
   @override
-  String get recurringTodosDescription => '为您的待办事项添加重复周期，让 Doable 在您完成后自动为您重新安排。待办事项将根据相关日期和您设置的日程重新安排。如果您没有在待办事项中添加截止日期，则将使用其创建日期。\n\n**有一点需要注意：虽然您现在可以在 Doable 中设置重复任务，但请注意，目前此功能仅限于英语。**';
+  String get recurringTodosDescription =>
+      '为您的待办事项添加重复周期，让 Doable 在您完成后自动为您重新安排。待办事项将根据相关日期和您设置的日程重新安排。如果您没有在待办事项中添加截止日期，则将使用其创建日期。\n\n**有一点需要注意：虽然您现在可以在 Doable 中设置重复任务，但请注意，目前此功能仅限于英语。**';
 
   @override
   String get post => '发布';
@@ -1050,7 +1066,8 @@ class StringsZh extends Strings {
   String get beta => '测试';
 
   @override
-  String get extensionBetaWarningDescription => '此扩展仍处于测试阶段，您在使用时可能会遇到一些问题。请注意风险，如果您遇到任何问题，请告诉我！';
+  String get extensionBetaWarningDescription =>
+      '此扩展仍处于测试阶段，您在使用时可能会遇到一些问题。请注意风险，如果您遇到任何问题，请告诉我！';
 
   @override
   String get extensionBetaWarning => '启用测试扩展？';
@@ -1083,7 +1100,8 @@ class StringsZh extends Strings {
   String get notifyTodosChannelName => '待办事项';
 
   @override
-  String get notificationsDescription => '让 Doable 在您的待办事项到期时通知您。您还可以更改您将接收通知的待办事项。';
+  String get notificationsDescription =>
+      '让 Doable 在您的待办事项到期时通知您。您还可以更改您将接收通知的待办事项。';
 
   @override
   String get notificationsDescriptionShort => '更改您接收通知的待办事项';
@@ -1104,7 +1122,8 @@ class StringsZh extends Strings {
   String get todoImages => '图片';
 
   @override
-  String get todoImagesDescription => '将图片添加到您的待办事项中，以便您可以为正在写的内容添加更多更多上下文。\n\n**很遗憾，图片尚未同步。**';
+  String get todoImagesDescription =>
+      '将图片添加到您的待办事项中，以便您可以为正在写的内容添加更多更多上下文。\n\n**很遗憾，图片尚未同步。**';
 
   @override
   String get clearInputField => '清除输入框';
@@ -1116,7 +1135,8 @@ class StringsZh extends Strings {
   String get apkSignatureInvalid => '签名无效';
 
   @override
-  String get apkSignatureInvalidDescription => '无法验证下载的 apk 文件的签名。请将此问题告知开发人员。尽管您可以自行承担风险继续安装 apk，但出于潜在的安全考虑，我们建议您谨慎操作。';
+  String get apkSignatureInvalidDescription =>
+      '无法验证下载的 apk 文件的签名。请将此问题告知开发人员。尽管您可以自行承担风险继续安装 apk，但出于潜在的安全考虑，我们建议您谨慎操作。';
 
   @override
   String get searchTodos => '搜索待办事项';
@@ -1173,10 +1193,12 @@ class StringsZh extends Strings {
   String get migrateToRemotes => '迁移';
 
   @override
-  String get migrateToRemotesDescription => 'Doable 最近更改了与 Nextcloud 或 WebDAV 等远程同步的方式。不幸的是，新的实现不是向后兼容的，因此需要进行迁移。Doable 需要一分钟来迁移所需的一切。\n\n如果您选择稍后执行此操作，则可能会遇到一些错误消息，因为尚未设置新的实现。';
+  String get migrateToRemotesDescription =>
+      'Doable 最近更改了与 Nextcloud 或 WebDAV 等远程同步的方式。不幸的是，新的实现不是向后兼容的，因此需要进行迁移。Doable 需要一分钟来迁移所需的一切。\n\n如果您选择稍后执行此操作，则可能会遇到一些错误消息，因为尚未设置新的实现。';
 
   @override
-  String get fixBrokenRemoteFile => 'Doable 的备份文件似乎已损坏。Doable 可以通过用当前本地值覆盖它来修复它。这将覆盖发生错误后其他设备所做的任何更改。';
+  String get fixBrokenRemoteFile =>
+      'Doable 的备份文件似乎已损坏。Doable 可以通过用当前本地值覆盖它来修复它。这将覆盖发生错误后其他设备所做的任何更改。';
 
   @override
   String get fixedBrokenRemoteFile => '已成功还原损坏的文件。';
@@ -1227,10 +1249,12 @@ class StringsZh extends Strings {
   String get fdroid => 'F-Droid';
 
   @override
-  String get aboutOpenSource => 'Doable 的所有源代码都可在 FOSS 许可下在 Codeberg 上访问。您还可以在那里提交问题和拉取请求。您还可以在 Codeberg 上找到 Doable 的 F-Droid 存储库！';
+  String get aboutOpenSource =>
+      'Doable 的所有源代码都可在 FOSS 许可下在 Codeberg 上访问。您还可以在那里提交问题和拉取请求。您还可以在 Codeberg 上找到 Doable 的 F-Droid 存储库！';
 
   @override
-  String get aboutPrivacy => 'Doable 不会收集您的任何个人信息。Doable 存储的关于您使用情况的唯一信息是日志。但是这些日志 **不会自动上传**。这些日志离开您设备的唯一方式是您选择分享它们，例如帮助我修复错误。';
+  String get aboutPrivacy =>
+      'Doable 不会收集您的任何个人信息。Doable 存储的关于您使用情况的唯一信息是日志。但是这些日志 **不会自动上传**。这些日志离开您设备的唯一方式是您选择分享它们，例如帮助我修复错误。';
 
   @override
   String get httpWarning => '未加密的连接';
@@ -1239,7 +1263,8 @@ class StringsZh extends Strings {
   String get cancelling => '正在取消…';
 
   @override
-  String get httpWarningDescription => '您正尝试连接到 HTTP 服务器，而不是更安全的 HTTPS 服务器。HTTP 会将未加密的数据发送到服务器，这会带来潜在的安全风险，因此不建议这样做。然而，有某些用例，如本地托管的服务器。是否确定要继续使用 HTTP？';
+  String get httpWarningDescription =>
+      '您正尝试连接到 HTTP 服务器，而不是更安全的 HTTPS 服务器。HTTP 会将未加密的数据发送到服务器，这会带来潜在的安全风险，因此不建议这样做。然而，有某些用例，如本地托管的服务器。是否确定要继续使用 HTTP？';
 
   @override
   String get enableNotificationReminder => '提醒通知';
@@ -1299,7 +1324,8 @@ class StringsZh extends Strings {
   String get updateDownload => '让 Doable 为您下载最新版本；您将在通知区域中找到该文件，并可以通过单击来安装它';
 
   @override
-  String get updateFdroid => '如果您从 F-Droid 安装了 Doable，则应该在接下来的几个小时内从 IzzyOnDroid 的存储库或 Doable 自己的存储库中获取更新';
+  String get updateFdroid =>
+      '如果您从 F-Droid 安装了 Doable，则应该在接下来的几个小时内从 IzzyOnDroid 的存储库或 Doable 自己的存储库中获取更新';
 
   @override
   String get updateDisable => '您还可以在设置中同时禁用自动更新检查';
@@ -1323,7 +1349,8 @@ class StringsZh extends Strings {
   String get changeDuration => '更改持续时间';
 
   @override
-  String get autoExportDescription => '您可以让 Doable 自动导出您的待办事项、列表和设置。请注意，Doable 将为每次导出创建一个新文件！相应地选择导出之间的持续时间。';
+  String get autoExportDescription =>
+      '您可以让 Doable 自动导出您的待办事项、列表和设置。请注意，Doable 将为每次导出创建一个新文件！相应地选择导出之间的持续时间。';
 
   @override
   String get seconds => '秒';
@@ -1335,7 +1362,8 @@ class StringsZh extends Strings {
   String get swipeActions => '滑动操作';
 
   @override
-  String get swipeActionsDescription => '添加了在待办事项上向左滑动以为其加星标或完成的功能。\n\n**请注意，这有时可能会与列表扩展的抽屉发生冲突。**';
+  String get swipeActionsDescription =>
+      '添加了在待办事项上向左滑动以为其加星标或完成的功能。\n\n**请注意，这有时可能会与列表扩展的抽屉发生冲突。**';
 
   @override
   String get selectedSwipeActions => '选定的操作';
@@ -1470,7 +1498,8 @@ class StringsZh extends Strings {
   String get customNotificationTime => '自定义通知时间';
 
   @override
-  String get defaultNotificationsDescription => '选择默认通知，这些通知将添加到每个待办事项中，并带有相关日期。';
+  String get defaultNotificationsDescription =>
+      '选择默认通知，这些通知将添加到每个待办事项中，并带有相关日期。';
 
   @override
   String nrOfNotifications(int count) {
@@ -1552,10 +1581,12 @@ class StringsZh extends Strings {
   String get notificationsAlwaysPreview => '始终预览通知';
 
   @override
-  String get notificationsAlwaysPreviewDescription => '始终以预览模式打开通知（这不会影响上次使用的模式）';
+  String get notificationsAlwaysPreviewDescription =>
+      '始终以预览模式打开通知（这不会影响上次使用的模式）';
 
   @override
-  String get nextcloudWipeDescription => 'Doable 收到请求，要求擦除与您登录的 Nextcloud 账号相关的所有数据。因此，您将退出账号。您还可以选择从应用中擦除所有数据（待办事项和列表）。此操作是永久性的，无法撤销。';
+  String get nextcloudWipeDescription =>
+      'Doable 收到请求，要求擦除与您登录的 Nextcloud 账号相关的所有数据。因此，您将退出账号。您还可以选择从应用中擦除所有数据（待办事项和列表）。此操作是永久性的，无法撤销。';
 
   @override
   String get nextcloudWipe => 'Nextcloud 远程擦除';
@@ -1579,7 +1610,8 @@ class StringsZh extends Strings {
   String get batteryOptimization => '电池优化';
 
   @override
-  String get batteryOptimizationDescription => 'Doable 正在进行电池优化。虽然这通常不是问题，但在登录 Nextcloud 时可能会导致一些问题。如果您想确保流畅的体验，请禁用这些优化。';
+  String get batteryOptimizationDescription =>
+      'Doable 正在进行电池优化。虽然这通常不是问题，但在登录 Nextcloud 时可能会导致一些问题。如果您想确保流畅的体验，请禁用这些优化。';
 
   @override
   String get couldNotAddTodoToCalendar => '无法将待办事项添加到日历。';

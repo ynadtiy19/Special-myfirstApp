@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:auto_size_text_plus/auto_size_text_plus.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hung/ui/animationartical/models/models.dart';
@@ -616,7 +616,7 @@ class _ArticleCardState extends State<ArticleCard>
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   CircleAvatar(
-                                    backgroundImage: CachedNetworkImageProvider(
+                                    backgroundImage: FastCachedImageProvider(
                                       widget.avatarUrl, // 网络图片的URL
                                     ),
                                     radius: 20,
@@ -664,16 +664,16 @@ class _ArticleCardState extends State<ArticleCard>
                                   // ),
                                   child: AspectRatio(
                                     aspectRatio: 16 / 9,
-                                    child: CachedNetworkImage(
-                                      imageUrl: widget.postImg,
+                                    child: FastCachedImage(
+                                      url: widget.postImg,
                                       height: 500,
                                       fit: BoxFit.cover,
-                                      placeholder: (context, url) =>
+                                      loadingBuilder: (context, url) =>
                                           const Center(
                                               child: CircularProgressIndicator(
                                         color: Colors.green,
                                       )), // 加载中占位符
-                                      errorWidget: (context, url, error) =>
+                                      errorBuilder: (context, url, error) =>
                                           const Center(
                                               child:
                                                   Icon(Icons.error)), // 加载失败占位符

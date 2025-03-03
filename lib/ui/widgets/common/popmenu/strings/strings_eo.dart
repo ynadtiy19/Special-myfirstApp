@@ -15,28 +15,31 @@ class StringsEo extends Strings {
   String get aboutDescription => 'Informoj pri la aplikaĵo';
 
   @override
-  String get aboutOSInfo => 'Fontkodo: [codeberg/flutter-doable](https://www.codeberg.org/florian-obernberger/flutter-doable)\nPrivateca politiko: [codeberg/flutter-doable/privacy](https://codeberg.org/florian-obernberger/flutter-doable/src/branch/main/PRIVACY.md)\nF-Droid deponejo: [codeberg/fdroid-repo](https://codeberg.org/florian-obernberger/fdroid-repo)\nMastodon: [@doable@floss.social](https://floss.social/@doable)';
+  String get aboutOSInfo =>
+      'Fontkodo: [codeberg/flutter-doable](https://www.codeberg.org/florian-obernberger/flutter-doable)\nPrivateca politiko: [codeberg/flutter-doable/privacy](https://codeberg.org/florian-obernberger/flutter-doable/src/branch/main/PRIVACY.md)\nF-Droid deponejo: [codeberg/fdroid-repo](https://codeberg.org/florian-obernberger/fdroid-repo)\nMastodon: [@doable@floss.social](https://floss.social/@doable)';
 
   @override
   String get aboutToCancelChanges => 'Forĵeti ŝanĝojn?';
 
   @override
-  String get aboutToCancelChangesDescription => 'Vi estas forĵeti ĉiujn ŝanĝojn faritajn al ĉi tiu penigaĵo.';
+  String get aboutToCancelChangesDescription =>
+      'Vi estas forĵeti ĉiujn ŝanĝojn faritajn al ĉi tiu penigaĵo.';
 
   @override
   String get aboutToCancelFeedback => 'Forĵeti prikomentojn?';
 
   @override
-  String get aboutToCancelFeedbackDescription => 'Vi estas forĵeti viajn prikomentojn. Ĉi tio ne povas esti malfarita.';
+  String get aboutToCancelFeedbackDescription =>
+      'Vi estas forĵeti viajn prikomentojn. Ĉi tio ne povas esti malfarita.';
 
   @override
-  String get aboutToDeleteCompleted => 'Vi estas forigi ĉiujn finitajn Penigaĵojn. Ĉi tiu ago estas konstanta kaj ne povas esti malfarita.';
+  String get aboutToDeleteCompleted =>
+      'Vi estas forigi ĉiujn finitajn Penigaĵojn. Ĉi tiu ago estas konstanta kaj ne povas esti malfarita.';
 
   @override
   String aboutToDeleteNSelected(int count) {
     final intl.NumberFormat countNumberFormat = intl.NumberFormat.compact(
       locale: localeName,
-      
     );
     final String countString = countNumberFormat.format(count);
 
@@ -53,13 +56,15 @@ class StringsEo extends Strings {
   String get additionalFeatures => 'Kromprogramoj';
 
   @override
-  String get additionalFeaturesDescription => 'Funkcioj kiuj igas la Doable pli potenca';
+  String get additionalFeaturesDescription =>
+      'Funkcioj kiuj igas la Doable pli potenca';
 
   @override
   String get alignTodoCheck => 'Kontrolmarku la dekstran skatolon';
 
   @override
-  String get alignTodoCheckDescription => 'Montri penigaĵo-kontrolmarko ĉe la dekstra flanko';
+  String get alignTodoCheckDescription =>
+      'Montri penigaĵo-kontrolmarko ĉe la dekstra flanko';
 
   @override
   String get appLanguage => 'Lingvo de la aplikaĵo';
@@ -77,16 +82,19 @@ class StringsEo extends Strings {
   String get syncAndBackup => 'Sinkronigi & Sekurkopion';
 
   @override
-  String get syncAndBackupDescription => 'Rezervi kaj sinkronigi viajn Penigaĵoj';
+  String get syncAndBackupDescription =>
+      'Rezervi kaj sinkronigi viajn Penigaĵoj';
 
   @override
   String get cancel => 'Nuligi';
 
   @override
-  String get chooseFeedbackExtrasDescription => 'Mi rekomendis inkluzivi ĉiujn jenajn, ĉar ĝi helpas min solvi vian problemon. Ĉi tio inkluzivas neniujn personajn informojn.';
+  String get chooseFeedbackExtrasDescription =>
+      'Mi rekomendis inkluzivi ĉiujn jenajn, ĉar ĝi helpas min solvi vian problemon. Ĉi tio inkluzivas neniujn personajn informojn.';
 
   @override
-  String get chooseFeedbackExtrasTitle => 'Kiun ekstran informon vi ŝatus inkluzivi?';
+  String get chooseFeedbackExtrasTitle =>
+      'Kiun ekstran informon vi ŝatus inkluzivi?';
 
   @override
   String get chooseFeedbackWay => 'Kie vi volas prikomenti?';
@@ -104,7 +112,8 @@ class StringsEo extends Strings {
   String get customAccentPicker => 'Akcentkoloro';
 
   @override
-  String get customAccentPickerDescription => 'Elekti propran akcentkoloron por la haŭto de la aplikaĵo';
+  String get customAccentPickerDescription =>
+      'Elekti propran akcentkoloron por la haŭto de la aplikaĵo';
 
   @override
   String get darkMode => 'Malhela reĝimo';
@@ -121,7 +130,6 @@ class StringsEo extends Strings {
   String deletedNTodos(int count) {
     final intl.NumberFormat countNumberFormat = intl.NumberFormat.compact(
       locale: localeName,
-      
     );
     final String countString = countNumberFormat.format(count);
 
@@ -182,10 +190,12 @@ class StringsEo extends Strings {
   }
 
   @override
-  String get feedbackDescriptionHelp => 'Pli detala klarigo pri kio misfunkciis / kiel ĝi okazis.';
+  String get feedbackDescriptionHelp =>
+      'Pli detala klarigo pri kio misfunkciis / kiel ĝi okazis.';
 
   @override
-  String get feedbackHeader => 'Bonvolu plenigi la suban formularon por helpi min kompreni kio misfunkciis.';
+  String get feedbackHeader =>
+      'Bonvolu plenigi la suban formularon por helpi min kompreni kio misfunkciis.';
 
   @override
   String get feedbackTitleHelp => 'Mallonga resumo de la evento.';
@@ -203,16 +213,19 @@ class StringsEo extends Strings {
   String get highlightOverdue => 'Emfazi posttempa';
 
   @override
-  String get highlightOverdueDescription => 'Emfazi Penigaĵoj kiuj estas posttempaj same kiel ĉefrolitaj Penigaĵoj';
+  String get highlightOverdueDescription =>
+      'Emfazi Penigaĵoj kiuj estas posttempaj same kiel ĉefrolitaj Penigaĵoj';
 
   @override
   String get highlightToday => 'Emfazi hodiaŭ';
 
   @override
-  String get highlightTodayDescription => 'Emfazi Penigaĵoj, kiuj estas pagendaj hodiaŭ same kiel ĉefrolita Penigaĵoj';
+  String get highlightTodayDescription =>
+      'Emfazi Penigaĵoj, kiuj estas pagendaj hodiaŭ same kiel ĉefrolita Penigaĵoj';
 
   @override
-  String get importLocalBackupError => 'Dosiero ne povis esti importita. Ĉu vi certas, ke ĝi estis kreita far Doable?';
+  String get importLocalBackupError =>
+      'Dosiero ne povis esti importita. Ĉu vi certas, ke ĝi estis kreita far Doable?';
 
   @override
   String get importTodosFromFile => 'Importi dosiero';
@@ -221,7 +234,6 @@ class StringsEo extends Strings {
   String importedNTodos(int count) {
     final intl.NumberFormat countNumberFormat = intl.NumberFormat.compact(
       locale: localeName,
-      
     );
     final String countString = countNumberFormat.format(count);
 
@@ -242,10 +254,12 @@ class StringsEo extends Strings {
   String get introDoubleTap => 'Duobla premi';
 
   @override
-  String get introDoubleTapDescription => 'Vi povas duoble premi sur Penigaĵoj, kiuj prezentas priskribon por etendi ĝin. Kiam etendita, la plena priskribo estas montrita kaj vi povas tiam interagi kun ligiloj ktp.\n\nVi povas provi ĝin kun ekzemplo ĉi tie!';
+  String get introDoubleTapDescription =>
+      'Vi povas duoble premi sur Penigaĵoj, kiuj prezentas priskribon por etendi ĝin. Kiam etendita, la plena priskribo estas montrita kaj vi povas tiam interagi kun ligiloj ktp.\n\nVi povas provi ĝin kun ekzemplo ĉi tie!';
 
   @override
-  String get introDoubleTapTodoDescription => 'La kuko estas mensogo!\n\nEksciu pli ĉi tie:\nhttps://theportalwiki.com/wiki/Cake';
+  String get introDoubleTapTodoDescription =>
+      'La kuko estas mensogo!\n\nEksciu pli ĉi tie:\nhttps://theportalwiki.com/wiki/Cake';
 
   @override
   String get introDoubleTapTodoTitle => 'Aĉeti novan kukon';
@@ -254,31 +268,36 @@ class StringsEo extends Strings {
   String get introLinks => 'Ligiloj, telefonnumeroj, retpoŝtoj';
 
   @override
-  String get introLinksDescription => 'Kiam vi aldonas ligilojn, telefonnumerojn aŭ retadresojn al priskribo, ĝi aŭtomate estos emfazita kaj vi povas interagi kun ĝi.';
+  String get introLinksDescription =>
+      'Kiam vi aldonas ligilojn, telefonnumerojn aŭ retadresojn al priskribo, ĝi aŭtomate estos emfazita kaj vi povas interagi kun ĝi.';
 
   @override
   String get introNextcloud => 'Nextcloud';
 
   @override
-  String get introNextcloudDescription => 'Vi ankaŭ povas sinkronigi viajn Penigaĵojn kun instanco de Nextcloud. Se vi volas, vi povas ensaluti ĉi tie!';
+  String get introNextcloudDescription =>
+      'Vi ankaŭ povas sinkronigi viajn Penigaĵojn kun instanco de Nextcloud. Se vi volas, vi povas ensaluti ĉi tie!';
 
   @override
   String get introStar => 'Steloj';
 
   @override
-  String get introStarDescription => 'Aldonu stelon al Penigaĵo por fari ĝin\nelstaras inter la homamaso.\n\nDonu al la suba stelo premon por provi ĝin!';
+  String get introStarDescription =>
+      'Aldonu stelon al Penigaĵo por fari ĝin\nelstaras inter la homamaso.\n\nDonu al la suba stelo premon por provi ĝin!';
 
   @override
   String get introTodos => 'Penigaĵoj';
 
   @override
-  String get introTodosDescription => 'Kreante novan Penigaĵo, vi povas aldoni diversajn aferojn. Ekzemple, vi povus aldoni daton, kiam la Penigaĵo fariĝos grava, aŭ vi povas ĉefroligi la Penigaĵo por ke ĝi elstaras inter la ceteraj! Vi ankaŭ povas aldoni priskribon kun ligiloj aŭ aliaj informoj rilataj al la Penigaĵo.';
+  String get introTodosDescription =>
+      'Kreante novan Penigaĵo, vi povas aldoni diversajn aferojn. Ekzemple, vi povus aldoni daton, kiam la Penigaĵo fariĝos grava, aŭ vi povas ĉefroligi la Penigaĵo por ke ĝi elstaras inter la ceteraj! Vi ankaŭ povas aldoni priskribon kun ligiloj aŭ aliaj informoj rilataj al la Penigaĵo.';
 
   @override
   String get introWelcome => 'Bonvenon al Doable!';
 
   @override
-  String get introWelcomeDescription => 'La simpla Penigaĵo-aplikaĵo kun moderna dezajno\nkaj Nextcloud integriĝo.';
+  String get introWelcomeDescription =>
+      'La simpla Penigaĵo-aplikaĵo kun moderna dezajno\nkaj Nextcloud integriĝo.';
 
   @override
   String get keepEditing => 'Daŭre redakti';
@@ -328,19 +347,22 @@ class StringsEo extends Strings {
   String get mdCheatSheet => 'https://www.markdownguide.org/cheat-sheet/';
 
   @override
-  String get mdHelpMessage => 'Aldonas subtenon por baza markado sintakso ene de la priskribo kaj titolo de via Todos.\n\nPor plena listo de sintaksaj elektoj vi povas kontroli\nhttps://www.markdownguide.org/cheat-sheet-ĉu vi ne scias?\n\nTamen, ĉi tiu programo **ne** subtenas la tutajn markajn specifojn. Subtenataj elementoj estas:\n\n- Aŭdaca\n- Kursiva\n- Substreki (\\_\\_teksto\\_\\_)\n- - Blokkvoto\n- Ordigitaj / Neordigitaj listoj\n- Taskolistoj\n- Inline kodo kaj barita kodo blokoj\n- Ligiloj\n- Elstarigo\n- Striko';
+  String get mdHelpMessage =>
+      'Aldonas subtenon por baza markado sintakso ene de la priskribo kaj titolo de via Todos.\n\nPor plena listo de sintaksaj elektoj vi povas kontroli\nhttps://www.markdownguide.org/cheat-sheet-ĉu vi ne scias?\n\nTamen, ĉi tiu programo **ne** subtenas la tutajn markajn specifojn. Subtenataj elementoj estas:\n\n- Aŭdaca\n- Kursiva\n- Substreki (\\_\\_teksto\\_\\_)\n- - Blokkvoto\n- Ordigitaj / Neordigitaj listoj\n- Taskolistoj\n- Inline kodo kaj barita kodo blokoj\n- Ligiloj\n- Elstarigo\n- Striko';
 
   @override
   String get moveImportantToTop => 'Movi grave al la supro';
 
   @override
-  String get moveImportantToTopDescription => 'Se ebligite, Penigaĵoj kiuj estis ĉefroligitaj ĉiam estos montrataj ĉe la supro de la listo';
+  String get moveImportantToTopDescription =>
+      'Se ebligite, Penigaĵoj kiuj estis ĉefroligitaj ĉiam estos montrataj ĉe la supro de la listo';
 
   @override
   String get moveUpWhenUpdated => 'Speguli ŝanĝojn en la listo';
 
   @override
-  String get moveUpWhenUpdatedDescription => 'Penigaĵoj moviĝas al la supro de la listo post esti ŝanĝitaj';
+  String get moveUpWhenUpdatedDescription =>
+      'Penigaĵoj moviĝas al la supro de la listo post esti ŝanĝitaj';
 
   @override
   String get ncBaseUrl => 'Servilo';
@@ -358,7 +380,8 @@ class StringsEo extends Strings {
   String get ncLogOut => 'Elsaluti el Nextcloud';
 
   @override
-  String get ncLogOutMessage => 'Kiam vi elsalutas, viaj konservitaj akreditaĵoj estos forigitaj. Tamen, la konservita dosiero sur via Nextcloud instanco daŭros.';
+  String get ncLogOutMessage =>
+      'Kiam vi elsalutas, viaj konservitaj akreditaĵoj estos forigitaj. Tamen, la konservita dosiero sur via Nextcloud instanco daŭros.';
 
   @override
   String get ncLoggedInAs => 'Ensalutinta kiel';
@@ -454,7 +477,8 @@ class StringsEo extends Strings {
   String get showCompletedTodos => 'Montro finita';
 
   @override
-  String get showCompletedTodosDescription => 'Montri finitajn Penigaĵojn en la listo';
+  String get showCompletedTodosDescription =>
+      'Montri finitajn Penigaĵojn en la listo';
 
   @override
   String get showIntroScreen => 'Montri enkondukan ekranon denove';
@@ -463,7 +487,8 @@ class StringsEo extends Strings {
   String get sortNewestFirst => 'Plej nova unue';
 
   @override
-  String get sortNewestFirstDescription => 'Pli novaj datoj estas montritaj supre';
+  String get sortNewestFirstDescription =>
+      'Pli novaj datoj estas montritaj supre';
 
   @override
   String get sortNoRelevantDate => 'Sen dato';
@@ -502,7 +527,8 @@ class StringsEo extends Strings {
   String get syncNoInternetConnection => 'Neniu interreta konekto.';
 
   @override
-  String get syncNotNcServer => 'Ne eblis trovi Nextcloud-servilon ĉe ĉi tiu adreso.';
+  String get syncNotNcServer =>
+      'Ne eblis trovi Nextcloud-servilon ĉe ĉi tiu adreso.';
 
   @override
   String get syncServiceUnavailable => 'Nextcloud nehavebla.';
@@ -517,7 +543,8 @@ class StringsEo extends Strings {
   String get syncWrongUrl => 'La URL kiun vi provizis ŝajnas esti malĝusta.';
 
   @override
-  String get syncWrongUserOrPassword => 'La donita uzantnomo aŭ pasvorto estas malĝusta.';
+  String get syncWrongUserOrPassword =>
+      'La donita uzantnomo aŭ pasvorto estas malĝusta.';
 
   @override
   String get system => 'Sistemo';
@@ -541,7 +568,8 @@ class StringsEo extends Strings {
   String get todoSearch => 'Penigaĵo-serĉi';
 
   @override
-  String get todoSearchDescription => 'Aldoni serĉbutonon al la Penigaĵo listo ebligante vin serĉi tra viaj Penigaĵoj.';
+  String get todoSearchDescription =>
+      'Aldoni serĉbutonon al la Penigaĵo listo ebligante vin serĉi tra viaj Penigaĵoj.';
 
   @override
   String get tomorrow => 'Morgaŭ';
@@ -550,19 +578,22 @@ class StringsEo extends Strings {
   String get treatTodayAsIsImportant => 'Trakti hodiaŭ kiel gravan';
 
   @override
-  String get treatTodayAsIsImportantDescription => 'Se ĝi estas ebligita, Penigaĵoj kiuj estas pagendaj hodiaŭ estos traktataj kvazaŭ ĝi estus steligitaj';
+  String get treatTodayAsIsImportantDescription =>
+      'Se ĝi estas ebligita, Penigaĵoj kiuj estas pagendaj hodiaŭ estos traktataj kvazaŭ ĝi estus steligitaj';
 
   @override
   String get trimTodoTexts => 'Stuci Penigaĵo-tekstojn';
 
   @override
-  String get trimTodoTextsDescription => 'Se ĝi estas ebligita, stucas ajnan ĉirkaŭan blankspacon de la Penigaĵo titolo kaj priskribo';
+  String get trimTodoTextsDescription =>
+      'Se ĝi estas ebligita, stucas ajnan ĉirkaŭan blankspacon de la Penigaĵo titolo kaj priskribo';
 
   @override
   String get trueBlackMode => 'Vera nigra reĝimo';
 
   @override
-  String get trueBlackModeDescription => 'Nigrigas la fonon, precipe utila por oled-aparatoj';
+  String get trueBlackModeDescription =>
+      'Nigrigas la fonon, precipe utila por oled-aparatoj';
 
   @override
   String get turnOff => 'Malŝalti';
@@ -583,7 +614,8 @@ class StringsEo extends Strings {
   String get useCustomTabs => 'Uzi en-aplikan TTT-legilon';
 
   @override
-  String get useCustomTabsDescription => 'Uzi en-aplikan TTT-legilon por malfermi ligilojn';
+  String get useCustomTabsDescription =>
+      'Uzi en-aplikan TTT-legilon por malfermi ligilojn';
 
   @override
   String get whatsNew => 'Kio novas?';
@@ -595,7 +627,8 @@ class StringsEo extends Strings {
   String get error => 'Eraro';
 
   @override
-  String get routingError => 'Ups! Ŝajnas, ke io misfunkciis kaj vi alvenis en paĝo kiu, nu, ne ekzistas. Mi terure bedaŭras tion!';
+  String get routingError =>
+      'Ups! Ŝajnas, ke io misfunkciis kaj vi alvenis en paĝo kiu, nu, ne ekzistas. Mi terure bedaŭras tion!';
 
   @override
   String get goToHome => 'Iri Hejmon';
@@ -639,7 +672,8 @@ class StringsEo extends Strings {
   String get introExtensions => 'Etendaĵoj? Etendaĵoj!';
 
   @override
-  String get introExtensionsDescription => 'Etendaĵoj permesas vin etendi kaj pligrandigi la funkciojn de Doable. Ĝi donas al vi la potencon elekti ĝuste kiel vi volas uzi Doable. Se vi volas kontroli ĉiujn haveblajn etendaĵojn, simple alklaku la suban butonon!';
+  String get introExtensionsDescription =>
+      'Etendaĵoj permesas vin etendi kaj pligrandigi la funkciojn de Doable. Ĝi donas al vi la potencon elekti ĝuste kiel vi volas uzi Doable. Se vi volas kontroli ĉiujn haveblajn etendaĵojn, simple alklaku la suban butonon!';
 
   @override
   String get introExtensionsButton => 'Etendi for!';
@@ -648,13 +682,15 @@ class StringsEo extends Strings {
   String get useBottomSheetMenu => 'Uzi malsupran folian menuon';
 
   @override
-  String get useBottomSheetMenuDescription => 'Uzi malsupran folion anstataŭ falliston kiel la menuon';
+  String get useBottomSheetMenuDescription =>
+      'Uzi malsupran folion anstataŭ falliston kiel la menuon';
 
   @override
   String get contributors => 'Kontribuantoj';
 
   @override
-  String get contributorDescription => 'Homoj kiuj helpis al Doable iĝi kio ĝi estas';
+  String get contributorDescription =>
+      'Homoj kiuj helpis al Doable iĝi kio ĝi estas';
 
   @override
   String get webdav => 'Webdav';
@@ -663,7 +699,8 @@ class StringsEo extends Strings {
   String get webdavUrlHint => 'Webdav servila url';
 
   @override
-  String get webdavLogOutMessage => 'Kiam vi elsalutas, viaj konservitaj akreditaĵoj estos forigitaj. Tamen, la konservita dosiero daŭros.';
+  String get webdavLogOutMessage =>
+      'Kiam vi elsalutas, viaj konservitaj akreditaĵoj estos forigitaj. Tamen, la konservita dosiero daŭros.';
 
   @override
   String get importExport => 'Importi ⳤ eksporti';
@@ -693,7 +730,8 @@ class StringsEo extends Strings {
   String get lists => 'Listoj';
 
   @override
-  String get listsDescription => 'Kreu listojn kaj ordigu viajn Penigaĵojn kun ĝi. Vi povas krei senliman kvanton da listoj, alireblaj per tirkesto sur la hejmekrano.';
+  String get listsDescription =>
+      'Kreu listojn kaj ordigu viajn Penigaĵojn kun ĝi. Vi povas krei senliman kvanton da listoj, alireblaj per tirkesto sur la hejmekrano.';
 
   @override
   String aboutToDeleteList(String listName) {
@@ -721,7 +759,8 @@ class StringsEo extends Strings {
   String get popUpAnimationOverSlideAnimation => 'Malnova paĝo transpasa';
 
   @override
-  String get popUpAnimationOverSlideAnimationDescription => 'Uzi la malnovan ŝprucfenestran stilan paĝan transpason';
+  String get popUpAnimationOverSlideAnimationDescription =>
+      'Uzi la malnovan ŝprucfenestran stilan paĝan transpason';
 
   @override
   String get restart => 'Rekomenci';
@@ -733,7 +772,8 @@ class StringsEo extends Strings {
   String get restartRequired => 'Rekomenco necesas';
 
   @override
-  String get restartRequiredForSetting => 'Rekomenco de aplikaĵo estas necesa por ke ĉi tiu agordo efiku.';
+  String get restartRequiredForSetting =>
+      'Rekomenco de aplikaĵo estas necesa por ke ĉi tiu agordo efiku.';
 
   @override
   String get image => 'Bildo';
@@ -748,10 +788,12 @@ class StringsEo extends Strings {
   String get includeBranding => 'Inkluzivi markadon';
 
   @override
-  String get doableBrandingText => 'Kunhavita de Doable, la simpla, moderna kaj facile uzebla Penigaĵo-aplikaĵo.\nVi povas akiri Doable ĉi tie: https://codeberg.org/florian-obernberger/flutter-doable';
+  String get doableBrandingText =>
+      'Kunhavita de Doable, la simpla, moderna kaj facile uzebla Penigaĵo-aplikaĵo.\nVi povas akiri Doable ĉi tie: https://codeberg.org/florian-obernberger/flutter-doable';
 
   @override
-  String get chooseTodoShareType => 'Elekti kiel vi volas kunhavigi viajn Penigaĵojn';
+  String get chooseTodoShareType =>
+      'Elekti kiel vi volas kunhavigi viajn Penigaĵojn';
 
   @override
   String get options => 'Opcioj';
@@ -769,13 +811,15 @@ class StringsEo extends Strings {
   String get contributeWantYourNameHere => 'Ĉu vi volas vian nomon ĉi tie?';
 
   @override
-  String get contributeWantYourNameHereDescription => 'Kontribuu al Doable rekte aŭ helpu traduki ĝin!';
+  String get contributeWantYourNameHereDescription =>
+      'Kontribuu al Doable rekte aŭ helpu traduki ĝin!';
 
   @override
   String get onlySymbolInDetailViewFab => 'Ikono anstataŭ teksto';
 
   @override
-  String get onlySymbolInDetailViewFabDescription => 'Uzi ikonon anstataŭ tekston en la detala vido de Penigaĵo';
+  String get onlySymbolInDetailViewFabDescription =>
+      'Uzi ikonon anstataŭ tekston en la detala vido de Penigaĵo';
 
   @override
   String get allSelected => 'Ĉiuj';
@@ -784,10 +828,12 @@ class StringsEo extends Strings {
   String get sharedTextAsTitle => 'Kunhavita teksto kiel titolo';
 
   @override
-  String get sharedTextAsTitleDescription => 'Uzi tekston kunhavitan al Doable kiel la titolon de la nova Penigaĵo anstataŭ ĝia priskribo';
+  String get sharedTextAsTitleDescription =>
+      'Uzi tekston kunhavitan al Doable kiel la titolon de la nova Penigaĵo anstataŭ ĝia priskribo';
 
   @override
-  String get noTodoLists => 'Vi nuntempe ne havas listojn.\nKreu novan por komenci!';
+  String get noTodoLists =>
+      'Vi nuntempe ne havas listojn.\nKreu novan por komenci!';
 
   @override
   String forExample(String example) {
@@ -801,7 +847,8 @@ class StringsEo extends Strings {
   String get syncConnectionTimedOut => 'Konekto eksvalidiĝis.';
 
   @override
-  String get syncTooManyTimeOuts => 'La servilo eksvalidiĝis tro multajn fojojn. Sinkronigo estas malebligita ĝis la rekomenco de la aplikaĵo.';
+  String get syncTooManyTimeOuts =>
+      'La servilo eksvalidiĝis tro multajn fojojn. Sinkronigo estas malebligita ĝis la rekomenco de la aplikaĵo.';
 
   @override
   String get todoToCalendar => 'Aldoni Penigaĵon al kalendaro';
@@ -813,13 +860,15 @@ class StringsEo extends Strings {
   String get logsDescription => 'Montri ĉiujn protokolojn Doable printas';
 
   @override
-  String get aboutToClearAllLogs => 'Vi estas forigi ĉiujn protokolojn igante ĝin nealireblaj por prikomenti kaj problemsolvi. Ĉi tiu ago estas konstanta kaj ne povas esti malfarita.';
+  String get aboutToClearAllLogs =>
+      'Vi estas forigi ĉiujn protokolojn igante ĝin nealireblaj por prikomenti kaj problemsolvi. Ĉi tiu ago estas konstanta kaj ne povas esti malfarita.';
 
   @override
   String get clearAllLogs => 'Forigi ĉiujn protokolojn';
 
   @override
-  String get noLogsYet => 'Nuntempe ne ekzistas protokoloj, kiujn vi povus rigardi.';
+  String get noLogsYet =>
+      'Nuntempe ne ekzistas protokoloj, kiujn vi povus rigardi.';
 
   @override
   String get dateFormat => 'Datformato';
@@ -837,7 +886,8 @@ class StringsEo extends Strings {
   String get whatWentWrong => 'Kio misfunkciis?';
 
   @override
-  String get fixCorruptBackupFile => 'La rezerva dosiero De Doable ne povis esti legita kaj ŝajnas esti korupta. Doable povas provi ripari ĉi tion forigante la nunan rezervan dosieron kaj kreante novan. Ĉi tio forigos ĉiujn ŝanĝojn faritajn en aliaj Fareblaj kazoj uzante la saman rezervan dosieron.';
+  String get fixCorruptBackupFile =>
+      'La rezerva dosiero De Doable ne povis esti legita kaj ŝajnas esti korupta. Doable povas provi ripari ĉi tion forigante la nunan rezervan dosieron kaj kreante novan. Ĉi tio forigos ĉiujn ŝanĝojn faritajn en aliaj Fareblaj kazoj uzante la saman rezervan dosieron.';
 
   @override
   String get initializingNextcloud => 'Komencanta Nextcloud…';
@@ -867,13 +917,15 @@ class StringsEo extends Strings {
   String get createSummaryForBugReport => 'Krei resumon';
 
   @override
-  String get createSummaryForBugReportDetails => 'Kreas raporton enhavantan sistemajn informojn, la agordojn de Doable kaj ĉiujn protokolojn. Ĉi tio povas esti utila por cimraportoj kaj helpas solvi problemon.';
+  String get createSummaryForBugReportDetails =>
+      'Kreas raporton enhavantan sistemajn informojn, la agordojn de Doable kaj ĉiujn protokolojn. Ĉi tio povas esti utila por cimraportoj kaj helpas solvi problemon.';
 
   @override
   String get bugReport => 'Cimraporto';
 
   @override
-  String get bugReportSupportingText => 'Bonvolu elekti kion vi ŝatus inkluzivi en la cimraporto. Ju pli da informoj vi provizas, des pli facile estas ekscii, kio fuŝiĝis. **Neniu persona informo estos kunhavita.**';
+  String get bugReportSupportingText =>
+      'Bonvolu elekti kion vi ŝatus inkluzivi en la cimraporto. Ju pli da informoj vi provizas, des pli facile estas ekscii, kio fuŝiĝis. **Neniu persona informo estos kunhavita.**';
 
   @override
   String get shareBugReport => 'Kunhavigi cimraporton';
@@ -918,13 +970,15 @@ class StringsEo extends Strings {
   String get closeDetailsOnCompelte => 'Fermi detalojn sur kompleta';
 
   @override
-  String get closeDetailsOnCompelteDescription => 'Konservas la Penigaĵon kaj fermas ĝian detalan vidon premante la kompletan butonon.';
+  String get closeDetailsOnCompelteDescription =>
+      'Konservas la Penigaĵon kaj fermas ĝian detalan vidon premante la kompletan butonon.';
 
   @override
   String get customColorTheme => 'Propra kolora haŭto';
 
   @override
-  String get discardCustomColorTheme => 'Vi estas forĵeti ĉiujn ŝanĝojn faritajn al la kolora haŭto.';
+  String get discardCustomColorTheme =>
+      'Vi estas forĵeti ĉiujn ŝanĝojn faritajn al la kolora haŭto.';
 
   @override
   String get lightMode => 'Hela reĝimo';
@@ -933,13 +987,15 @@ class StringsEo extends Strings {
   String get deletedCustomColorTheme => 'Forigita propra kolora haŭto.';
 
   @override
-  String get customThemeInfo => 'Ĉi tie vi povas ŝanĝi ĉiun koloran signon laŭ via koro. Vi ankaŭ povas importi / eksporti la kolorojn en `json`-dosieron kaj redakti ĝin tie!\n\nSe vi volas kompreni, kion faras ĉiu ĵetono, bonvolu viziti la sekvan retejon: https://m3.material.io/foundations/design-tokens';
+  String get customThemeInfo =>
+      'Ĉi tie vi povas ŝanĝi ĉiun koloran signon laŭ via koro. Vi ankaŭ povas importi / eksporti la kolorojn en `json`-dosieron kaj redakti ĝin tie!\n\nSe vi volas kompreni, kion faras ĉiu ĵetono, bonvolu viziti la sekvan retejon: https://m3.material.io/foundations/design-tokens';
 
   @override
   String get import => 'Importi';
 
   @override
-  String get customThemeFuckedFile => 'Ĉi tiu dosiero ne enhavas validan kolorhaŭton. Bonvolu certigi, ke via dosiero sekvas la saman stilon kaj strukturon kiel la dosiero, kiun vi eksportis.';
+  String get customThemeFuckedFile =>
+      'Ĉi tiu dosiero ne enhavas validan kolorhaŭton. Bonvolu certigi, ke via dosiero sekvas la saman stilon kaj strukturon kiel la dosiero, kiun vi eksportis.';
 
   @override
   String get markdownBold => 'Grasa';
@@ -963,7 +1019,8 @@ class StringsEo extends Strings {
   String get fediRememberInstance => 'Memori mian instancon';
 
   @override
-  String get fediDoablePost => 'Ĵuse sukcesis fini ĉiujn miajn Penigaĵojn dankon al @Doable@floss.social!\n\nSonas interese? Vi povas ekscii pli pri #Doable vizitante https://repo.doable.at!';
+  String get fediDoablePost =>
+      'Ĵuse sukcesis fini ĉiujn miajn Penigaĵojn dankon al @Doable@floss.social!\n\nSonas interese? Vi povas ekscii pli pri #Doable vizitante https://repo.doable.at!';
 
   @override
   String get doable => 'Doable - La moderna kaj simpla Penigaĵo-aplikaĵo';
@@ -1038,7 +1095,8 @@ class StringsEo extends Strings {
   String get recurringTodos => 'Ripetiĝanta Penigaĵoj';
 
   @override
-  String get recurringTodosDescription => 'Aldonu ripetiĝon al viaj Penigaĵoj kaj lasu Doable aŭtomate replani ĝin por vi post kiam vi kompletigas ĝin. La Penigaĵoj replanos laŭ la laŭtema dato kaj la horaro, kiun vi agordis. Se vi ne aldonis limdaton al via Penigaĵo, ĝia kredato estos uzata anstataŭe.\n\n**Unu afero por memori: Dum vi nun povas agordi taskojn por ripeti en Doable, bonvolu noti, ke nuntempe ĉi tiu funkcio estas limigita al la angla.**';
+  String get recurringTodosDescription =>
+      'Aldonu ripetiĝon al viaj Penigaĵoj kaj lasu Doable aŭtomate replani ĝin por vi post kiam vi kompletigas ĝin. La Penigaĵoj replanos laŭ la laŭtema dato kaj la horaro, kiun vi agordis. Se vi ne aldonis limdaton al via Penigaĵo, ĝia kredato estos uzata anstataŭe.\n\n**Unu afero por memori: Dum vi nun povas agordi taskojn por ripeti en Doable, bonvolu noti, ke nuntempe ĉi tiu funkcio estas limigita al la angla.**';
 
   @override
   String get post => 'Afiŝi';
@@ -1050,7 +1108,8 @@ class StringsEo extends Strings {
   String get beta => 'Betao';
 
   @override
-  String get extensionBetaWarningDescription => 'Ĉi tiu etendaĵo ankoraŭ estas en beta kaj vi eble trovos kelkajn singultojn dum vi uzas ĝin. Bonvolu konscii pri la riskoj kaj sciigi min se vi renkontas problemojn!';
+  String get extensionBetaWarningDescription =>
+      'Ĉi tiu etendaĵo ankoraŭ estas en beta kaj vi eble trovos kelkajn singultojn dum vi uzas ĝin. Bonvolu konscii pri la riskoj kaj sciigi min se vi renkontas problemojn!';
 
   @override
   String get extensionBetaWarning => 'Ĉu ebligi beta-etendaĵon?';
@@ -1059,7 +1118,8 @@ class StringsEo extends Strings {
   String get showFediButton => 'Montri afiŝon butonon';
 
   @override
-  String get showFediButtonDescription => 'Montri butonon, kiu ebligas vin afiŝi pri via malplena listo al la Fediverse';
+  String get showFediButtonDescription =>
+      'Montri butonon, kiu ebligas vin afiŝi pri via malplena listo al la Fediverse';
 
   @override
   String get notifications => 'Sciigoj';
@@ -1071,22 +1131,26 @@ class StringsEo extends Strings {
   String get notifyAll => 'Ĉiuj Penigaĵoj';
 
   @override
-  String get notifyAllDescription => 'Ricevi sciigon pri ĉiu Penigaĵo, kiu havas limdaton';
+  String get notifyAllDescription =>
+      'Ricevi sciigon pri ĉiu Penigaĵo, kiu havas limdaton';
 
   @override
   String get notifyTimeOnly => 'Nur Penigaĵoj kun tempo';
 
   @override
-  String get notifyTimeOnlyDescription => 'Ricevi sciigon nur por Penigaĵoj, kiuj havas ambaŭ limdaton kaj limtempo';
+  String get notifyTimeOnlyDescription =>
+      'Ricevi sciigon nur por Penigaĵoj, kiuj havas ambaŭ limdaton kaj limtempo';
 
   @override
   String get notifyTodosChannelName => 'Penigaĵoj';
 
   @override
-  String get notificationsDescription => 'Lasu Doable sciigi vin kiam viaj Penigaĵoj pagendas. Vi ankaŭ povas ŝanĝi pri kiuj Penigaĵoj vi ricevos sciigojn.';
+  String get notificationsDescription =>
+      'Lasu Doable sciigi vin kiam viaj Penigaĵoj pagendas. Vi ankaŭ povas ŝanĝi pri kiuj Penigaĵoj vi ricevos sciigojn.';
 
   @override
-  String get notificationsDescriptionShort => 'Ŝanĝo pri kiuj Penigaĵoj vi estas sciigitaj';
+  String get notificationsDescriptionShort =>
+      'Ŝanĝo pri kiuj Penigaĵoj vi estas sciigitaj';
 
   @override
   String get notifyNeverDescription => 'Ne ricevi sciigon pri iuj Penigaĵoj';
@@ -1095,7 +1159,8 @@ class StringsEo extends Strings {
   String get defaultNotificationTime => 'Defaŭlta sciiga tempo';
 
   @override
-  String get defaultNotificationTimeDescription => 'La tempo, kiam vi estos sciigita por Penigaĵoj, kiuj ne havas koncernan tempon';
+  String get defaultNotificationTimeDescription =>
+      'La tempo, kiam vi estos sciigita por Penigaĵoj, kiuj ne havas koncernan tempon';
 
   @override
   String get addImage => 'Aldoni bildon';
@@ -1104,7 +1169,8 @@ class StringsEo extends Strings {
   String get todoImages => 'Bildoj';
 
   @override
-  String get todoImagesDescription => 'Aldonu bildojn al viaj Todoj por ke vi povu aldoni pli da kunteksto al tio, kion vi skribas.\n\n** Bedaŭrinde bildoj ankoraŭ ne estos sinkronigitaj.**';
+  String get todoImagesDescription =>
+      'Aldonu bildojn al viaj Todoj por ke vi povu aldoni pli da kunteksto al tio, kion vi skribas.\n\n** Bedaŭrinde bildoj ankoraŭ ne estos sinkronigitaj.**';
 
   @override
   String get clearInputField => 'Klarigi enigkampon';
@@ -1116,7 +1182,8 @@ class StringsEo extends Strings {
   String get apkSignatureInvalid => 'Nevalida subskribo';
 
   @override
-  String get apkSignatureInvalidDescription => 'La subskribo de la elŝutita apk-dosiero ne povis esti konfirmita. Bonvolu sciigi la programiston pri ĉi tiu afero. Dum vi povas instali la apk je via propra risko, ni rekomendas singardemon pro eblaj sekurecaj zorgoj.';
+  String get apkSignatureInvalidDescription =>
+      'La subskribo de la elŝutita apk-dosiero ne povis esti konfirmita. Bonvolu sciigi la programiston pri ĉi tiu afero. Dum vi povas instali la apk je via propra risko, ni rekomendas singardemon pro eblaj sekurecaj zorgoj.';
 
   @override
   String get searchTodos => 'Serĉi Penigaĵojn';
@@ -1131,7 +1198,8 @@ class StringsEo extends Strings {
   String get readerMode => 'Legila Reĝimo';
 
   @override
-  String get readerModeDescription => 'Permesas al vi antaŭrigardi viajn Penigaĵojn ene de la redakta ekrano.';
+  String get readerModeDescription =>
+      'Permesas al vi antaŭrigardi viajn Penigaĵojn ene de la redakta ekrano.';
 
   @override
   String get noList => 'Neniu listo';
@@ -1140,16 +1208,19 @@ class StringsEo extends Strings {
   String get chooseAList => 'Elektu liston';
 
   @override
-  String get readerModeDescriptionShort => 'Ŝanĝi la komencan reĝimon dum malfermado de Penigaĵo';
+  String get readerModeDescriptionShort =>
+      'Ŝanĝi la komencan reĝimon dum malfermado de Penigaĵo';
 
   @override
   String get lastUsed => 'Laste uzata';
 
   @override
-  String get syncFileLocked => 'La servilo ŝlosis rezervan dosieron, bonvolu provi denove post almenaŭ 15 minutoj.';
+  String get syncFileLocked =>
+      'La servilo ŝlosis rezervan dosieron, bonvolu provi denove post almenaŭ 15 minutoj.';
 
   @override
-  String get syncInternalError => 'Okazis interna eraro, pardonpetas pro la ĝeno.';
+  String get syncInternalError =>
+      'Okazis interna eraro, pardonpetas pro la ĝeno.';
 
   @override
   String get syncConnectionError => 'Okazis eraro dum konektado al la servilo.';
@@ -1164,19 +1235,23 @@ class StringsEo extends Strings {
   String get initializingWebdav => 'Komencante Webdav…';
 
   @override
-  String get migratingNextcloudToRemote => 'Migrante Nextcloud al nova sinkroniga efektivigo…';
+  String get migratingNextcloudToRemote =>
+      'Migrante Nextcloud al nova sinkroniga efektivigo…';
 
   @override
-  String get migratingWebdavToRemote => 'Migrante Webdav al nova sinkroniga efektivigo…';
+  String get migratingWebdavToRemote =>
+      'Migrante Webdav al nova sinkroniga efektivigo…';
 
   @override
   String get migrateToRemotes => 'Migrado';
 
   @override
-  String get migrateToRemotesDescription => 'Doable lastatempe ŝanĝis kiel ĝi sinkronigas kun foroj kiel Nextcloud aŭ Webdav. Bedaŭrinde la nova efektivigo ne estas retrokongrua kaj tial migrado devas okazi. Doable devus bezoni minuton por migri ĉion, kion ĝi bezonas.\n\nSe vi elektas fari ĝin poste, vi eble renkontos kelkajn erarmesaĝojn ĉar la nova efektivigo ankoraŭ ne estas agordita.';
+  String get migrateToRemotesDescription =>
+      'Doable lastatempe ŝanĝis kiel ĝi sinkronigas kun foroj kiel Nextcloud aŭ Webdav. Bedaŭrinde la nova efektivigo ne estas retrokongrua kaj tial migrado devas okazi. Doable devus bezoni minuton por migri ĉion, kion ĝi bezonas.\n\nSe vi elektas fari ĝin poste, vi eble renkontos kelkajn erarmesaĝojn ĉar la nova efektivigo ankoraŭ ne estas agordita.';
 
   @override
-  String get fixBrokenRemoteFile => 'Rezerva dosiero de Doable ŝajnas esti korupta. Doable povas ripari ĝin anstataŭigante ĝin per la nuna, loka valoro. Ĉi tio anstataŭigos ajnajn ŝanĝojn faritajn far aliaj aparatoj post kiam tiu eraro okazis.';
+  String get fixBrokenRemoteFile =>
+      'Rezerva dosiero de Doable ŝajnas esti korupta. Doable povas ripari ĝin anstataŭigante ĝin per la nuna, loka valoro. Ĉi tio anstataŭigos ajnajn ŝanĝojn faritajn far aliaj aparatoj post kiam tiu eraro okazis.';
 
   @override
   String get fixedBrokenRemoteFile => 'Sukcese restarigita rompita dosiero.';
@@ -1203,7 +1278,8 @@ class StringsEo extends Strings {
   String get listColorAsAccent => 'Lista koloro kiel akcento';
 
   @override
-  String get listColorAsAccentDescription => 'Uzi la koloron de la nuna listo kiel la akcentkoloron por Doable';
+  String get listColorAsAccentDescription =>
+      'Uzi la koloron de la nuna listo kiel la akcentkoloron por Doable';
 
   @override
   String get privacy => 'Privateco';
@@ -1227,10 +1303,12 @@ class StringsEo extends Strings {
   String get fdroid => 'F-Droid';
 
   @override
-  String get aboutOpenSource => 'La tuta fontkodo de Doable estas alirebla sur Codeberg sub FOSS-licenco. Vi ankaŭ povas sendi problemojn kaj tirpetojn tie. Vi ankaŭ povas trovi la deponejon F-Droid de Doable ĉe Codeberg!';
+  String get aboutOpenSource =>
+      'La tuta fontkodo de Doable estas alirebla sur Codeberg sub FOSS-licenco. Vi ankaŭ povas sendi problemojn kaj tirpetojn tie. Vi ankaŭ povas trovi la deponejon F-Droid de Doable ĉe Codeberg!';
 
   @override
-  String get aboutPrivacy => 'Doable ne kolektas ajnajn personajn informojn pri vi. La nuran aferon ke Doable konservas pri via uzado estas protokoloj. Tamen tiuj protokoloj **ne estas alŝutitaj aŭtomate.** La nura maniero kiel tiuj protokoloj forlasas vian aparaton estas se vi elektas kunhavigi ilin ekzemple por helpi min ripari cimon.';
+  String get aboutPrivacy =>
+      'Doable ne kolektas ajnajn personajn informojn pri vi. La nuran aferon ke Doable konservas pri via uzado estas protokoloj. Tamen tiuj protokoloj **ne estas alŝutitaj aŭtomate.** La nura maniero kiel tiuj protokoloj forlasas vian aparaton estas se vi elektas kunhavigi ilin ekzemple por helpi min ripari cimon.';
 
   @override
   String get httpWarning => 'Neĉifrita konekto';
@@ -1239,7 +1317,8 @@ class StringsEo extends Strings {
   String get cancelling => 'Nuligante…';
 
   @override
-  String get httpWarningDescription => 'Vi provas konektiĝi al HTTP-servilo anstataŭ pli sekura HTTPS-servilo. HTTP sendas la datumojn neĉifritajn al la servilo, prezentante eblajn sekurecajn riskojn, do ĉi tio ne estas rekomendita. Estas tamen certaj uzkazoj kiel loke gastigita servilo. Ĉu vi certas, ke vi volas daŭrigi kun HTTP?';
+  String get httpWarningDescription =>
+      'Vi provas konektiĝi al HTTP-servilo anstataŭ pli sekura HTTPS-servilo. HTTP sendas la datumojn neĉifritajn al la servilo, prezentante eblajn sekurecajn riskojn, do ĉi tio ne estas rekomendita. Estas tamen certaj uzkazoj kiel loke gastigita servilo. Ĉu vi certas, ke vi volas daŭrigi kun HTTP?';
 
   @override
   String get enableNotificationReminder => 'Rememoriga sciigo';
@@ -1257,7 +1336,8 @@ class StringsEo extends Strings {
   String get enableNotificationSound => 'Ludi sonon';
 
   @override
-  String get enableNotificationSoundDescription => 'Ludi propran sonon kiam sciigo estas montrata';
+  String get enableNotificationSoundDescription =>
+      'Ludi propran sonon kiam sciigo estas montrata';
 
   @override
   String get interval => 'Intervalo';
@@ -1284,25 +1364,31 @@ class StringsEo extends Strings {
   String get showList => 'Montri liston';
 
   @override
-  String get showListDescription => 'Montru Todos de ĉi tiu listo en la superrigardo.';
+  String get showListDescription =>
+      'Montru Todos de ĉi tiu listo en la superrigardo.';
 
   @override
-  String get hideListDescription => 'Ne montru Todos de ĉi tiu listo en la superrigardo.';
+  String get hideListDescription =>
+      'Ne montru Todos de ĉi tiu listo en la superrigardo.';
 
   @override
   String get gotIt => 'Akiris ĝin';
 
   @override
-  String get updateRelease => 'Malfermu la liberigan paĝon De Doable kaj elŝutu la plej novan version';
+  String get updateRelease =>
+      'Malfermu la liberigan paĝon De Doable kaj elŝutu la plej novan version';
 
   @override
-  String get updateDownload => 'Lasu Doable elŝuti la lastan version por vi; vi trovos la dosieron en la sciiga areo kaj povas instali ĝin alklakante ĝin';
+  String get updateDownload =>
+      'Lasu Doable elŝuti la lastan version por vi; vi trovos la dosieron en la sciiga areo kaj povas instali ĝin alklakante ĝin';
 
   @override
-  String get updateFdroid => 'Se vi instalis Doable De F-Droid vi devus akiri la ĝisdatigon en la sekvanta paro horoj aŭ De Izzjondroid deponejo aŭ Doable propra deponejo';
+  String get updateFdroid =>
+      'Se vi instalis Doable De F-Droid vi devus akiri la ĝisdatigon en la sekvanta paro horoj aŭ De Izzjondroid deponejo aŭ Doable propra deponejo';
 
   @override
-  String get updateDisable => 'Vi ankaŭ povas malŝalti aŭtomatajn ĝisdatigajn kontrolojn kune en la agordoj';
+  String get updateDisable =>
+      'Vi ankaŭ povas malŝalti aŭtomatajn ĝisdatigajn kontrolojn kune en la agordoj';
 
   @override
   String get updateChecker => 'Ĝisdatiga kontrolilo';
@@ -1323,7 +1409,8 @@ class StringsEo extends Strings {
   String get changeDuration => 'Ŝanĝi daŭron';
 
   @override
-  String get autoExportDescription => 'Vi povas lasi Doable aŭtomate fari eksportoj de via Todo, Listoj, Kaj Agordoj. Bonvolu scii, Ke Doable kreos novan dosieron por ĉiu eksportado! Elektu la daŭron inter eksportoj laŭe.';
+  String get autoExportDescription =>
+      'Vi povas lasi Doable aŭtomate fari eksportoj de via Todo, Listoj, Kaj Agordoj. Bonvolu scii, Ke Doable kreos novan dosieron por ĉiu eksportado! Elektu la daŭron inter eksportoj laŭe.';
 
   @override
   String get seconds => 'Sekundoj';
@@ -1335,7 +1422,8 @@ class StringsEo extends Strings {
   String get swipeActions => 'Svingi agojn';
 
   @override
-  String get swipeActionsDescription => 'Aldonas la kapablon gliti maldekstren sur Todos por aŭ komenci ilin aŭ kompletigi ilin.\n\n** Notu, ke tio foje povas konflikti kun la tirkesto de La listo-etendaĵo.**';
+  String get swipeActionsDescription =>
+      'Aldonas la kapablon gliti maldekstren sur Todos por aŭ komenci ilin aŭ kompletigi ilin.\n\n** Notu, ke tio foje povas konflikti kun la tirkesto de La listo-etendaĵo.**';
 
   @override
   String get selectedSwipeActions => 'Elektitaj agoj';
@@ -1367,7 +1455,8 @@ class StringsEo extends Strings {
   String get forceHighestRefreshRate => 'Forto plej alta refreŝiga indico';
 
   @override
-  String get forceHighestRefreshRateDescription => '(Provu) devigi la sistemon uzi la plej altan eblan refreŝigan indicon ene de la programo';
+  String get forceHighestRefreshRateDescription =>
+      '(Provu) devigi la sistemon uzi la plej altan eblan refreŝigan indicon ene de la programo';
 
   @override
   String get overview => 'Superrigardo';
@@ -1381,7 +1470,8 @@ class StringsEo extends Strings {
   String get expandTodosByDefault => 'Pligrandigi Todos defaŭlte';
 
   @override
-  String get expandTodosByDefaultDescription => 'Montri Todos kiel vastigita defaŭlte';
+  String get expandTodosByDefaultDescription =>
+      'Montri Todos kiel vastigita defaŭlte';
 
   @override
   String get progress => 'Progreso';
@@ -1390,10 +1480,12 @@ class StringsEo extends Strings {
   String get progressBar => 'Progreso trinkejo';
 
   @override
-  String get progressBarDescription => 'Aldonas progresan stangon al viaj Todoj donante al vi pli bonan kontrolon pri ĝia kompleta stato.';
+  String get progressBarDescription =>
+      'Aldonas progresan stangon al viaj Todoj donante al vi pli bonan kontrolon pri ĝia kompleta stato.';
 
   @override
-  String get syncMultipleErrors => 'La teleregilo renkontis plurajn erarojn. Por detaloj vidu la protokolojn.';
+  String get syncMultipleErrors =>
+      'La teleregilo renkontis plurajn erarojn. Por detaloj vidu la protokolojn.';
 
   @override
   String get deletedCompleted => 'Forigita kompletigita todos.';
@@ -1408,7 +1500,8 @@ class StringsEo extends Strings {
   String get dateFilters => 'Datfiltriloj';
 
   @override
-  String get dateFiltersDescription => 'Aldoni la eblon filtri vian todos de specifa dato gamo.';
+  String get dateFiltersDescription =>
+      'Aldoni la eblon filtri vian todos de specifa dato gamo.';
 
   @override
   String get exportedFile => 'Eksportita dosiero.';
@@ -1419,7 +1512,8 @@ class StringsEo extends Strings {
   }
 
   @override
-  String get enablePrideFlagsDescription => 'Montras Fierajn flagojn malantaŭ la titolbreto en certaj monatoj';
+  String get enablePrideFlagsDescription =>
+      'Montras Fierajn flagojn malantaŭ la titolbreto en certaj monatoj';
 
   @override
   String get enablePrideFlags => 'Ebligu Fierajn flagojn';
@@ -1461,7 +1555,8 @@ class StringsEo extends Strings {
   String get anHourBefore => 'An hour before';
 
   @override
-  String get defaultNotificationsDescriptionIfLists => 'You can also select different Notifications for each List.';
+  String get defaultNotificationsDescriptionIfLists =>
+      'You can also select different Notifications for each List.';
 
   @override
   String get halfHourAfter => 'Half hour after';
@@ -1470,7 +1565,8 @@ class StringsEo extends Strings {
   String get customNotificationTime => 'Custom notification time';
 
   @override
-  String get defaultNotificationsDescription => 'Select default Notifications that get added to every Todo with a relevant date.';
+  String get defaultNotificationsDescription =>
+      'Select default Notifications that get added to every Todo with a relevant date.';
 
   @override
   String nrOfNotifications(int count) {
@@ -1493,7 +1589,8 @@ class StringsEo extends Strings {
   String get snooze => 'Snooze';
 
   @override
-  String get snoozeDurationDescription => 'Duration that a notification gets delayed for when pressing the snooze button';
+  String get snoozeDurationDescription =>
+      'Duration that a notification gets delayed for when pressing the snooze button';
 
   @override
   String get snoozeDuration => 'Snooze duration';
@@ -1546,16 +1643,19 @@ class StringsEo extends Strings {
   String get info => 'Info';
 
   @override
-  String get aboutToCancelChangesToList => 'You\'re about to discard all changes made to this List.';
+  String get aboutToCancelChangesToList =>
+      'You\'re about to discard all changes made to this List.';
 
   @override
   String get notificationsAlwaysPreview => 'Always preview Notifications';
 
   @override
-  String get notificationsAlwaysPreviewDescription => 'Always open Notifications in preview mode regardless (this does not affect what mode was last used)';
+  String get notificationsAlwaysPreviewDescription =>
+      'Always open Notifications in preview mode regardless (this does not affect what mode was last used)';
 
   @override
-  String get nextcloudWipeDescription => 'Doable received a request to wipe all data associated with the Nextcloud account you logged in with. Therefore you will be logged out of your account. You can also choose to wipe all data (Todos and Lists) from the app. This action is permanent and cannot be undone.';
+  String get nextcloudWipeDescription =>
+      'Doable received a request to wipe all data associated with the Nextcloud account you logged in with. Therefore you will be logged out of your account. You can also choose to wipe all data (Todos and Lists) from the app. This action is permanent and cannot be undone.';
 
   @override
   String get nextcloudWipe => 'Nextcloud remote wipe';
@@ -1573,13 +1673,15 @@ class StringsEo extends Strings {
   String get useSystemFont => 'Use system font';
 
   @override
-  String get useSystemFontDescription => 'Use the system font as the primary font for Doable';
+  String get useSystemFontDescription =>
+      'Use the system font as the primary font for Doable';
 
   @override
   String get batteryOptimization => 'Battery optimization';
 
   @override
-  String get batteryOptimizationDescription => 'Doable is being battery optimized. While this usually isn\'t a problem it might lead to some issues when logging in to Nextcloud. If you want to ensure a smooth experience, please disable these optimizations.';
+  String get batteryOptimizationDescription =>
+      'Doable is being battery optimized. While this usually isn\'t a problem it might lead to some issues when logging in to Nextcloud. If you want to ensure a smooth experience, please disable these optimizations.';
 
   @override
   String get couldNotAddTodoToCalendar => 'Could not add Todo to calendar.';
@@ -1588,5 +1690,6 @@ class StringsEo extends Strings {
   String get sortCompleted => 'Sort completed';
 
   @override
-  String get sortCompletedDescription => 'Apply sorting to completed Todos as well';
+  String get sortCompletedDescription =>
+      'Apply sorting to completed Todos as well';
 }

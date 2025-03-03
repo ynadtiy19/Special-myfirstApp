@@ -15,28 +15,31 @@ class StringsEu extends Strings {
   String get aboutDescription => 'Aplikazioari buruzko informazioa';
 
   @override
-  String get aboutOSInfo => 'Iturburu-kodea: [kodeberg/flutter-doable](https://www.codeberg.org/florian-obernberger/flutter-double)\nF-Droid biltegia: [kodeberg/fdroid-repo](https://codeberg.org/florian-obernberger/fdroid-repo)\nMastodon: [@doable@haria.soziala](https://floss.soziala/@doable)';
+  String get aboutOSInfo =>
+      'Iturburu-kodea: [kodeberg/flutter-doable](https://www.codeberg.org/florian-obernberger/flutter-double)\nF-Droid biltegia: [kodeberg/fdroid-repo](https://codeberg.org/florian-obernberger/fdroid-repo)\nMastodon: [@doable@haria.soziala](https://floss.soziala/@doable)';
 
   @override
   String get aboutToCancelChanges => 'Baztertu aldaketak?';
 
   @override
-  String get aboutToCancelChangesDescription => 'Egin beharreko aldaketa guztiak baztertzera zoaz.';
+  String get aboutToCancelChangesDescription =>
+      'Egin beharreko aldaketa guztiak baztertzera zoaz.';
 
   @override
   String get aboutToCancelFeedback => 'Baztertu iritzia?';
 
   @override
-  String get aboutToCancelFeedbackDescription => 'Zure iritzia baztertzeko zorian zaude. Hau ezin da desegin.';
+  String get aboutToCancelFeedbackDescription =>
+      'Zure iritzia baztertzeko zorian zaude. Hau ezin da desegin.';
 
   @override
-  String get aboutToDeleteCompleted => 'Burututako Todos guztiak ezabatzeko zorian zaude. Ekintza hau iraunkorra da eta ezin da desegin.';
+  String get aboutToDeleteCompleted =>
+      'Burututako Todos guztiak ezabatzeko zorian zaude. Ekintza hau iraunkorra da eta ezin da desegin.';
 
   @override
   String aboutToDeleteNSelected(int count) {
     final intl.NumberFormat countNumberFormat = intl.NumberFormat.compact(
       locale: localeName,
-      
     );
     final String countString = countNumberFormat.format(count);
 
@@ -53,13 +56,15 @@ class StringsEu extends Strings {
   String get additionalFeatures => 'Luzapenak';
 
   @override
-  String get additionalFeaturesDescription => 'Doable ahaltsuagoa egiten duten ezaugarriak';
+  String get additionalFeaturesDescription =>
+      'Doable ahaltsuagoa egiten duten ezaugarriak';
 
   @override
   String get alignTodoCheck => 'Markatu eskuinean';
 
   @override
-  String get alignTodoCheckDescription => 'Erakutsi egitekoaren kontrol-marka eskuineko aldean';
+  String get alignTodoCheckDescription =>
+      'Erakutsi egitekoaren kontrol-marka eskuineko aldean';
 
   @override
   String get appLanguage => 'App language hizkuntza';
@@ -77,16 +82,19 @@ class StringsEu extends Strings {
   String get syncAndBackup => 'Babeskopia Eta Sinkronizazioa';
 
   @override
-  String get syncAndBackupDescription => 'Egin babeskopia eta sinkronizatu Zure Todos';
+  String get syncAndBackupDescription =>
+      'Egin babeskopia eta sinkronizatu Zure Todos';
 
   @override
   String get cancel => 'Utzi';
 
   @override
-  String get chooseFeedbackExtrasDescription => 'Honako hauek guztiak barne gomendatzen dut me laguntzen du zure arazoa konpontzeko batera geroztik. Ez dago informazio pertsonalik.';
+  String get chooseFeedbackExtrasDescription =>
+      'Honako hauek guztiak barne gomendatzen dut me laguntzen du zure arazoa konpontzeko batera geroztik. Ez dago informazio pertsonalik.';
 
   @override
-  String get chooseFeedbackExtrasTitle => 'Zein informazio gehigarri nahi duzu?';
+  String get chooseFeedbackExtrasTitle =>
+      'Zein informazio gehigarri nahi duzu?';
 
   @override
   String get chooseFeedbackWay => 'Non jaso nahi dituzu iradokizunak?';
@@ -104,7 +112,8 @@ class StringsEu extends Strings {
   String get customAccentPicker => 'Azentu-kolorea';
 
   @override
-  String get customAccentPickerDescription => 'Aukeratu aplikazioaren gaiaren azentu-kolore pertsonalizatua';
+  String get customAccentPickerDescription =>
+      'Aukeratu aplikazioaren gaiaren azentu-kolore pertsonalizatua';
 
   @override
   String get darkMode => 'Modu iluna';
@@ -121,7 +130,6 @@ class StringsEu extends Strings {
   String deletedNTodos(int count) {
     final intl.NumberFormat countNumberFormat = intl.NumberFormat.compact(
       locale: localeName,
-      
     );
     final String countString = countNumberFormat.format(count);
 
@@ -159,7 +167,8 @@ class StringsEu extends Strings {
   String get dynamicColors => 'Kolore dinamikoak';
 
   @override
-  String get dynamicColorsDescription => 'Erabili sistemaren koloreak (Android 12+)';
+  String get dynamicColorsDescription =>
+      'Erabili sistemaren koloreak (Android 12+)';
 
   @override
   String get email => 'Posta elektronikoa';
@@ -182,10 +191,12 @@ class StringsEu extends Strings {
   }
 
   @override
-  String get feedbackDescriptionHelp => 'Azalpen zehatzagoa zer gaizki joan / nola gertatu zen.';
+  String get feedbackDescriptionHelp =>
+      'Azalpen zehatzagoa zer gaizki joan / nola gertatu zen.';
 
   @override
-  String get feedbackHeader => 'Mesedez, bete beheko formularioa zer oker joan zen ulertzen laguntzeko.';
+  String get feedbackHeader =>
+      'Mesedez, bete beheko formularioa zer oker joan zen ulertzen laguntzeko.';
 
   @override
   String get feedbackTitleHelp => 'Ekitaldiaren laburpen txiki bat.';
@@ -203,13 +214,15 @@ class StringsEu extends Strings {
   String get highlightOverdue => 'Nabarmendu atzeratua';
 
   @override
-  String get highlightOverdueDescription => 'Nabarmendu atzeratutako todoak todos izarratu bezala';
+  String get highlightOverdueDescription =>
+      'Nabarmendu atzeratutako todoak todos izarratu bezala';
 
   @override
   String get highlightToday => 'Nabarmendu gaur';
 
   @override
-  String get highlightTodayDescription => 'Nabarmendu gaur egun behar diren Todoak todos izarratu bezala';
+  String get highlightTodayDescription =>
+      'Nabarmendu gaur egun behar diren Todoak todos izarratu bezala';
 
   @override
   String get importLocalBackupError => 'Fitxategi honek Ez dauka Todos.';
@@ -221,7 +234,6 @@ class StringsEu extends Strings {
   String importedNTodos(int count) {
     final intl.NumberFormat countNumberFormat = intl.NumberFormat.compact(
       locale: localeName,
-      
     );
     final String countString = countNumberFormat.format(count);
 
@@ -242,10 +254,12 @@ class StringsEu extends Strings {
   String get introDoubleTap => 'Kolpatu bikoitza';
 
   @override
-  String get introDoubleTapDescription => 'Deskribapen bat egin duten todos sakatu bikoitza dezakezu horiek zabaltzeko. Zabaldutakoan, deskribapen osoa erakusten da eta ondoren estekekin elkarreragin dezakezu, etab.\n\nAdibide batekin probatu dezakezu hemen!';
+  String get introDoubleTapDescription =>
+      'Deskribapen bat egin duten todos sakatu bikoitza dezakezu horiek zabaltzeko. Zabaldutakoan, deskribapen osoa erakusten da eta ondoren estekekin elkarreragin dezakezu, etab.\n\nAdibide batekin probatu dezakezu hemen!';
 
   @override
-  String get introDoubleTapTodoDescription => 'Pastela gezurra da!\n\nGehiago jakiteko hemen:\nhttps://theportalwiki.com/wiki/Cake';
+  String get introDoubleTapTodoDescription =>
+      'Pastela gezurra da!\n\nGehiago jakiteko hemen:\nhttps://theportalwiki.com/wiki/Cake';
 
   @override
   String get introDoubleTapTodoTitle => 'Erosi pastel berria';
@@ -254,31 +268,36 @@ class StringsEu extends Strings {
   String get introLinks => 'Loturak, telefono zenbakiak, posta elektronikoak';
 
   @override
-  String get introLinksDescription => 'Deskribapen bati estekak, telefono zenbakiak edo helbide elektronikoa gehitzen dizkiozunean, automatikoki nabarmenduko dira eta haiekin elkarreragin dezakezu.';
+  String get introLinksDescription =>
+      'Deskribapen bati estekak, telefono zenbakiak edo helbide elektronikoa gehitzen dizkiozunean, automatikoki nabarmenduko dira eta haiekin elkarreragin dezakezu.';
 
   @override
   String get introNextcloud => 'Nextcloud';
 
   @override
-  String get introNextcloudDescription => 'Zure Todos Nextcloud instantzia batekin ere sinkroniza ditzakezu. Nahi baduzu, hemen sartu zaitezke!';
+  String get introNextcloudDescription =>
+      'Zure Todos Nextcloud instantzia batekin ere sinkroniza ditzakezu. Nahi baduzu, hemen sartu zaitezke!';
 
   @override
   String get introStar => 'Izarrak';
 
   @override
-  String get introStarDescription => 'Gehitu izar bat egin ahal izateko\njendetzaren artean zutik.\n\nEman beheko izarra txorrota bat probatzeko!';
+  String get introStarDescription =>
+      'Gehitu izar bat egin ahal izateko\njendetzaren artean zutik.\n\nEman beheko izarra txorrota bat probatzeko!';
 
   @override
   String get introTodos => 'Todosek';
 
   @override
-  String get introTodosDescription => 'Todo berri bat sortzean hainbat gauza gehi ditzakezu. Esate baterako, data bat gehitu ahal izango duzu denean zeregin garrantzitsua bihurtzen da, edo makila da gainerako artean egiteko zeregin hasteko dezakezu! Ere egin lotutako loturak edo beste informazio deskribapen bat gehitu dezakezu.';
+  String get introTodosDescription =>
+      'Todo berri bat sortzean hainbat gauza gehi ditzakezu. Esate baterako, data bat gehitu ahal izango duzu denean zeregin garrantzitsua bihurtzen da, edo makila da gainerako artean egiteko zeregin hasteko dezakezu! Ere egin lotutako loturak edo beste informazio deskribapen bat gehitu dezakezu.';
 
   @override
   String get introWelcome => 'Ongi Etorri Doable!';
 
   @override
-  String get introWelcomeDescription => 'Todo aplikazio sinplea diseinu modernoarekin\neta nextcloud integrazioa.';
+  String get introWelcomeDescription =>
+      'Todo aplikazio sinplea diseinu modernoarekin\neta nextcloud integrazioa.';
 
   @override
   String get keepEditing => 'Jarraitu editatzen';
@@ -328,19 +347,22 @@ class StringsEu extends Strings {
   String get mdCheatSheet => 'https://www.markdownguide.org/cheat-sheet/';
 
   @override
-  String get mdHelpMessage => 'Oinarrizko markdown sintaxiaren euskarria gehitzen du zure Todos-en deskribapenaren eta izenburuaren barruan.\n\nSintaxi aukeren zerrenda osoa kontsultatu dezakezu\nhttps://www.markdownguide.org/cheat-sheet/.\n\nHala ere, aplikazio honek * * ez du * * onartzen markdown zehaztapen guztiak. Onartutako elementuak:\n\n- Lodia\n- Etzana\n- - Aipu blokea\n Ordenatu gabeko / ordenatu gabeko zerrendak\n- Zereginen zerrendak\n- Barneko kodea eta hesitutako kode blokeak\n- Estekak\n- Nabarmentzea\n- Marratua\n\n\nEra berean, nabarmentzekoa da, formatua **ez da errekurtsiboki aplikatzen**.';
+  String get mdHelpMessage =>
+      'Oinarrizko markdown sintaxiaren euskarria gehitzen du zure Todos-en deskribapenaren eta izenburuaren barruan.\n\nSintaxi aukeren zerrenda osoa kontsultatu dezakezu\nhttps://www.markdownguide.org/cheat-sheet/.\n\nHala ere, aplikazio honek * * ez du * * onartzen markdown zehaztapen guztiak. Onartutako elementuak:\n\n- Lodia\n- Etzana\n- - Aipu blokea\n Ordenatu gabeko / ordenatu gabeko zerrendak\n- Zereginen zerrendak\n- Barneko kodea eta hesitutako kode blokeak\n- Estekak\n- Nabarmentzea\n- Marratua\n\n\nEra berean, nabarmentzekoa da, formatua **ez da errekurtsiboki aplikatzen**.';
 
   @override
   String get moveImportantToTop => 'Eraman garrantzitsua goira';
 
   @override
-  String get moveImportantToTopDescription => 'Gaituta badago, izarretako Todoak beti bistaratuko dira zerrendaren goialdean';
+  String get moveImportantToTopDescription =>
+      'Gaituta badago, izarretako Todoak beti bistaratuko dira zerrendaren goialdean';
 
   @override
   String get moveUpWhenUpdated => 'Islatu zerrendako aldaketak';
 
   @override
-  String get moveUpWhenUpdatedDescription => 'Todos zerrendaren goialdera joaten da aldatu ondoren';
+  String get moveUpWhenUpdatedDescription =>
+      'Todos zerrendaren goialdera joaten da aldatu ondoren';
 
   @override
   String get ncBaseUrl => 'Zerbitzaria';
@@ -358,7 +380,8 @@ class StringsEu extends Strings {
   String get ncLogOut => 'Nextcloud en saioa amaitzen';
 
   @override
-  String get ncLogOutMessage => 'Saioa amaitzean gordetako kredentzialak ezabatu egingo dira. Hala ere, gordetako fitxategia Zure Hurrengo Hodeiko instantzian mantenduko da.';
+  String get ncLogOutMessage =>
+      'Saioa amaitzean gordetako kredentzialak ezabatu egingo dira. Hala ere, gordetako fitxategia Zure Hurrengo Hodeiko instantzian mantenduko da.';
 
   @override
   String get ncLoggedInAs => 'Saioa hasi honela';
@@ -454,7 +477,8 @@ class StringsEu extends Strings {
   String get showCompletedTodos => 'Erakutsi osatuta';
 
   @override
-  String get showCompletedTodosDescription => 'Erakutsi osatutako Todoak zerrendan';
+  String get showCompletedTodosDescription =>
+      'Erakutsi osatutako Todoak zerrendan';
 
   @override
   String get showIntroScreen => 'Erakutsi sarrerako pantaila berriro';
@@ -463,7 +487,8 @@ class StringsEu extends Strings {
   String get sortNewestFirst => 'Berriena lehen';
 
   @override
-  String get sortNewestFirstDescription => 'Data berriagoak agertzen dira goian';
+  String get sortNewestFirstDescription =>
+      'Data berriagoak agertzen dira goian';
 
   @override
   String get sortNoRelevantDate => 'Datarik gabe';
@@ -490,10 +515,12 @@ class StringsEu extends Strings {
   String get submitFeedback => 'Bidali';
 
   @override
-  String get syncCorruptedFile => 'Badirudi babeskopiaren fitxategia hondatuta dagoela.';
+  String get syncCorruptedFile =>
+      'Badirudi babeskopiaren fitxategia hondatuta dagoela.';
 
   @override
-  String get syncDirectoryDoesNotExist => 'Zehaztutako direktorioa ez da existitzen.';
+  String get syncDirectoryDoesNotExist =>
+      'Zehaztutako direktorioa ez da existitzen.';
 
   @override
   String get syncNcMaintenance => 'Nextcloud Mantentze Moduan dago.';
@@ -502,7 +529,8 @@ class StringsEu extends Strings {
   String get syncNoInternetConnection => 'Ez dago interneteko konexiorik.';
 
   @override
-  String get syncNotNcServer => 'Ezin Izan Da Nextcloud zerbitzaria aurkitu helbide honetan.';
+  String get syncNotNcServer =>
+      'Ezin Izan Da Nextcloud zerbitzaria aurkitu helbide honetan.';
 
   @override
   String get syncServiceUnavailable => 'Nextcloud ez dago erabilgarri.';
@@ -517,7 +545,8 @@ class StringsEu extends Strings {
   String get syncWrongUrl => 'Emandakola ez da zuzena.';
 
   @override
-  String get syncWrongUserOrPassword => 'Emandako erabiltzaile-izena edo pasahitza ez dira zuzenak.';
+  String get syncWrongUserOrPassword =>
+      'Emandako erabiltzaile-izena edo pasahitza ez dira zuzenak.';
 
   @override
   String get system => 'Sistema';
@@ -541,7 +570,8 @@ class StringsEu extends Strings {
   String get todoSearch => 'Egitekoen bilaketa';
 
   @override
-  String get todoSearchDescription => 'Gehitu bilaketa-botoia Todoen zerrendan, Zure Todoak bilatzeko aukera emanez.';
+  String get todoSearchDescription =>
+      'Gehitu bilaketa-botoia Todoen zerrendan, Zure Todoak bilatzeko aukera emanez.';
 
   @override
   String get tomorrow => 'Bihar';
@@ -550,19 +580,22 @@ class StringsEu extends Strings {
   String get treatTodayAsIsImportant => 'Gaurkoa bezain garrantzitsua';
 
   @override
-  String get treatTodayAsIsImportantDescription => 'Gaituta badago, gaur egun behar diren Todoak izartuta egongo balira bezala tratatuko dira';
+  String get treatTodayAsIsImportantDescription =>
+      'Gaituta badago, gaur egun behar diren Todoak izartuta egongo balira bezala tratatuko dira';
 
   @override
   String get trimTodoTexts => 'Moztu Egitekoen testuak';
 
   @override
-  String get trimTodoTextsDescription => 'Gaituta badago, inguruko zuriuneak txikitzen ditu todos-etik izenburua eta azalpena';
+  String get trimTodoTextsDescription =>
+      'Gaituta badago, inguruko zuriuneak txikitzen ditu todos-etik izenburua eta azalpena';
 
   @override
   String get trueBlackMode => 'Benetako modu beltza';
 
   @override
-  String get trueBlackModeDescription => 'Makes planoa beltza bihurtzen du, oled gailuetarako bereziki erabilgarria';
+  String get trueBlackModeDescription =>
+      'Makes planoa beltza bihurtzen du, oled gailuetarako bereziki erabilgarria';
 
   @override
   String get turnOff => 'Itzali';
@@ -583,7 +616,8 @@ class StringsEu extends Strings {
   String get useCustomTabs => 'Erabili aplikazioen arakatzailean';
 
   @override
-  String get useCustomTabsDescription => 'Erabili in-app nabigatzaile bat estekak irekitzeko';
+  String get useCustomTabsDescription =>
+      'Erabili in-app nabigatzaile bat estekak irekitzeko';
 
   @override
   String get whatsNew => 'Zer berri?';
@@ -595,7 +629,8 @@ class StringsEu extends Strings {
   String get error => 'Errorea';
 
   @override
-  String get routingError => 'Uau! Badirudi zerbait gaizki joan dela eta orrialde batean amaitu duzula, beno, ez da existitzen. Izugarri sentitzen dut!';
+  String get routingError =>
+      'Uau! Badirudi zerbait gaizki joan dela eta orrialde batean amaitu duzula, beno, ez da existitzen. Izugarri sentitzen dut!';
 
   @override
   String get goToHome => 'Zoaz etxera';
@@ -639,7 +674,8 @@ class StringsEu extends Strings {
   String get introExtensions => 'Luzapenak? Luzapenak!';
 
   @override
-  String get introExtensionsDescription => 'Luzapenak luzatzeko eta Handitzeko Ezaugarri Doable multzo aukera ematen dizu. Duzu boterea zehazki Nola Doable erabili nahi duzun aukeratzeko ematen dute. Eskuragarri dauden luzapen guztiak ikusi nahi badituzu, egin klik beheko botoian!';
+  String get introExtensionsDescription =>
+      'Luzapenak luzatzeko eta Handitzeko Ezaugarri Doable multzo aukera ematen dizu. Duzu boterea zehazki Nola Doable erabili nahi duzun aukeratzeko ematen dute. Eskuragarri dauden luzapen guztiak ikusi nahi badituzu, egin klik beheko botoian!';
 
   @override
   String get introExtensionsButton => 'Luzatu!';
@@ -648,13 +684,15 @@ class StringsEu extends Strings {
   String get useBottomSheetMenu => 'Erabili beheko orriaren menua';
 
   @override
-  String get useBottomSheetMenuDescription => 'Erabili beheko orria menu gisa jaitsi beharrean';
+  String get useBottomSheetMenuDescription =>
+      'Erabili beheko orria menu gisa jaitsi beharrean';
 
   @override
   String get contributors => 'Laguntzaileak';
 
   @override
-  String get contributorDescription => 'Laguntzen Duten Pertsonak Doable bihurtu zer da';
+  String get contributorDescription =>
+      'Laguntzen Duten Pertsonak Doable bihurtu zer da';
 
   @override
   String get webdav => 'WebDAV';
@@ -663,7 +701,8 @@ class StringsEu extends Strings {
   String get webdavUrlHint => 'WebDAV url';
 
   @override
-  String get webdavLogOutMessage => 'Saioa amaitzean gordetako kredentzialak ezabatu egingo dira. Hala ere, gordetako fitxategiak iraungo du.';
+  String get webdavLogOutMessage =>
+      'Saioa amaitzean gordetako kredentzialak ezabatu egingo dira. Hala ere, gordetako fitxategiak iraungo du.';
 
   @override
   String get importExport => 'Inportatu eta esportatu';
@@ -693,7 +732,8 @@ class StringsEu extends Strings {
   String get lists => 'Lists';
 
   @override
-  String get listsDescription => 'Create lists and sort your Todos with them. You can create an unlimited amount of lists, accessible through a drawer on the home screen.';
+  String get listsDescription =>
+      'Create lists and sort your Todos with them. You can create an unlimited amount of lists, accessible through a drawer on the home screen.';
 
   @override
   String aboutToDeleteList(String listName) {
@@ -721,7 +761,8 @@ class StringsEu extends Strings {
   String get popUpAnimationOverSlideAnimation => 'Old page transition';
 
   @override
-  String get popUpAnimationOverSlideAnimationDescription => 'Use the old pop up style page transition';
+  String get popUpAnimationOverSlideAnimationDescription =>
+      'Use the old pop up style page transition';
 
   @override
   String get restart => 'Restart';
@@ -733,7 +774,8 @@ class StringsEu extends Strings {
   String get restartRequired => 'Restart required';
 
   @override
-  String get restartRequiredForSetting => 'An app restart is required for this setting to take affect.';
+  String get restartRequiredForSetting =>
+      'An app restart is required for this setting to take affect.';
 
   @override
   String get image => 'Image';
@@ -748,7 +790,8 @@ class StringsEu extends Strings {
   String get includeBranding => 'Include branding';
 
   @override
-  String get doableBrandingText => 'Shared from Doable, the simple, modern and easy to use Todo app.\nYou can get Doable here: https://codeberg.org/florian-obernberger/flutter-doable';
+  String get doableBrandingText =>
+      'Shared from Doable, the simple, modern and easy to use Todo app.\nYou can get Doable here: https://codeberg.org/florian-obernberger/flutter-doable';
 
   @override
   String get chooseTodoShareType => 'Select how you want to share your Todos';
@@ -769,13 +812,15 @@ class StringsEu extends Strings {
   String get contributeWantYourNameHere => 'Want your name here?';
 
   @override
-  String get contributeWantYourNameHereDescription => 'Contribute to Doable directly or help translating it!';
+  String get contributeWantYourNameHereDescription =>
+      'Contribute to Doable directly or help translating it!';
 
   @override
   String get onlySymbolInDetailViewFab => 'Icon instead of text';
 
   @override
-  String get onlySymbolInDetailViewFabDescription => 'Use an icon instead of text in the Todo detail view';
+  String get onlySymbolInDetailViewFabDescription =>
+      'Use an icon instead of text in the Todo detail view';
 
   @override
   String get allSelected => 'All selected';
@@ -784,10 +829,12 @@ class StringsEu extends Strings {
   String get sharedTextAsTitle => 'Shared text as title';
 
   @override
-  String get sharedTextAsTitleDescription => 'Use text shared to Doable as the title of the new Todo instead of its description';
+  String get sharedTextAsTitleDescription =>
+      'Use text shared to Doable as the title of the new Todo instead of its description';
 
   @override
-  String get noTodoLists => 'You currently don\'t have any lists.\nCreate a new one to get started!';
+  String get noTodoLists =>
+      'You currently don\'t have any lists.\nCreate a new one to get started!';
 
   @override
   String forExample(String example) {
@@ -801,7 +848,8 @@ class StringsEu extends Strings {
   String get syncConnectionTimedOut => 'Connection timed out.';
 
   @override
-  String get syncTooManyTimeOuts => 'The server timed out too many times. Sync is disabled until app restart.';
+  String get syncTooManyTimeOuts =>
+      'The server timed out too many times. Sync is disabled until app restart.';
 
   @override
   String get todoToCalendar => 'Add Todo to calendar';
@@ -813,7 +861,8 @@ class StringsEu extends Strings {
   String get logsDescription => 'Show all the logs Doable prints';
 
   @override
-  String get aboutToClearAllLogs => 'You\'re about to delete all logs making them inaccessible for feedback and trouble shooting. This action is permanent and cannot be undone.';
+  String get aboutToClearAllLogs =>
+      'You\'re about to delete all logs making them inaccessible for feedback and trouble shooting. This action is permanent and cannot be undone.';
 
   @override
   String get clearAllLogs => 'Clear all logs';
@@ -837,7 +886,8 @@ class StringsEu extends Strings {
   String get whatWentWrong => 'What went wrong?';
 
   @override
-  String get fixCorruptBackupFile => 'The backup file of Doable could not be read and appears to be corrupt. Doable can try to fix this by deleting the current backup file and creating a new one. This will delete all changes made in other Doable instances using the same backup file.';
+  String get fixCorruptBackupFile =>
+      'The backup file of Doable could not be read and appears to be corrupt. Doable can try to fix this by deleting the current backup file and creating a new one. This will delete all changes made in other Doable instances using the same backup file.';
 
   @override
   String get initializingNextcloud => 'Initializing Nextcloud…';
@@ -867,13 +917,15 @@ class StringsEu extends Strings {
   String get createSummaryForBugReport => 'Create summary';
 
   @override
-  String get createSummaryForBugReportDetails => 'Creates a report containing system info, Doable\'s settings, and all logs. This can be useful for bug reports and helps troubleshoot a problem.';
+  String get createSummaryForBugReportDetails =>
+      'Creates a report containing system info, Doable\'s settings, and all logs. This can be useful for bug reports and helps troubleshoot a problem.';
 
   @override
   String get bugReport => 'Bug report';
 
   @override
-  String get bugReportSupportingText => 'Please choose what you would like to include in the bug report. The more information you provide, the easier it is to find out exactly what went wrong. **No personal information will be shared.**';
+  String get bugReportSupportingText =>
+      'Please choose what you would like to include in the bug report. The more information you provide, the easier it is to find out exactly what went wrong. **No personal information will be shared.**';
 
   @override
   String get shareBugReport => 'Share bug report';
@@ -918,13 +970,15 @@ class StringsEu extends Strings {
   String get closeDetailsOnCompelte => 'Close details on complete';
 
   @override
-  String get closeDetailsOnCompelteDescription => 'Saves the Todo and closes its detail view when pressing the complete button.';
+  String get closeDetailsOnCompelteDescription =>
+      'Saves the Todo and closes its detail view when pressing the complete button.';
 
   @override
   String get customColorTheme => 'Custom color theme';
 
   @override
-  String get discardCustomColorTheme => 'You\'re about to discard all changes made to the color theme.';
+  String get discardCustomColorTheme =>
+      'You\'re about to discard all changes made to the color theme.';
 
   @override
   String get lightMode => 'Light mode';
@@ -933,13 +987,15 @@ class StringsEu extends Strings {
   String get deletedCustomColorTheme => 'Deleted custom color theme.';
 
   @override
-  String get customThemeInfo => 'Here you can change each and every color token to your heart’s content. You can also import / export the colors into a `json` file and edit them there!\n\nIf you want to understand, what each token does, please visit the following website: https://m3.material.io/foundations/design-tokens';
+  String get customThemeInfo =>
+      'Here you can change each and every color token to your heart’s content. You can also import / export the colors into a `json` file and edit them there!\n\nIf you want to understand, what each token does, please visit the following website: https://m3.material.io/foundations/design-tokens';
 
   @override
   String get import => 'Import';
 
   @override
-  String get customThemeFuckedFile => 'This file does not contain a valid color theme. Please make sure your file follows the same style and structure as the file you exported.';
+  String get customThemeFuckedFile =>
+      'This file does not contain a valid color theme. Please make sure your file follows the same style and structure as the file you exported.';
 
   @override
   String get markdownBold => 'Bold';
@@ -963,7 +1019,8 @@ class StringsEu extends Strings {
   String get fediRememberInstance => 'Remember my instance';
 
   @override
-  String get fediDoablePost => 'Just managed to finish all my Todos thanks to @Doable@floss.social!\n\nSounds interesting? You can find out more about #Doable by visiting https://repo.doable.at!';
+  String get fediDoablePost =>
+      'Just managed to finish all my Todos thanks to @Doable@floss.social!\n\nSounds interesting? You can find out more about #Doable by visiting https://repo.doable.at!';
 
   @override
   String get doable => 'Doable – The modern and simple Todo app';
@@ -1038,7 +1095,8 @@ class StringsEu extends Strings {
   String get recurringTodos => 'Recurring Todos';
 
   @override
-  String get recurringTodosDescription => 'Add recurrence to your Todos and let Doable automatically reschedule them for you once you complete them. The Todos will be rescheduled based on the relevant date and the schedule you set. If you didn’t add a due date to your Todo, its creation date will be used instead.\n\n**One thing to keep in mind: While you can now set tasks to repeat in Doable, please note that currently this feature is limited to English.**';
+  String get recurringTodosDescription =>
+      'Add recurrence to your Todos and let Doable automatically reschedule them for you once you complete them. The Todos will be rescheduled based on the relevant date and the schedule you set. If you didn’t add a due date to your Todo, its creation date will be used instead.\n\n**One thing to keep in mind: While you can now set tasks to repeat in Doable, please note that currently this feature is limited to English.**';
 
   @override
   String get post => 'Post';
@@ -1050,7 +1108,8 @@ class StringsEu extends Strings {
   String get beta => 'Beta';
 
   @override
-  String get extensionBetaWarningDescription => 'This extension is still in beta and you might come across a few hiccups while using it. Please be aware of the risks and let me know if you come across any issues!';
+  String get extensionBetaWarningDescription =>
+      'This extension is still in beta and you might come across a few hiccups while using it. Please be aware of the risks and let me know if you come across any issues!';
 
   @override
   String get extensionBetaWarning => 'Enable beta extension?';
@@ -1059,7 +1118,8 @@ class StringsEu extends Strings {
   String get showFediButton => 'Show post button';
 
   @override
-  String get showFediButtonDescription => 'Show a button that lets you post about your empty list to the Fediverse';
+  String get showFediButtonDescription =>
+      'Show a button that lets you post about your empty list to the Fediverse';
 
   @override
   String get notifications => 'Notifications';
@@ -1071,22 +1131,26 @@ class StringsEu extends Strings {
   String get notifyAll => 'All Todos';
 
   @override
-  String get notifyAllDescription => 'Get notified for every Todo that has a due date';
+  String get notifyAllDescription =>
+      'Get notified for every Todo that has a due date';
 
   @override
   String get notifyTimeOnly => 'Only Todos with time';
 
   @override
-  String get notifyTimeOnlyDescription => 'Only get notified for Todos that have both a due date and time';
+  String get notifyTimeOnlyDescription =>
+      'Only get notified for Todos that have both a due date and time';
 
   @override
   String get notifyTodosChannelName => 'Todos';
 
   @override
-  String get notificationsDescription => 'Let Doable notify you when your Todos are due. You can also change for which Todos you will receive notifications.';
+  String get notificationsDescription =>
+      'Let Doable notify you when your Todos are due. You can also change for which Todos you will receive notifications.';
 
   @override
-  String get notificationsDescriptionShort => 'Change for which Todos you get notified';
+  String get notificationsDescriptionShort =>
+      'Change for which Todos you get notified';
 
   @override
   String get notifyNeverDescription => 'Don\'t get notified for any Todos';
@@ -1095,7 +1159,8 @@ class StringsEu extends Strings {
   String get defaultNotificationTime => 'Default notification time';
 
   @override
-  String get defaultNotificationTimeDescription => 'The time you will get notified for Todos that don\'t have a relevant time';
+  String get defaultNotificationTimeDescription =>
+      'The time you will get notified for Todos that don\'t have a relevant time';
 
   @override
   String get addImage => 'Add image';
@@ -1104,7 +1169,8 @@ class StringsEu extends Strings {
   String get todoImages => 'Images';
 
   @override
-  String get todoImagesDescription => 'Add images to your Todos so you can add more context to what you\'re writing.\n\n**Unfortunately images will not be synchronized yet.**';
+  String get todoImagesDescription =>
+      'Add images to your Todos so you can add more context to what you\'re writing.\n\n**Unfortunately images will not be synchronized yet.**';
 
   @override
   String get clearInputField => 'Clear input field';
@@ -1116,7 +1182,8 @@ class StringsEu extends Strings {
   String get apkSignatureInvalid => 'Invalid signature';
 
   @override
-  String get apkSignatureInvalidDescription => 'The signature of the downloaded apk file could not be verified. Please notify the developer about this issue. While you can proceed to install the apk at your own risk, we recommend caution due to potential security concerns.';
+  String get apkSignatureInvalidDescription =>
+      'The signature of the downloaded apk file could not be verified. Please notify the developer about this issue. While you can proceed to install the apk at your own risk, we recommend caution due to potential security concerns.';
 
   @override
   String get searchTodos => 'Search Todos';
@@ -1131,7 +1198,8 @@ class StringsEu extends Strings {
   String get readerMode => 'Reader mode';
 
   @override
-  String get readerModeDescription => 'Allows you to preview your Todos inside the edit screen.';
+  String get readerModeDescription =>
+      'Allows you to preview your Todos inside the edit screen.';
 
   @override
   String get noList => 'No list';
@@ -1140,19 +1208,23 @@ class StringsEu extends Strings {
   String get chooseAList => 'Choose a list';
 
   @override
-  String get readerModeDescriptionShort => 'Change the initial mode when opening a Todo';
+  String get readerModeDescriptionShort =>
+      'Change the initial mode when opening a Todo';
 
   @override
   String get lastUsed => 'Last used';
 
   @override
-  String get syncFileLocked => 'The server locked a backup file, please try again in about 15 minutes.';
+  String get syncFileLocked =>
+      'The server locked a backup file, please try again in about 15 minutes.';
 
   @override
-  String get syncInternalError => 'There was an internal error, apologies for the inconvenience.';
+  String get syncInternalError =>
+      'There was an internal error, apologies for the inconvenience.';
 
   @override
-  String get syncConnectionError => 'An error occurred while connecting to the server.';
+  String get syncConnectionError =>
+      'An error occurred while connecting to the server.';
 
   @override
   String get restore => 'Restore';
@@ -1164,19 +1236,23 @@ class StringsEu extends Strings {
   String get initializingWebdav => 'Initializing Webdav…';
 
   @override
-  String get migratingNextcloudToRemote => 'Migrating Nextcloud to new synchronization implementation…';
+  String get migratingNextcloudToRemote =>
+      'Migrating Nextcloud to new synchronization implementation…';
 
   @override
-  String get migratingWebdavToRemote => 'Migrating Webdav to new synchronization implementation…';
+  String get migratingWebdavToRemote =>
+      'Migrating Webdav to new synchronization implementation…';
 
   @override
   String get migrateToRemotes => 'Migration';
 
   @override
-  String get migrateToRemotesDescription => 'Doable recently changed how it synchronizes with remotes like Nextcloud or Webdav. Unfortunately the new implementation is not backwards compatible and therefore a migration needs to take place. Doable should need a minute to migrate everything it needs to.\n\nIf you choose to do it later you might encounter some error messages since the new implementation has not yet been set up.';
+  String get migrateToRemotesDescription =>
+      'Doable recently changed how it synchronizes with remotes like Nextcloud or Webdav. Unfortunately the new implementation is not backwards compatible and therefore a migration needs to take place. Doable should need a minute to migrate everything it needs to.\n\nIf you choose to do it later you might encounter some error messages since the new implementation has not yet been set up.';
 
   @override
-  String get fixBrokenRemoteFile => 'A backup file of Doable appears to be corrupt. Doable can fix it by overriding it with the current, local value. This will override any changes made by other devices after that error occurred.';
+  String get fixBrokenRemoteFile =>
+      'A backup file of Doable appears to be corrupt. Doable can fix it by overriding it with the current, local value. This will override any changes made by other devices after that error occurred.';
 
   @override
   String get fixedBrokenRemoteFile => 'Successfully restored broken file.';
@@ -1191,7 +1267,8 @@ class StringsEu extends Strings {
   String get todos => 'Todos';
 
   @override
-  String get selectWhatToExport => 'Please select what you would like to export.';
+  String get selectWhatToExport =>
+      'Please select what you would like to export.';
 
   @override
   String get exportFile => 'Export file';
@@ -1203,7 +1280,8 @@ class StringsEu extends Strings {
   String get listColorAsAccent => 'List color as accent';
 
   @override
-  String get listColorAsAccentDescription => 'Use the color of the current list as the accent color for Doable';
+  String get listColorAsAccentDescription =>
+      'Use the color of the current list as the accent color for Doable';
 
   @override
   String get privacy => 'Privacy';
@@ -1227,10 +1305,12 @@ class StringsEu extends Strings {
   String get fdroid => 'F-Droid';
 
   @override
-  String get aboutOpenSource => 'All of Doable\'s source code is accessible on Codeberg under a FOSS license. You can also submit issues and pull requests there. You can also find Doable\'s F-Droid repository over on Codeberg!';
+  String get aboutOpenSource =>
+      'All of Doable\'s source code is accessible on Codeberg under a FOSS license. You can also submit issues and pull requests there. You can also find Doable\'s F-Droid repository over on Codeberg!';
 
   @override
-  String get aboutPrivacy => 'Doable does not collect any personal information about you. The only thing Doable stores about your usage are logs. However those logs **are not uploaded automatically.** The only way those logs leave your device is if you choose to share them for example to help me fix a bug.';
+  String get aboutPrivacy =>
+      'Doable does not collect any personal information about you. The only thing Doable stores about your usage are logs. However those logs **are not uploaded automatically.** The only way those logs leave your device is if you choose to share them for example to help me fix a bug.';
 
   @override
   String get httpWarning => 'Unencrypted connection';
@@ -1239,7 +1319,8 @@ class StringsEu extends Strings {
   String get cancelling => 'Cancelling…';
 
   @override
-  String get httpWarningDescription => 'You are trying to connect to an HTTP server instead of a more secure HTTPS server. HTTP sends the data unencrypted to the server, posing potential security risks so this is not recommended. There are however certain use cases like a locally hosted server. Are you sure you want to continue with HTTP?';
+  String get httpWarningDescription =>
+      'You are trying to connect to an HTTP server instead of a more secure HTTPS server. HTTP sends the data unencrypted to the server, posing potential security risks so this is not recommended. There are however certain use cases like a locally hosted server. Are you sure you want to continue with HTTP?';
 
   @override
   String get enableNotificationReminder => 'Reminder notification';
@@ -1257,7 +1338,8 @@ class StringsEu extends Strings {
   String get enableNotificationSound => 'Play sound';
 
   @override
-  String get enableNotificationSoundDescription => 'Play a custom sound when showing a notification';
+  String get enableNotificationSoundDescription =>
+      'Play a custom sound when showing a notification';
 
   @override
   String get interval => 'Interval';
@@ -1287,22 +1369,27 @@ class StringsEu extends Strings {
   String get showListDescription => 'Show Todos of this list in the overview.';
 
   @override
-  String get hideListDescription => 'Don\'t show Todos of this list in the overview.';
+  String get hideListDescription =>
+      'Don\'t show Todos of this list in the overview.';
 
   @override
   String get gotIt => 'Got it';
 
   @override
-  String get updateRelease => 'Open Doable\'s release page and download the latest version';
+  String get updateRelease =>
+      'Open Doable\'s release page and download the latest version';
 
   @override
-  String get updateDownload => 'Let Doable download the latest version for you; you will find the file in the notification area and can install it by clicking on it';
+  String get updateDownload =>
+      'Let Doable download the latest version for you; you will find the file in the notification area and can install it by clicking on it';
 
   @override
-  String get updateFdroid => 'If you installed Doable from F-Droid you should get the update in the next couple hours either from IzzyOnDroid\'s repository or Doable\'s own repository';
+  String get updateFdroid =>
+      'If you installed Doable from F-Droid you should get the update in the next couple hours either from IzzyOnDroid\'s repository or Doable\'s own repository';
 
   @override
-  String get updateDisable => 'You can also disable automatic update checks all together in the settings';
+  String get updateDisable =>
+      'You can also disable automatic update checks all together in the settings';
 
   @override
   String get updateChecker => 'Update checker';
@@ -1323,7 +1410,8 @@ class StringsEu extends Strings {
   String get changeDuration => 'Change duration';
 
   @override
-  String get autoExportDescription => 'You can let Doable automatically make exports of your Todos, Lists, and Settings. Please know, that Doable will create a new file for every export! Choose the duration between exports accordingly.';
+  String get autoExportDescription =>
+      'You can let Doable automatically make exports of your Todos, Lists, and Settings. Please know, that Doable will create a new file for every export! Choose the duration between exports accordingly.';
 
   @override
   String get seconds => 'Seconds';
@@ -1335,7 +1423,8 @@ class StringsEu extends Strings {
   String get swipeActions => 'Swipe actions';
 
   @override
-  String get swipeActionsDescription => 'Adds the ability to swipe left on Todos to either star them or complete them.\n\n**Note, that this might sometimes conflicht with the Lists extension\'s drawer.**';
+  String get swipeActionsDescription =>
+      'Adds the ability to swipe left on Todos to either star them or complete them.\n\n**Note, that this might sometimes conflicht with the Lists extension\'s drawer.**';
 
   @override
   String get selectedSwipeActions => 'Selected actions';
@@ -1367,7 +1456,8 @@ class StringsEu extends Strings {
   String get forceHighestRefreshRate => 'Force highest refresh rate';
 
   @override
-  String get forceHighestRefreshRateDescription => '(Try to) force the system to use the highest possible refresh rate inside the app';
+  String get forceHighestRefreshRateDescription =>
+      '(Try to) force the system to use the highest possible refresh rate inside the app';
 
   @override
   String get overview => 'Overview';
@@ -1381,7 +1471,8 @@ class StringsEu extends Strings {
   String get expandTodosByDefault => 'Expand Todos by default';
 
   @override
-  String get expandTodosByDefaultDescription => 'Show Todos as expanded by default';
+  String get expandTodosByDefaultDescription =>
+      'Show Todos as expanded by default';
 
   @override
   String get progress => 'Progress';
@@ -1390,10 +1481,12 @@ class StringsEu extends Strings {
   String get progressBar => 'Progress bar';
 
   @override
-  String get progressBarDescription => 'Adds a progress bar to your Todos giving you finer control over its completion state.';
+  String get progressBarDescription =>
+      'Adds a progress bar to your Todos giving you finer control over its completion state.';
 
   @override
-  String get syncMultipleErrors => 'The remote encountered multiple errors. For details see the logs.';
+  String get syncMultipleErrors =>
+      'The remote encountered multiple errors. For details see the logs.';
 
   @override
   String get deletedCompleted => 'Deleted completed Todos.';
@@ -1408,7 +1501,8 @@ class StringsEu extends Strings {
   String get dateFilters => 'Date filters';
 
   @override
-  String get dateFiltersDescription => 'Add the option to filter your Todos by a specific date range.';
+  String get dateFiltersDescription =>
+      'Add the option to filter your Todos by a specific date range.';
 
   @override
   String get exportedFile => 'Exported file.';
@@ -1419,7 +1513,8 @@ class StringsEu extends Strings {
   }
 
   @override
-  String get enablePrideFlagsDescription => 'Shows Pride flags behind the title bar in certain months';
+  String get enablePrideFlagsDescription =>
+      'Shows Pride flags behind the title bar in certain months';
 
   @override
   String get enablePrideFlags => 'Enable Pride flags';
@@ -1461,7 +1556,8 @@ class StringsEu extends Strings {
   String get anHourBefore => 'An hour before';
 
   @override
-  String get defaultNotificationsDescriptionIfLists => 'You can also select different Notifications for each List.';
+  String get defaultNotificationsDescriptionIfLists =>
+      'You can also select different Notifications for each List.';
 
   @override
   String get halfHourAfter => 'Half hour after';
@@ -1470,7 +1566,8 @@ class StringsEu extends Strings {
   String get customNotificationTime => 'Custom notification time';
 
   @override
-  String get defaultNotificationsDescription => 'Select default Notifications that get added to every Todo with a relevant date.';
+  String get defaultNotificationsDescription =>
+      'Select default Notifications that get added to every Todo with a relevant date.';
 
   @override
   String nrOfNotifications(int count) {
@@ -1493,7 +1590,8 @@ class StringsEu extends Strings {
   String get snooze => 'Snooze';
 
   @override
-  String get snoozeDurationDescription => 'Duration that a notification gets delayed for when pressing the snooze button';
+  String get snoozeDurationDescription =>
+      'Duration that a notification gets delayed for when pressing the snooze button';
 
   @override
   String get snoozeDuration => 'Snooze duration';
@@ -1546,16 +1644,19 @@ class StringsEu extends Strings {
   String get info => 'Info';
 
   @override
-  String get aboutToCancelChangesToList => 'You\'re about to discard all changes made to this List.';
+  String get aboutToCancelChangesToList =>
+      'You\'re about to discard all changes made to this List.';
 
   @override
   String get notificationsAlwaysPreview => 'Always preview Notifications';
 
   @override
-  String get notificationsAlwaysPreviewDescription => 'Always open Notifications in preview mode regardless (this does not affect what mode was last used)';
+  String get notificationsAlwaysPreviewDescription =>
+      'Always open Notifications in preview mode regardless (this does not affect what mode was last used)';
 
   @override
-  String get nextcloudWipeDescription => 'Doable received a request to wipe all data associated with the Nextcloud account you logged in with. Therefore you will be logged out of your account. You can also choose to wipe all data (Todos and Lists) from the app. This action is permanent and cannot be undone.';
+  String get nextcloudWipeDescription =>
+      'Doable received a request to wipe all data associated with the Nextcloud account you logged in with. Therefore you will be logged out of your account. You can also choose to wipe all data (Todos and Lists) from the app. This action is permanent and cannot be undone.';
 
   @override
   String get nextcloudWipe => 'Nextcloud remote wipe';
@@ -1573,13 +1674,15 @@ class StringsEu extends Strings {
   String get useSystemFont => 'Use system font';
 
   @override
-  String get useSystemFontDescription => 'Use the system font as the primary font for Doable';
+  String get useSystemFontDescription =>
+      'Use the system font as the primary font for Doable';
 
   @override
   String get batteryOptimization => 'Battery optimization';
 
   @override
-  String get batteryOptimizationDescription => 'Doable is being battery optimized. While this usually isn\'t a problem it might lead to some issues when logging in to Nextcloud. If you want to ensure a smooth experience, please disable these optimizations.';
+  String get batteryOptimizationDescription =>
+      'Doable is being battery optimized. While this usually isn\'t a problem it might lead to some issues when logging in to Nextcloud. If you want to ensure a smooth experience, please disable these optimizations.';
 
   @override
   String get couldNotAddTodoToCalendar => 'Could not add Todo to calendar.';
@@ -1588,5 +1691,6 @@ class StringsEu extends Strings {
   String get sortCompleted => 'Sort completed';
 
   @override
-  String get sortCompletedDescription => 'Apply sorting to completed Todos as well';
+  String get sortCompletedDescription =>
+      'Apply sorting to completed Todos as well';
 }

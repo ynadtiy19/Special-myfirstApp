@@ -1,12 +1,13 @@
+import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
+import 'dart:ui';
 
 import 'package:brotli/brotli.dart';
 import 'package:colorgram/colorgram.dart';
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:high_q_paginated_drop_down/high_q_paginated_drop_down.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
@@ -45,19 +46,7 @@ class PinterestViewModel extends BaseViewModel with WidgetsBindingObserver {
     for (int urlIndex = 0; urlIndex < imageUrls.length; urlIndex++) {
       String url = imageUrls[urlIndex]; // 获取当前 URL
       try {
-        // 从缓存中获取图片文件
-        File? cachedImageFile = await DefaultCacheManager().getSingleFile(url);
-        if (!cachedImageFile.existsSync()) {
-          print('No cached image found for URL: $url');
-          continue; // 如果没有缓存的图像，则继续下一个 URL
-        }
-
-        // 读取缓存图片的字节数据
-        final bytes = await cachedImageFile.readAsBytes();
-
-        // 使用字节数据创建图像提供者
-        Uint8List imageData = Uint8List.fromList(bytes);
-        FileImage imageProvider = FileImage(cachedImageFile);
+        FastCachedImageProvider imageProvider = FastCachedImageProvider(url);
 
         // 提取图像中的颜色
         List<CgColor> colorList =
@@ -346,11 +335,27 @@ class PinterestViewModel extends BaseViewModel with WidgetsBindingObserver {
     }
   }
 
+  Future<Uint8List?> getImageBytes(String imageUrl) async {
+    final imageProvider = FastCachedImageProvider(imageUrl);
+    final imageStream = imageProvider.resolve(ImageConfiguration.empty);
+
+    Completer<Uint8List?> completer = Completer<Uint8List?>();
+
+    imageStream.addListener(
+        ImageStreamListener((ImageInfo info, bool synchronousCall) async {
+      final byteData = await info.image.toByteData(format: ImageByteFormat.png);
+      final bytes = byteData?.buffer.asUint8List();
+      completer.complete(bytes); // 完成 Future 并返回图像字节数据
+    }));
+
+    return completer.future; // 返回 Future
+  }
+
   Future<void> saveCachedImageToGallery(String url) async {
     try {
       // 从缓存中获取图片文件
-      File? cachedImageFile = await DefaultCacheManager().getSingleFile(url);
-      if (!cachedImageFile.existsSync()) {
+      final bytes = await getImageBytes(url);
+      if (bytes!.isEmpty) {
         print('No cached image found for URL: $url');
         return;
       }
@@ -358,9 +363,6 @@ class PinterestViewModel extends BaseViewModel with WidgetsBindingObserver {
       // 请求存储权限
       var status = await Permission.storage.request();
       if (status.isGranted) {
-        // 读取缓存图片的字节数据
-        final bytes = await cachedImageFile.readAsBytes();
-
         // 保存图片到相册
         await ImageGallerySaverPlus.saveImage(
           bytes,
@@ -433,9 +435,24 @@ class PinterestViewModel extends BaseViewModel with WidgetsBindingObserver {
   }
 
   Future<void> cacheImages(List<dynamic> imageUrls) async {
+    // 创建 Future 列表来并行处理
+    List<Future<void>> futures = [];
+
     for (String url in imageUrls) {
-      await DefaultCacheManager().getSingleFile(url); //获取所有缓存url
+      // 确保 url 不为 null 并且有效
+      if (url.isNotEmpty) {
+        // 包装为一个 Future，这样它就能符合 Future<void> 的要求
+        futures.add(Future<void>(() async {
+          // 执行缓存操作
+          FastCachedImageProvider(url); // 使用缓存逻辑（需要是异步操作）
+        }));
+      } else {
+        print('Invalid URL: $url');
+      }
     }
+
+    // 等待所有异步操作完成
+    await Future.wait(futures);
   }
 
   Future<void> saveLast14Urls() async {

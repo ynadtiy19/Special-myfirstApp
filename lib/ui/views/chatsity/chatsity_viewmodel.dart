@@ -19,24 +19,24 @@ import 'package:mime/mime.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
-import 'package:toastification/toastification.dart';
 
 import '../../../app/app.locator.dart';
+import '../../../services/atchatclient_service.dart';
 import '../../../services/chat_message.dart';
 import '../../../services/image_repository_service.dart';
 import '../../utils/BackgroundAnimation.dart';
 import '../../utils/hero-icons-outline_icons.dart';
 
-class ChatsityViewModel extends BaseViewModel {
+class ChatsityViewModel extends ReactiveViewModel {
   late final ScrollController _scrollController = ScrollController();
   ScrollController get scrollController => _scrollController;
 
   final ImageRepository = locator<ImageRepositoryService>();
   void setBottomNavVisible() => ImageRepository.setBottomNavVisible();
+  final chatclientPlugin = locator<AtchatclientService>();
 
-  List<ListenableServiceMixin> get listenableServices => [
-        ImageRepository,
-      ];
+  List<ListenableServiceMixin> get listenableServices =>
+      [ImageRepository, chatclientPlugin];
 
   bool get isBottomNavVisibleValue => ImageRepository.isBottomNavVisibleValue;
 
@@ -53,27 +53,14 @@ class ChatsityViewModel extends BaseViewModel {
   get imagePathsList => imagePaths;
 
   @override
-  ChatsityViewModel() {
+  ChatsityViewModel(BuildContext context) {
     print('初始化 ChatsityViewModel');
     getAllImagePaths();
     loadData();
     loadbackgroundImage();
-    if (isfetchingUpdateVersion) {
-      FetchUpdatedata();
-    } else {
-      print('不用更新版本');
-    }
     _textController.addListener(initState);
   }
-
-  static bool _isfetchingUpdateVersion = true;
-  bool get isfetchingUpdateVersion => _isfetchingUpdateVersion;
-  Future<void> FetchUpdatedata() async {
-    await Future.delayed(Duration(seconds: 5));
-    _isfetchingUpdateVersion = false;
-    notifyListeners();
-  }
-
+  bool get isfetchingUpdateVersion => !chatclientPlugin.uonboarded;
   Future<void> routeTotextPage(String text, BuildContext context) async {
     await HapticFeedback.lightImpact();
     Navigator.of(context).push(
@@ -94,20 +81,35 @@ class ChatsityViewModel extends BaseViewModel {
                       GestureDetector(
                         onTap: () {
                           Clipboard.setData(ClipboardData(text: text));
-                          toastification.show(
-                            context: context,
-                            type: ToastificationType.success,
-                            style: ToastificationStyle.flatColored,
-                            title: const Text("文字已复制到剪切板"),
-                            description: const Text(
-                                "The text has been copied to the clipboard."),
-                            alignment: Alignment.bottomCenter,
-                            autoCloseDuration:
-                                const Duration(milliseconds: 2000),
-                            primaryColor: Colors.green,
-                            icon: const Icon(Hero_icons_outline.check_badge),
-                            borderRadius: BorderRadius.circular(15.0),
-                            applyBlurEffect: true,
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const Row(
+                                children: [
+                                  Icon(
+                                    Hero_icons_outline.check_badge, // 使用相同的图标
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(width: 8), // 增加图标和文本之间的间距
+                                  Expanded(
+                                    child: Text(
+                                      "文字已复制到剪切板\nThe text has been copied to the clipboard.",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              backgroundColor: Colors.green, // 设置 SnackBar 背景颜色
+                              duration:
+                                  const Duration(milliseconds: 2000), // 设置持续时间
+                              behavior:
+                                  SnackBarBehavior.floating, // 使 SnackBar 浮动显示
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(15.0), // 设置圆角
+                              ),
+                              margin:
+                                  const EdgeInsets.all(16.0), // 设置 margin，调整位置
+                            ),
                           );
                         },
                         child: Padding(
@@ -324,7 +326,7 @@ class ChatsityViewModel extends BaseViewModel {
         // 添加阈值
         _scrollController.animateTo(
           position.maxScrollExtent,
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );
       }

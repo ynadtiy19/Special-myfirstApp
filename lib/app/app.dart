@@ -1,3 +1,4 @@
+import 'package:hung/services/atchatclient_service.dart';
 import 'package:hung/services/gemini_services_service.dart';
 import 'package:hung/services/image_repository_service.dart';
 import 'package:hung/services/select_img_favo_service.dart';
@@ -21,6 +22,7 @@ import 'package:hung/ui/views/travelcard/travelcard_view.dart';
 import 'package:hung/ui/views/travelstory/travelstory_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:hung/ui/views/clientchat/clientchat_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -41,6 +43,7 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: PromptToFavoPageView),
     MaterialRoute(page: PromptToSelectView),
     MaterialRoute(page: PinterestView),
+    MaterialRoute(page: ClientchatView),
 // @stacked-route
   ],
   dependencies: [
@@ -50,6 +53,7 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton(classType: GeminiService),
     LazySingleton(classType: ImageRepositoryService),
     LazySingleton(classType: SelectImgFavoService),
+    LazySingleton(classType: AtchatclientService),
 // @stacked-service
   ],
   bottomsheets: [

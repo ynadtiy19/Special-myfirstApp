@@ -11,9 +11,8 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:r_strings/r_strings.dart';
 import 'package:stacked/stacked.dart';
-import 'package:toastification/toastification.dart';
-import 'package:typeid/typeid.dart';
 
 import '../../../app/app.locator.dart';
 import '../../../services/image_data.dart';
@@ -161,7 +160,7 @@ class PromptToRealViewModel extends ReactiveViewModel {
     }
 
     // 使用截取的前缀生成唯一的文件名
-    final typeId = TypeId.generate(prefix); // 使用 base64 前缀
+    final typeId = RStrings.generateUnique(); // 使用 base64 前缀
     String fileName = '$typeId.jpg'; // 使用 TypeId 生成的值作为文件名
 
     // 获取应用程序的文档目录
@@ -240,19 +239,29 @@ class PromptToRealViewModel extends ReactiveViewModel {
                       print('图像已保存到: $singleimgPath/$fileName');
 
                       notifyListeners();
-                      toastification.show(
-                        context: context,
-                        type: ToastificationType.success,
-                        style: ToastificationStyle.flatColored,
-                        title: const Text("图片已保存进相册"),
-                        description:
-                            const Text("Photo has been saved to the album."),
-                        alignment: Alignment.bottomCenter,
-                        autoCloseDuration: const Duration(milliseconds: 2350),
-                        primaryColor: Colors.green,
-                        icon: const Icon(Hero_icons_outline.check_circle),
-                        borderRadius: BorderRadius.circular(15.0),
-                        applyBlurEffect: true,
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Row(
+                            children: [
+                              Icon(
+                                Hero_icons_outline.check_circle,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                '图片已保存进相册', // 中文标题
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                          backgroundColor: Colors.green, // 使用绿色背景
+                          duration:
+                              const Duration(milliseconds: 2350), // 设置持续时间
+                          behavior: SnackBarBehavior.fixed, // 固定位置
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0), // 圆角效果
+                          ),
+                        ),
                       );
                       Navigator.of(context).pop(true);
                     }

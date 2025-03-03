@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'chat_message.g.dart';
 
-@HiveType(typeId: 2)
+@HiveType(typeId: 5)
 class ChatMessage extends HiveObject {
   @HiveField(0)
   final bool isSender;

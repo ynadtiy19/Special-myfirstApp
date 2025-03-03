@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart';
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
@@ -29,21 +32,32 @@ class ProfileViewModel extends BaseViewModel {
     print('初始化ProfileViewModel');
   }
 
+  Future<Uint8List?> getImageBytes(String imageUrl) async {
+    final imageProvider = FastCachedImageProvider(imageUrl);
+    final imageStream = imageProvider.resolve(ImageConfiguration.empty);
+
+    Completer<Uint8List?> completer = Completer<Uint8List?>();
+
+    imageStream.addListener(
+        ImageStreamListener((ImageInfo info, bool synchronousCall) async {
+      final byteData = await info.image.toByteData(format: ImageByteFormat.png);
+      final bytes = byteData?.buffer.asUint8List();
+      completer.complete(bytes); // 完成 Future 并返回图像字节数据
+    }));
+
+    return completer.future; // 返回 Future
+  }
+
   Future<void> saveCachedImageToGallery(String url) async {
     try {
-      // 从缓存中获取图片文件
-      File? cachedImageFile = await DefaultCacheManager().getSingleFile(url);
-      if (!cachedImageFile.existsSync()) {
+      final bytes = await getImageBytes(url);
+      if (bytes!.isEmpty) {
         print('No cached image found for URL: $url');
         return;
       }
-
       // 请求存储权限
       var status = await Permission.storage.request();
       if (status.isGranted) {
-        // 读取缓存图片的字节数据
-        final bytes = await cachedImageFile.readAsBytes();
-
         // 保存图片到相册
         await ImageGallerySaverPlus.saveImage(
           bytes,

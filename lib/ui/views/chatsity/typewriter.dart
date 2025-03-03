@@ -112,7 +112,7 @@ class _TypewriterAnimatedMarkdownTextState
       style: widget.textStyle,
       textAlign: widget.textAlign,
       maxLines: widget.maxLines, // Use maxLines if provided
-      codeBuilder: (context, language, code,isCopyable) {
+      codeBuilder: (context, language, code, isCopyable) {
         return Container(
           padding: const EdgeInsets.all(8),
           margin: const EdgeInsets.symmetric(vertical: 4),

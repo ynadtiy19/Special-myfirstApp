@@ -8,7 +8,7 @@ part of 'image_data.dart';
 
 class ImageDataAdapter extends TypeAdapter<ImageData> {
   @override
-  final int typeId = 0;
+  final int typeId = 4;
 
   @override
   ImageData read(BinaryReader reader) {

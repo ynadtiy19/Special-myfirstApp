@@ -2,17 +2,16 @@ import 'dart:io';
 
 import 'package:auto_size_text_plus/auto_size_text_plus.dart';
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_bubbles/bubbles/bubble_normal_image.dart';
 import 'package:device_scan_animation/device_scan_animation.dart';
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:listview_screenshot/listview_screenshot.dart';
 import 'package:pretty_animated_buttons/widgets/pretty_shadow_button.dart';
 import 'package:stacked/stacked.dart';
-import 'package:toastification/toastification.dart';
-import 'package:user_profile_avatar/user_profile_avatar.dart';
 
 import '../../../services/chat_message.dart';
 import '../../utils/hero-icons-outline_icons.dart';
@@ -47,8 +46,8 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
         children: [
           Positioned.fill(
             child: viewModel.imageBackground == null
-                ? CachedNetworkImage(
-                    imageUrl:
+                ? const FastCachedImage(
+                    url:
                         'https://utfs.io/f/e9rePmZszdcgCYSAVwB68En15KMm7CcRVx0pUrehv3OJqtXi', // 替换为你的图片URL
                     fit: BoxFit.cover, // 确保图片覆盖整个背景
                   )
@@ -180,22 +179,26 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                                   onTap: () async {
                                     viewModel.clearImageBackground();
                                     await viewModel.clearSharedPreferences();
-                                    toastification.show(
-                                      context: context,
-                                      type: ToastificationType.success,
-                                      style: ToastificationStyle.flatColored,
-                                      title: const Text("缓存数据已清除"),
-                                      description: const Text(
-                                          "Cache data has been cleared."),
-                                      alignment: Alignment.bottomCenter,
-                                      autoCloseDuration:
-                                          const Duration(milliseconds: 1600),
-                                      primaryColor: Colors.green,
-                                      icon: const Icon(
-                                        Hero_icons_outline.check_badge,
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: const Row(
+                                          children: [
+                                            Icon(Hero_icons_outline.check_badge,
+                                                color: Colors.white), // 添加图标
+                                            SizedBox(width: 10), // 调整间距
+                                            Text("缓存数据已清除"),
+                                          ],
+                                        ),
+                                        backgroundColor: Colors.green, // 设置背景颜色
+                                        behavior: SnackBarBehavior
+                                            .floating, // 让 Snackbar 悬浮
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              15.0), // 圆角设计
+                                        ),
+                                        duration: const Duration(
+                                            milliseconds: 2500), // 显示 2.5s
                                       ),
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      applyBlurEffect: true,
                                     );
                                   },
                                   //删除缓存中所有数据
@@ -217,7 +220,7 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                       ),
                       const SizedBox(height: 20),
                       // 使用自定义的 CustomGridColumn 部件
-                      CustomGridColumn(
+                      const CustomGridColumn(
                         imageUrls: [
                           'https://utfs.io/f/e9rePmZszdcgcNfK53MfPredhvoHpLy5a2Oi1Un9VBj4YSZI',
                           'https://utfs.io/f/e9rePmZszdcgcNfK53MfPredhvoHpLy5a2Oi1Un9VBj4YSZI',
@@ -240,17 +243,17 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                       CustomSection(
                         title: 'ChatGPT',
                         buttonText: '浏览全部',
-                        imageUrls: [
+                        imageUrls: const [
                           'https://sjbz-fd.zol-img.com.cn/t_s1080x1920c/g5/M00/00/02/ChMkJ1fJVACIOcDTAAmrpgi1J2QAAU9uQETzP4ACau-914.jpg',
                           'https://utfs.io/f/e9rePmZszdcgET7tYDSeQbHLKAarSm17Rl6j2dw3g0IcCYNP',
                           'https://utfs.io/f/e9rePmZszdcgET7tYDSeQbHLKAarSm17Rl6j2dw3g0IcCYNP',
                         ],
-                        cardTitles: [
+                        cardTitles: const [
                           'Top 50 Global',
                           'Trending Now',
                           'Popular Hits',
                         ],
-                        cardDescriptions: [
+                        cardDescriptions: const [
                           'Worldwide hits.\nCover: Bad Bunny',
                           'Latest trends in music.',
                           'The most popular songs right now.',
@@ -266,17 +269,17 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                       CustomSection(
                         title: 'Google Gemini',
                         buttonText: '浏览全部',
-                        imageUrls: [
+                        imageUrls: const [
                           'https://sjbz-fd.zol-img.com.cn/t_s1080x1920c/g5/M00/00/02/ChMkJ1fJVACIOcDTAAmrpgi1J2QAAU9uQETzP4ACau-914.jpg',
                           'https://utfs.io/f/e9rePmZszdcgCYSAVwB68En15KMm7CcRVx0pUrehv3OJqtXi',
                           'https://utfs.io/f/e9rePmZszdcgCYSAVwB68En15KMm7CcRVx0pUrehv3OJqtXi',
                         ],
-                        cardTitles: [
+                        cardTitles: const [
                           'Top 50 Global',
                           'Trending Now',
                           'Popular Hits',
                         ],
-                        cardDescriptions: [
+                        cardDescriptions: const [
                           'Worldwide hits.\nCover: Bad Bunny',
                           'Latest trends in music.',
                           'The most popular songs right now.',
@@ -640,7 +643,7 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                     AnimatedCrossFade(
                       firstChild: viewModel.isgoingpickImage
                           ? Container(
-                              color: Color.fromRGBO(239, 220, 220, 0.8),
+                              color: const Color.fromRGBO(239, 220, 220, 0.8),
                               height: 240,
                               width: double.infinity,
                               child: ListView.separated(
@@ -754,7 +757,7 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
   ChatsityViewModel viewModelBuilder(
     BuildContext context,
   ) =>
-      ChatsityViewModel();
+      ChatsityViewModel(context);
 }
 
 class CustomGridColumn extends StatelessWidget {
@@ -798,7 +801,7 @@ class CustomGridColumn extends StatelessWidget {
         height: itemHeight,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: CachedNetworkImageProvider(
+            image: FastCachedImageProvider(
                 imageUrl), // 使用 CachedNetworkImageProvider
             fit: BoxFit.cover, // 确保图片覆盖整个容器
           ),
@@ -857,8 +860,8 @@ class RecentPlayCard extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(15.0), // 图片圆角
-                    child: CachedNetworkImage(
-                      imageUrl: imageUrl,
+                    child: FastCachedImage(
+                      url: imageUrl,
                       width: 100, // 图片宽度
                       height: 100, // 图片高度
                       fit: BoxFit.cover, // 图片填充方式
@@ -868,15 +871,15 @@ class RecentPlayCard extends StatelessWidget {
                     right: 2,
                     top: 2,
                     child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                       ),
-                      padding: EdgeInsets.all(8.0), // 播放按钮的内边距
+                      padding: const EdgeInsets.all(8.0), // 播放按钮的内边距
                       child: InkWell(
                         onTap: () {
                           print('点击了爱心');
                         },
-                        child: Icon(
+                        child: const Icon(
                           Hero_icons_outline.heart, // 播放图标
                           color: Colors.orangeAccent,
                         ),
@@ -887,15 +890,15 @@ class RecentPlayCard extends StatelessWidget {
                     right: 2,
                     top: 65,
                     child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                       ),
-                      padding: EdgeInsets.all(8.0), // 播放按钮的内边距
+                      padding: const EdgeInsets.all(8.0), // 播放按钮的内边距
                       child: InkWell(
                         onTap: () {
                           print('点击了评论');
                         },
-                        child: Icon(
+                        child: const Icon(
                           Hero_icons_outline
                               .chat_bubble_bottom_center_text, // 评论图标
                           color: Colors.green,
@@ -1093,27 +1096,59 @@ class _MyCustomAppBarState extends State<MyCustomAppBar>
               children: [
                 Row(
                   children: [
-                    AvatarGlow(
-                      startDelay: const Duration(seconds: 0),
-                      glowColor: Colors.yellowAccent,
-                      glowShape: BoxShape.circle,
-                      curve: Curves.fastOutSlowIn,
-                      child: UserProfileAvatar(
-                        avatarUrl:
-                            'https://c-ssl.dtstatic.com/uploads/blog/202304/15/20230415081411_f2e46.thumb.400_0.jpg',
-                        onAvatarTap: widget.onAvatarTap,
-                        notificationCount: 10,
-                        notificationBubbleTextStyle: const TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w100,
-                        ),
-                        avatarSplashColor: Colors.lightGreen,
-                        radius: 30.0,
-                        isActivityIndicatorSmall: true,
-                        avatarBorderData: AvatarBorderData(
-                          borderColor: Colors.yellowAccent,
-                          borderWidth: 3.0,
+                    GestureDetector(
+                      onTap: widget.onAvatarTap,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: AvatarGlow(
+                          startDelay: const Duration(seconds: 0),
+                          glowColor: Colors.yellowAccent,
+                          glowShape: BoxShape.circle,
+                          curve: Curves.fastOutSlowIn,
+                          child: AdvancedAvatar(
+                            image: const NetworkImage(
+                                'https://c-ssl.dtstatic.com/uploads/blog/202304/15/20230415081411_f2e46.thumb.400_0.jpg'),
+                            size: 60.0, // Set the avatar size
+                            statusColor: Colors
+                                .green, // Set status color for activity indicator
+                            statusAlignment: Alignment
+                                .topRight, // Position the status indicator
+                            foregroundDecoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors
+                                    .yellowAccent, // Border color for the avatar
+                                width: 3.0, // Border width
+                              ),
+                            ),
+                            children: [
+                              if (10 >
+                                  0) // Display notification bubble only if there are notifications
+                                AlignCircular(
+                                  alignment: Alignment.topRight,
+                                  size: const Size.square(20),
+                                  child: Container(
+                                    width: 20.0,
+                                    height: 20.0,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors
+                                          .red, // Notification bubble color
+                                    ),
+                                    child: const Center(
+                                      child: Text(
+                                        '10', // Notification count
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w100,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -1167,7 +1202,7 @@ class _MyCustomAppBarState extends State<MyCustomAppBar>
                                 borderRadius: BorderRadius.circular(20),
                                 child: InkWell(
                                   splashColor:
-                                      Color.fromARGB(255, 216, 219, 231)
+                                      const Color.fromARGB(255, 216, 219, 231)
                                           .withOpacity(0.5),
                                   onTap: () {
                                     print('$index');
@@ -1389,7 +1424,7 @@ class ChatListViewState extends State<ChatListView> {
             right: 16,
             child: FloatingActionButton(
               onPressed: _scrollToBottom,
-              child: Icon(Icons.arrow_downward),
+              child: const Icon(Icons.arrow_downward),
             ),
           ),
       ],

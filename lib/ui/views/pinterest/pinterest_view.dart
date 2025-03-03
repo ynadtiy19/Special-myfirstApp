@@ -1,14 +1,13 @@
 import 'package:auto_size_text_plus/auto_size_text_plus.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:high_q_paginated_drop_down/high_q_paginated_drop_down.dart';
-import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:primer_progress_bar/primer_progress_bar.dart';
 import 'package:stacked/stacked.dart';
-import 'package:toastification/toastification.dart';
 
 import '../../common/app_colors.dart';
 import '../../utils/hero-icons-outline_icons.dart';
+import '../../widgets/common/fullscreen/fullscreen_image_viewer.dart';
 import 'pinterest_viewmodel.dart';
 
 class PinterestView extends StackedView<PinterestViewModel> {
@@ -380,7 +379,7 @@ class ImageGridItem extends StatelessWidget {
               PrimerProgressBar(
                 barStyle: SegmentedBarStyle(
                   backgroundColor: Colors.grey.shade300,
-                  padding: EdgeInsets.all(4.0),
+                  padding: const EdgeInsets.all(4.0),
                   gap: 1.0,
                 ),
                 segments: segmentsForImage ?? [],
@@ -388,37 +387,50 @@ class ImageGridItem extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 24),
-                child: InstaImageViewer(
-                  uonTap: (bool value) async {
-                    if (value) {
-                      // 只有当 value 为 false 时执行保存逻辑
-                      print(originalUrl);
-                      await onImageSave(url);
+                child: GestureDetector(
+                  onTap: () {
+                    FullscreenImageViewer.open(
+                      context: context,
+                      child: FastCachedImage(
+                        url: url,
+                        fit: BoxFit.contain,
+                      ),
+                      closeWidget:
+                          const Icon(Hero_icons_outline.x_mark), // 关闭按钮
+                      saveWidget:
+                          const Icon(Hero_icons_outline.heart), // 如果需要保存按钮可以传入
+                      onTap: () async {
+                        // 只有当 value 为 false 时执行保存逻辑
+                        print(originalUrl);
+                        await onImageSave(url);
 
-                      // 显示成功的 Toast 消息
-                      toastification.show(
-                        context: context,
-                        type: ToastificationType.success,
-                        style: ToastificationStyle.flatColored,
-                        title: const Text("Pin图已经保存到相册中"),
-                        description: const Text("Pin image has been saved."),
-                        alignment: Alignment.bottomCenter,
-                        autoCloseDuration: const Duration(milliseconds: 2350),
-                        primaryColor: Colors.green,
-                        icon: const Icon(Hero_icons_outline.check_badge),
-                        borderRadius: BorderRadius.circular(15.0),
-                        applyBlurEffect: true,
-                      );
-                      // 返回 true 表示保存成功
-                    } else {
-                      // 如果 value 为 true，表示按钮已填充，则不执行保存逻辑
-                      print('按钮已填充，不执行保存');
-                    }
+                        // 显示成功的 Toast 消息
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Row(
+                              children: [
+                                Icon(
+                                  Hero_icons_outline.check_badge,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(width: 8),
+                                Text(
+                                  "Pin图已经保存到相册中.",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                            backgroundColor: Colors.green,
+                            duration: const Duration(milliseconds: 2350),
+                            behavior: SnackBarBehavior.floating,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                          ),
+                        );
+                      },
+                    );
                   },
-                  ufavoriteIcon: Icons.favorite,
-                  ucloseIcon: Hero_icons_outline.x_mark,
-                  disableSwipeToDismiss: true,
-                  backgroundColor: const Color.fromARGB(255, 216, 219, 231),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15.0),
                     child: LayoutBuilder(
@@ -427,21 +439,31 @@ class ImageGridItem extends StatelessWidget {
                         final double containerHeight = containerWidth * 0.85;
 
                         return Container(
-                          height: containerHeight.clamp(containerWidth * 0.6,
-                              containerWidth * 1.2), // 限制高度
+                          height: containerHeight.clamp(
+                            containerWidth * 0.6,
+                            containerWidth * 1.2,
+                          ), // 限制高度
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15.0),
                             color: Colors.transparent,
                           ),
-                          child: CachedNetworkImage(
-                            imageUrl: url,
-                            fit: BoxFit.contain, // 使用 BoxFit.cover 填充图像
-                            placeholder: (context, url) => const Center(
-                              child: CircularProgressIndicator(
-                                  color: Colors.green),
-                            ),
-                            errorWidget: (context, url, error) =>
-                                const Center(child: Icon(Icons.error)),
+                          child: FastCachedImage(
+                            url: url,
+                            fit: BoxFit.contain, // 使用 BoxFit.contain 填充图像
+                            fadeInDuration: const Duration(seconds: 1),
+                            errorBuilder: (context, exception, stacktrace) {
+                              return const Center(
+                                  child: Icon(Icons.error)); // 错误时显示图标
+                            },
+                            loadingBuilder: (context, progress) {
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.green,
+                                  value: progress
+                                      .progressPercentage.value, // 显示下载进度
+                                ),
+                              );
+                            },
                           ),
                         );
                       },

@@ -15,28 +15,31 @@ class StringsNl extends Strings {
   String get aboutDescription => 'Informatie over de app';
 
   @override
-  String get aboutOSInfo => 'Broncode: [codeberg/flutter-doable](https://www.codeberg.org/florian-obernberger/flutter-doable)\nPrivacybeleid: [codeberg/flutter-doable/privacy](https://codeberg.org/florian-obernberger/flutter-doable/src/branch/main/PRIVACY.md)\nF-Droid-repo: [codeberg/fdroid-repo](https://codeberg.org/florian-obernberger/fdroid-repo)\nMastodon: [@doable@floss.social](https://floss.social/@doable)';
+  String get aboutOSInfo =>
+      'Broncode: [codeberg/flutter-doable](https://www.codeberg.org/florian-obernberger/flutter-doable)\nPrivacybeleid: [codeberg/flutter-doable/privacy](https://codeberg.org/florian-obernberger/flutter-doable/src/branch/main/PRIVACY.md)\nF-Droid-repo: [codeberg/fdroid-repo](https://codeberg.org/florian-obernberger/fdroid-repo)\nMastodon: [@doable@floss.social](https://floss.social/@doable)';
 
   @override
   String get aboutToCancelChanges => 'Wijzigingen wissen?';
 
   @override
-  String get aboutToCancelChangesDescription => 'Je staat op het punt om alle wijzigingen aan deze taak te wissen.';
+  String get aboutToCancelChangesDescription =>
+      'Je staat op het punt om alle wijzigingen aan deze taak te wissen.';
 
   @override
   String get aboutToCancelFeedback => 'Feedback wissen?';
 
   @override
-  String get aboutToCancelFeedbackDescription => 'Je staat op het punt om je feedback te wissen. Deze actie is onomkeerbaar.';
+  String get aboutToCancelFeedbackDescription =>
+      'Je staat op het punt om je feedback te wissen. Deze actie is onomkeerbaar.';
 
   @override
-  String get aboutToDeleteCompleted => 'Je staat op het punt om alle afgeronde taken te verwijderen. Deze actie is permanent en onomkeerbaar.';
+  String get aboutToDeleteCompleted =>
+      'Je staat op het punt om alle afgeronde taken te verwijderen. Deze actie is permanent en onomkeerbaar.';
 
   @override
   String aboutToDeleteNSelected(int count) {
     final intl.NumberFormat countNumberFormat = intl.NumberFormat.compact(
       locale: localeName,
-      
     );
     final String countString = countNumberFormat.format(count);
 
@@ -53,13 +56,15 @@ class StringsNl extends Strings {
   String get additionalFeatures => 'Uitbreidingen';
 
   @override
-  String get additionalFeaturesDescription => 'Functies die Doable krachtiger maken';
+  String get additionalFeaturesDescription =>
+      'Functies die Doable krachtiger maken';
 
   @override
   String get alignTodoCheck => 'Selectievakjes aan rechterkant';
 
   @override
-  String get alignTodoCheckDescription => 'Toon selectievakjes van taken aan de rechterkant';
+  String get alignTodoCheckDescription =>
+      'Toon selectievakjes van taken aan de rechterkant';
 
   @override
   String get appLanguage => 'Apptaal';
@@ -77,16 +82,19 @@ class StringsNl extends Strings {
   String get syncAndBackup => 'Synchronisatie en reservekopieën';
 
   @override
-  String get syncAndBackupDescription => 'Synchroniseer en maak reservekopieën van je taken';
+  String get syncAndBackupDescription =>
+      'Synchroniseer en maak reservekopieën van je taken';
 
   @override
   String get cancel => 'Annuleren';
 
   @override
-  String get chooseFeedbackExtrasDescription => 'Het is aanbevolen om alle volgende informatie op te nemen, zodat ik een beter beeld van het probleem krijg. Hierin staat géén persoonlijke informatie.';
+  String get chooseFeedbackExtrasDescription =>
+      'Het is aanbevolen om alle volgende informatie op te nemen, zodat ik een beter beeld van het probleem krijg. Hierin staat géén persoonlijke informatie.';
 
   @override
-  String get chooseFeedbackExtrasTitle => 'Welke aanvullende informatie wil je opnemen?';
+  String get chooseFeedbackExtrasTitle =>
+      'Welke aanvullende informatie wil je opnemen?';
 
   @override
   String get chooseFeedbackWay => 'Waar wil je feedback achterlaten?';
@@ -104,7 +112,8 @@ class StringsNl extends Strings {
   String get customAccentPicker => 'Accentkleur';
 
   @override
-  String get customAccentPickerDescription => 'Kies een eigen accentkleur voor het appthema';
+  String get customAccentPickerDescription =>
+      'Kies een eigen accentkleur voor het appthema';
 
   @override
   String get darkMode => 'Donker thema';
@@ -121,7 +130,6 @@ class StringsNl extends Strings {
   String deletedNTodos(int count) {
     final intl.NumberFormat countNumberFormat = intl.NumberFormat.compact(
       locale: localeName,
-      
     );
     final String countString = countNumberFormat.format(count);
 
@@ -159,7 +167,8 @@ class StringsNl extends Strings {
   String get dynamicColors => 'Dynamische kleuren';
 
   @override
-  String get dynamicColorsDescription => 'Systeemkleuren gebruiken (Android 12+)';
+  String get dynamicColorsDescription =>
+      'Systeemkleuren gebruiken (Android 12+)';
 
   @override
   String get email => 'E-mail';
@@ -182,10 +191,12 @@ class StringsNl extends Strings {
   }
 
   @override
-  String get feedbackDescriptionHelp => 'Een uitgebreidere uitleg van wat er misging/hoe dit veroorzaakt werd.';
+  String get feedbackDescriptionHelp =>
+      'Een uitgebreidere uitleg van wat er misging/hoe dit veroorzaakt werd.';
 
   @override
-  String get feedbackHeader => 'Vul het onderstaande formulier in zodat ik een beter beeld krijg van wat er misging.';
+  String get feedbackHeader =>
+      'Vul het onderstaande formulier in zodat ik een beter beeld krijg van wat er misging.';
 
   @override
   String get feedbackTitleHelp => 'Een korte samenvatting van het gebeuren.';
@@ -203,16 +214,19 @@ class StringsNl extends Strings {
   String get highlightOverdue => 'Verstreken taken markeren';
 
   @override
-  String get highlightOverdueDescription => 'Markeer taken die te laat zijn op dezelfde manier als taken met een ster';
+  String get highlightOverdueDescription =>
+      'Markeer taken die te laat zijn op dezelfde manier als taken met een ster';
 
   @override
   String get highlightToday => 'Taken van vandaag markeren';
 
   @override
-  String get highlightTodayDescription => 'Markeer taken die vandaag dienen te worden afgerond op dezelfde manier als taken met een ster';
+  String get highlightTodayDescription =>
+      'Markeer taken die vandaag dienen te worden afgerond op dezelfde manier als taken met een ster';
 
   @override
-  String get importLocalBackupError => 'Dit bestand kan niet worden geïmporteerd. Weet je zeker dat het een Doable-bestand is?';
+  String get importLocalBackupError =>
+      'Dit bestand kan niet worden geïmporteerd. Weet je zeker dat het een Doable-bestand is?';
 
   @override
   String get importTodosFromFile => 'Bestand importeren';
@@ -221,7 +235,6 @@ class StringsNl extends Strings {
   String importedNTodos(int count) {
     final intl.NumberFormat countNumberFormat = intl.NumberFormat.compact(
       locale: localeName,
-      
     );
     final String countString = countNumberFormat.format(count);
 
@@ -242,10 +255,12 @@ class StringsNl extends Strings {
   String get introDoubleTap => 'Dubbeltikken';
 
   @override
-  String get introDoubleTapDescription => 'Dubbeltik op taken met een beschrijving om de volledige beschrijving te tonen. Ook kun je drukken op interactieve items, zoals links.\n\nProbeer dit voorbeeld uit!';
+  String get introDoubleTapDescription =>
+      'Dubbeltik op taken met een beschrijving om de volledige beschrijving te tonen. Ook kun je drukken op interactieve items, zoals links.\n\nProbeer dit voorbeeld uit!';
 
   @override
-  String get introDoubleTapTodoDescription => 'Taarten bestaan niet!\n\nMeer informatie:\nhttps://theportalwiki.com/wiki/Cake';
+  String get introDoubleTapTodoDescription =>
+      'Taarten bestaan niet!\n\nMeer informatie:\nhttps://theportalwiki.com/wiki/Cake';
 
   @override
   String get introDoubleTapTodoTitle => 'Nieuwe taart kopen';
@@ -254,31 +269,36 @@ class StringsNl extends Strings {
   String get introLinks => 'Links, telefoonnummers, e-mailadressen';
 
   @override
-  String get introLinksDescription => 'Als je links, telefoonnummers of e-mailadressen aan een beschrijving toevoegt, worden deze automatisch gemarkeerd en aanklikbaar gemaakt.';
+  String get introLinksDescription =>
+      'Als je links, telefoonnummers of e-mailadressen aan een beschrijving toevoegt, worden deze automatisch gemarkeerd en aanklikbaar gemaakt.';
 
   @override
   String get introNextcloud => 'Nextcloud';
 
   @override
-  String get introNextcloudDescription => 'Je kunt je taken ook synchroniseren met een Nextcloud-instantie. Log hier in!';
+  String get introNextcloudDescription =>
+      'Je kunt je taken ook synchroniseren met een Nextcloud-instantie. Log hier in!';
 
   @override
   String get introStar => 'Sterren';
 
   @override
-  String get introStarDescription => 'Voeg een ster toe aan een taak om deze\nop te laten vallen tussen de menigte.\n\nDruk op de ster hieronder om uit te proberen!';
+  String get introStarDescription =>
+      'Voeg een ster toe aan een taak om deze\nop te laten vallen tussen de menigte.\n\nDruk op de ster hieronder om uit te proberen!';
 
   @override
   String get introTodos => 'Taken';
 
   @override
-  String get introTodosDescription => 'Je kunt verschillende dingen toevoegen aan taken, zoals de datum waarop de taak dient te worden afgerond of een ster om hem op te laten vallen tussen de rest! Ook kun je een beschrijving toevoegen met links of andere informatie omtrent de taak.';
+  String get introTodosDescription =>
+      'Je kunt verschillende dingen toevoegen aan taken, zoals de datum waarop de taak dient te worden afgerond of een ster om hem op te laten vallen tussen de rest! Ook kun je een beschrijving toevoegen met links of andere informatie omtrent de taak.';
 
   @override
   String get introWelcome => 'Welkom in Doable!';
 
   @override
-  String get introWelcomeDescription => 'De eenvoudige takenapp met een modern ontwerp\nen Nextcloud-integratie.';
+  String get introWelcomeDescription =>
+      'De eenvoudige takenapp met een modern ontwerp\nen Nextcloud-integratie.';
 
   @override
   String get keepEditing => 'Verder bewerken';
@@ -328,19 +348,22 @@ class StringsNl extends Strings {
   String get mdCheatSheet => 'https://www.markdownguide.org/cheat-sheet/';
 
   @override
-  String get mdHelpMessage => 'Voegt ondersteuning toe voor basis-markdownsyntaxis in de beschrijving en titel van je taken.\n\nBekijk de volledige lijst met syntaxisopties:\n\n\nDeze app ondersteunt echter **niet** alle markdownspecificaties. Ondersteunde elementen zijn:\n\n- **Tekststijlen:**\n  - **Vetgedrukt**;\n  - *Cursief*;\n  - __Onderstrepen__ (`__tekst__`);\n  - ~~Doorhalen~~;\n  ==Markeren==\n  - [Links](https://www.markdownguide.org/cheat-sheet/);\n  - `Inlinecode`.\n- **Lijsten:**\n  1. Geordende lijsten;\n  2. Ongeordende lijsten;\n  3. Takenlijsten.\n- **Blokken:**\n- Blokcitaten;\n- Afgesloten codeblokken.';
+  String get mdHelpMessage =>
+      'Voegt ondersteuning toe voor basis-markdownsyntaxis in de beschrijving en titel van je taken.\n\nBekijk de volledige lijst met syntaxisopties:\n\n\nDeze app ondersteunt echter **niet** alle markdownspecificaties. Ondersteunde elementen zijn:\n\n- **Tekststijlen:**\n  - **Vetgedrukt**;\n  - *Cursief*;\n  - __Onderstrepen__ (`__tekst__`);\n  - ~~Doorhalen~~;\n  ==Markeren==\n  - [Links](https://www.markdownguide.org/cheat-sheet/);\n  - `Inlinecode`.\n- **Lijsten:**\n  1. Geordende lijsten;\n  2. Ongeordende lijsten;\n  3. Takenlijsten.\n- **Blokken:**\n- Blokcitaten;\n- Afgesloten codeblokken.';
 
   @override
   String get moveImportantToTop => 'Belangrijke taken bovenaan';
 
   @override
-  String get moveImportantToTopDescription => 'Schakel in om taken met een ster altijd bovenaan de lijst te tonen';
+  String get moveImportantToTopDescription =>
+      'Schakel in om taken met een ster altijd bovenaan de lijst te tonen';
 
   @override
   String get moveUpWhenUpdated => 'Wijzigingen op lijst tonen';
 
   @override
-  String get moveUpWhenUpdatedDescription => 'Verplaats taken na wijzigen naar de bovenkant van de lijst';
+  String get moveUpWhenUpdatedDescription =>
+      'Verplaats taken na wijzigen naar de bovenkant van de lijst';
 
   @override
   String get ncBaseUrl => 'Server';
@@ -358,7 +381,8 @@ class StringsNl extends Strings {
   String get ncLogOut => 'Uitloggen op Nextcloud';
 
   @override
-  String get ncLogOutMessage => 'Na het uitloggen worden je opgeslagen inloggegevens gewist. Het opgeslagen bestand op je Nextcloud-instantie blijft echter bewaard.';
+  String get ncLogOutMessage =>
+      'Na het uitloggen worden je opgeslagen inloggegevens gewist. Het opgeslagen bestand op je Nextcloud-instantie blijft echter bewaard.';
 
   @override
   String get ncLoggedInAs => 'Ingelogd als';
@@ -454,7 +478,8 @@ class StringsNl extends Strings {
   String get showCompletedTodos => 'Afgeronde taken tonen';
 
   @override
-  String get showCompletedTodosDescription => 'Toon afgeronde taken op de lijst';
+  String get showCompletedTodosDescription =>
+      'Toon afgeronde taken op de lijst';
 
   @override
   String get showIntroScreen => 'Uitleg tonen';
@@ -463,7 +488,8 @@ class StringsNl extends Strings {
   String get sortNewestFirst => 'Nieuwste bovenaan';
 
   @override
-  String get sortNewestFirstDescription => 'Toon taken met een nieuwere datum bovenaan';
+  String get sortNewestFirstDescription =>
+      'Toon taken met een nieuwere datum bovenaan';
 
   @override
   String get sortNoRelevantDate => 'Zonder datum';
@@ -484,13 +510,15 @@ class StringsNl extends Strings {
   String get sorting => 'Sorteervolgorde';
 
   @override
-  String get sortingDescription => 'De volgorde waarin taken dienen te worden gesorteerd';
+  String get sortingDescription =>
+      'De volgorde waarin taken dienen te worden gesorteerd';
 
   @override
   String get submitFeedback => 'Versturen';
 
   @override
-  String get syncCorruptedFile => 'Het reservekopiebestand lijkt beschadigd te zijn.';
+  String get syncCorruptedFile =>
+      'Het reservekopiebestand lijkt beschadigd te zijn.';
 
   @override
   String get syncDirectoryDoesNotExist => 'De opgegeven map bestaat niet.';
@@ -502,7 +530,8 @@ class StringsNl extends Strings {
   String get syncNoInternetConnection => 'Geen internetverbinding.';
 
   @override
-  String get syncNotNcServer => 'Er is geen Nextcloud-server aangetroffen op dit adres.';
+  String get syncNotNcServer =>
+      'Er is geen Nextcloud-server aangetroffen op dit adres.';
 
   @override
   String get syncServiceUnavailable => 'Nextcloud is niet bereikbaar.';
@@ -517,7 +546,8 @@ class StringsNl extends Strings {
   String get syncWrongUrl => 'De opgegeven url lijkt niet te kloppen.';
 
   @override
-  String get syncWrongUserOrPassword => 'De opgegeven gebruikersnaam of het opgegeven wachtwoord is onjuist.';
+  String get syncWrongUserOrPassword =>
+      'De opgegeven gebruikersnaam of het opgegeven wachtwoord is onjuist.';
 
   @override
   String get system => 'Systeem';
@@ -541,7 +571,8 @@ class StringsNl extends Strings {
   String get todoSearch => 'Taken doorzoekbaar maken';
 
   @override
-  String get todoSearchDescription => 'Toon een zoekknop op de takenlijst waarmee je taken kunt doorzoeken.';
+  String get todoSearchDescription =>
+      'Toon een zoekknop op de takenlijst waarmee je taken kunt doorzoeken.';
 
   @override
   String get tomorrow => 'Morgen';
@@ -550,19 +581,22 @@ class StringsNl extends Strings {
   String get treatTodayAsIsImportant => 'Vandaag behandelen als belangrijk';
 
   @override
-  String get treatTodayAsIsImportantDescription => 'Schakel in om taken die vandaag verstrijken te behandelen alsof ze voorzien zijn van een ster';
+  String get treatTodayAsIsImportantDescription =>
+      'Schakel in om taken die vandaag verstrijken te behandelen alsof ze voorzien zijn van een ster';
 
   @override
   String get trimTodoTexts => 'Taakteksten inkorten';
 
   @override
-  String get trimTodoTextsDescription => 'Schakel in om witregels uit taaktitels en -beschrijvingen te knippen';
+  String get trimTodoTextsDescription =>
+      'Schakel in om witregels uit taaktitels en -beschrijvingen te knippen';
 
   @override
   String get trueBlackMode => 'Puur zwart gebruiken';
 
   @override
-  String get trueBlackModeDescription => 'Maakt de achtergrond zwart (vooral nuttig op oled-apparaten)';
+  String get trueBlackModeDescription =>
+      'Maakt de achtergrond zwart (vooral nuttig op oled-apparaten)';
 
   @override
   String get turnOff => 'Uitschakelen';
@@ -583,7 +617,8 @@ class StringsNl extends Strings {
   String get useCustomTabs => 'Ingebouwde webbrowser gebruiken';
 
   @override
-  String get useCustomTabsDescription => 'Gebruik de ingebouwde webbrowser om links te openen';
+  String get useCustomTabsDescription =>
+      'Gebruik de ingebouwde webbrowser om links te openen';
 
   @override
   String get whatsNew => 'Wijzigingslog';
@@ -595,7 +630,8 @@ class StringsNl extends Strings {
   String get error => 'Foutmelding';
 
   @override
-  String get routingError => 'Oeps! Het lijkt er op dat er iets mis is gegaan en dat je op een pagina terecht bent gekomen die - nou ja - niet bestaat. Onze welgemeende excuses!';
+  String get routingError =>
+      'Oeps! Het lijkt er op dat er iets mis is gegaan en dat je op een pagina terecht bent gekomen die - nou ja - niet bestaat. Onze welgemeende excuses!';
 
   @override
   String get goToHome => 'Ga naar overzicht';
@@ -639,7 +675,8 @@ class StringsNl extends Strings {
   String get introExtensions => 'Uitbreidingen? Uitbreidingen!';
 
   @override
-  String get introExtensionsDescription => 'Met uitbreidingen kun je de mogelijkheden van Doable uitbreiden en vergroten. Ze stellen je in staat om precies aan te geven hoe je Doable wilt gebruiken. Druk op onderstaande knop om alle uitbreidinget te bekijken!';
+  String get introExtensionsDescription =>
+      'Met uitbreidingen kun je de mogelijkheden van Doable uitbreiden en vergroten. Ze stellen je in staat om precies aan te geven hoe je Doable wilt gebruiken. Druk op onderstaande knop om alle uitbreidinget te bekijken!';
 
   @override
   String get introExtensionsButton => 'Breid lekker uit!';
@@ -648,13 +685,15 @@ class StringsNl extends Strings {
   String get useBottomSheetMenu => 'Menu onderaan tonen';
 
   @override
-  String get useBottomSheetMenuDescription => 'Toon het menu onderaan in plaats van het uitklapmenu bovenaan';
+  String get useBottomSheetMenuDescription =>
+      'Toon het menu onderaan in plaats van het uitklapmenu bovenaan';
 
   @override
   String get contributors => 'Bijdragers';
 
   @override
-  String get contributorDescription => 'Mensen die Doable hielpen vorm te geven';
+  String get contributorDescription =>
+      'Mensen die Doable hielpen vorm te geven';
 
   @override
   String get webdav => 'Webdav';
@@ -663,7 +702,8 @@ class StringsNl extends Strings {
   String get webdavUrlHint => 'Webdav-server-url';
 
   @override
-  String get webdavLogOutMessage => 'Na het uitloggen worden de opgeslagen inloggegevens gewist. Het opgeslagen bestand blijft echter bewaard.';
+  String get webdavLogOutMessage =>
+      'Na het uitloggen worden de opgeslagen inloggegevens gewist. Het opgeslagen bestand blijft echter bewaard.';
 
   @override
   String get importExport => 'Im- en export';
@@ -693,7 +733,8 @@ class StringsNl extends Strings {
   String get lists => 'Lijsten';
 
   @override
-  String get listsDescription => 'Stel lijsten samen om al je taken te sorteren. Je kunt oneindig veel lijsten samenstellen, die allemaal vanaf het overzicht te openen zijn.';
+  String get listsDescription =>
+      'Stel lijsten samen om al je taken te sorteren. Je kunt oneindig veel lijsten samenstellen, die allemaal vanaf het overzicht te openen zijn.';
 
   @override
   String aboutToDeleteList(String listName) {
@@ -715,13 +756,15 @@ class StringsNl extends Strings {
   String get font => 'Lettertype';
 
   @override
-  String get fontDescription => 'Houd lang ingedrukt om lettertypenamen te tonen';
+  String get fontDescription =>
+      'Houd lang ingedrukt om lettertypenamen te tonen';
 
   @override
   String get popUpAnimationOverSlideAnimation => 'Oude paginawisseling';
 
   @override
-  String get popUpAnimationOverSlideAnimationDescription => 'Gebruik het oude paginawisselingseffect';
+  String get popUpAnimationOverSlideAnimationDescription =>
+      'Gebruik het oude paginawisselingseffect';
 
   @override
   String get restart => 'Herstarten';
@@ -733,7 +776,8 @@ class StringsNl extends Strings {
   String get restartRequired => 'Herstart vereist';
 
   @override
-  String get restartRequiredForSetting => 'Herstart de app om deze instelling toe te passen.';
+  String get restartRequiredForSetting =>
+      'Herstart de app om deze instelling toe te passen.';
 
   @override
   String get image => 'Afbeelding';
@@ -748,7 +792,8 @@ class StringsNl extends Strings {
   String get includeBranding => 'Doable vermelden';
 
   @override
-  String get doableBrandingText => 'Gedeeld vanuit Doable, de eenvoudige en moderne takenapp.\nInstalleer Doable via https://codeberg.org/florian-obernberger/flutter-doable';
+  String get doableBrandingText =>
+      'Gedeeld vanuit Doable, de eenvoudige en moderne takenapp.\nInstalleer Doable via https://codeberg.org/florian-obernberger/flutter-doable';
 
   @override
   String get chooseTodoShareType => 'Geef aan hoe je je taken wilt delen';
@@ -769,13 +814,15 @@ class StringsNl extends Strings {
   String get contributeWantYourNameHere => 'Wil je je naam hier terugzien?';
 
   @override
-  String get contributeWantYourNameHereDescription => 'Draag dan bij aan de code van Doable of help met vertalen!';
+  String get contributeWantYourNameHereDescription =>
+      'Draag dan bij aan de code van Doable of help met vertalen!';
 
   @override
   String get onlySymbolInDetailViewFab => 'Pictogrammen in plaats van tekst';
 
   @override
-  String get onlySymbolInDetailViewFabDescription => 'Toon pictogrammen in plaats van tekst in de detailweergave';
+  String get onlySymbolInDetailViewFabDescription =>
+      'Toon pictogrammen in plaats van tekst in de detailweergave';
 
   @override
   String get allSelected => 'Alle geselecteerde';
@@ -784,10 +831,12 @@ class StringsNl extends Strings {
   String get sharedTextAsTitle => 'Gedeelde tekst als titel gebruiken';
 
   @override
-  String get sharedTextAsTitleDescription => 'Gebruik de met Doable gedeelde tekst als titel in plaats van de taakbeschrijving';
+  String get sharedTextAsTitleDescription =>
+      'Gebruik de met Doable gedeelde tekst als titel in plaats van de taakbeschrijving';
 
   @override
-  String get noTodoLists => 'Je hebt nog geen lijsten samengesteld.\nMaak een nieuwe lijst om aan de slag te gaan!';
+  String get noTodoLists =>
+      'Je hebt nog geen lijsten samengesteld.\nMaak een nieuwe lijst om aan de slag te gaan!';
 
   @override
   String forExample(String example) {
@@ -801,7 +850,8 @@ class StringsNl extends Strings {
   String get syncConnectionTimedOut => 'De verbinding is verlopen.';
 
   @override
-  String get syncTooManyTimeOuts => 'De server verbrak de verbinding te vaak. Synchronisatie is uitgeschakeld totdat de app wordt herstart.';
+  String get syncTooManyTimeOuts =>
+      'De server verbrak de verbinding te vaak. Synchronisatie is uitgeschakeld totdat de app wordt herstart.';
 
   @override
   String get todoToCalendar => 'Taak toevoegen aan agenda';
@@ -810,10 +860,12 @@ class StringsNl extends Strings {
   String get logs => 'Logboeken';
 
   @override
-  String get logsDescription => 'Bekijk alle logboeken die Doable heeft aangelegd';
+  String get logsDescription =>
+      'Bekijk alle logboeken die Doable heeft aangelegd';
 
   @override
-  String get aboutToClearAllLogs => 'Je staat op het punt om alle logboeken onbruikbaar te maken voor feedback en probleemoplossing. Deze actie is permanent en onomkeerbaar.';
+  String get aboutToClearAllLogs =>
+      'Je staat op het punt om alle logboeken onbruikbaar te maken voor feedback en probleemoplossing. Deze actie is permanent en onomkeerbaar.';
 
   @override
   String get clearAllLogs => 'Alle logboeken wissen';
@@ -837,7 +889,8 @@ class StringsNl extends Strings {
   String get whatWentWrong => 'Wat is er misgegaan?';
 
   @override
-  String get fixCorruptBackupFile => 'Het reservekopiebestand van Doable is niet leesbaar en lijkt beschadigd te zijn. Doable kan trachten dit op te lossen door het huidige reservekopiebestand te verwijderen en een nieuw bestand aan te maken. Hierdoor worden alle wijzigingen in Doable-instanties die dit bestand gebruiken gewist.';
+  String get fixCorruptBackupFile =>
+      'Het reservekopiebestand van Doable is niet leesbaar en lijkt beschadigd te zijn. Doable kan trachten dit op te lossen door het huidige reservekopiebestand te verwijderen en een nieuw bestand aan te maken. Hierdoor worden alle wijzigingen in Doable-instanties die dit bestand gebruiken gewist.';
 
   @override
   String get initializingNextcloud => 'Bezig met voorbereiden van Nextcloud…';
@@ -867,13 +920,15 @@ class StringsNl extends Strings {
   String get createSummaryForBugReport => 'Samenvatting maken';
 
   @override
-  String get createSummaryForBugReportDetails => 'Maak een verslag bestaande uit systeeminformatie, Doable\'s instellingen en alle logboeken. Dit kan nuttig zijn voor bugmeldingen en het oplossen van problemen.';
+  String get createSummaryForBugReportDetails =>
+      'Maak een verslag bestaande uit systeeminformatie, Doable\'s instellingen en alle logboeken. Dit kan nuttig zijn voor bugmeldingen en het oplossen van problemen.';
 
   @override
   String get bugReport => 'Bugmelding';
 
   @override
-  String get bugReportSupportingText => 'Geef aan wat je wilt toevoegen aan de bugmelding. Hoe meer informatie je deelt, des te makkelijker het is om het probleem op te sporen. **Er wordt géén persoonlijke informatie gedeeld.**';
+  String get bugReportSupportingText =>
+      'Geef aan wat je wilt toevoegen aan de bugmelding. Hoe meer informatie je deelt, des te makkelijker het is om het probleem op te sporen. **Er wordt géén persoonlijke informatie gedeeld.**';
 
   @override
   String get shareBugReport => 'Bugmelding delen';
@@ -918,13 +973,15 @@ class StringsNl extends Strings {
   String get closeDetailsOnCompelte => 'Details verbergen na afronden';
 
   @override
-  String get closeDetailsOnCompelteDescription => 'Bewaart de taak en verbergt de details na het drukken op de afrondknop.';
+  String get closeDetailsOnCompelteDescription =>
+      'Bewaart de taak en verbergt de details na het drukken op de afrondknop.';
 
   @override
   String get customColorTheme => 'Eigen thema';
 
   @override
-  String get discardCustomColorTheme => 'Je staat op het punt om alle themawijzingen ongedaan te maken.';
+  String get discardCustomColorTheme =>
+      'Je staat op het punt om alle themawijzingen ongedaan te maken.';
 
   @override
   String get lightMode => 'Licht thema';
@@ -933,13 +990,15 @@ class StringsNl extends Strings {
   String get deletedCustomColorTheme => 'Het eigen thema is verwijderd.';
 
   @override
-  String get customThemeInfo => 'Hier kun je iedere kleur naar eigen hand zetten. Ook kun je kleuren im- en exporteren (json-bestand) en op die manier bewerken!\n\nAls je wilt weten waar iedere kleurcode voor staat, bekĳk dan de volgende website: https://m3.material.io/foundations/design-tokens';
+  String get customThemeInfo =>
+      'Hier kun je iedere kleur naar eigen hand zetten. Ook kun je kleuren im- en exporteren (json-bestand) en op die manier bewerken!\n\nAls je wilt weten waar iedere kleurcode voor staat, bekĳk dan de volgende website: https://m3.material.io/foundations/design-tokens';
 
   @override
   String get import => 'Importeren';
 
   @override
-  String get customThemeFuckedFile => 'Dit bestand bevat geen geldig thema. Zorg er voor dat bestand dezelfde stĳl en structuur als het geëxporteerde bestand volgt.';
+  String get customThemeFuckedFile =>
+      'Dit bestand bevat geen geldig thema. Zorg er voor dat bestand dezelfde stĳl en structuur als het geëxporteerde bestand volgt.';
 
   @override
   String get markdownBold => 'Vetgedrukt';
@@ -963,7 +1022,8 @@ class StringsNl extends Strings {
   String get fediRememberInstance => 'Instantie onthouden';
 
   @override
-  String get fediDoablePost => 'Ik heb zojuist al mĳn taken afgerond, met dank aan @Doable@floss.social!\n\nBen je benieuwd naar deze app? Lees meer over #Doable op https://repo.doable.at!';
+  String get fediDoablePost =>
+      'Ik heb zojuist al mĳn taken afgerond, met dank aan @Doable@floss.social!\n\nBen je benieuwd naar deze app? Lees meer over #Doable op https://repo.doable.at!';
 
   @override
   String get doable => 'Doable - dé moderne doch eenvoudige takenapp';
@@ -1038,7 +1098,8 @@ class StringsNl extends Strings {
   String get recurringTodos => 'Terugkerende taken';
 
   @override
-  String get recurringTodosDescription => 'Herhaal je taken en laat Doable ze automatisch opnieuw voor je inplannen zodra je ze afrondt. Taken worden ingepland op de relevante datum op basis van het door jou ingestelde schema. Als je geen einddatum aan een taak hebt toegekend, dan wordt de aanmaakdatum gebruikt.\n\n**Let op: deze functie werkt momenteel alléén in het Engels.**';
+  String get recurringTodosDescription =>
+      'Herhaal je taken en laat Doable ze automatisch opnieuw voor je inplannen zodra je ze afrondt. Taken worden ingepland op de relevante datum op basis van het door jou ingestelde schema. Als je geen einddatum aan een taak hebt toegekend, dan wordt de aanmaakdatum gebruikt.\n\n**Let op: deze functie werkt momenteel alléén in het Engels.**';
 
   @override
   String get post => 'Plaatsen';
@@ -1050,7 +1111,8 @@ class StringsNl extends Strings {
   String get beta => 'Bèta';
 
   @override
-  String get extensionBetaWarningDescription => 'Let op: deze uitbreiding is nog in de bètafase en kan daardoor fouten en/of ongemakken bevatten. Wees je hiervan bewust en neem contact met me op als je tegen problemen aanloopt!';
+  String get extensionBetaWarningDescription =>
+      'Let op: deze uitbreiding is nog in de bètafase en kan daardoor fouten en/of ongemakken bevatten. Wees je hiervan bewust en neem contact met me op als je tegen problemen aanloopt!';
 
   @override
   String get extensionBetaWarning => 'Bèta-uitbreiding inschakelen?';
@@ -1059,7 +1121,8 @@ class StringsNl extends Strings {
   String get showFediButton => 'Plaatsknop tonen';
 
   @override
-  String get showFediButtonDescription => 'Toon een knop waarmee je je blanco lijst op het fediverse kan plaatsen';
+  String get showFediButtonDescription =>
+      'Toon een knop waarmee je je blanco lijst op het fediverse kan plaatsen';
 
   @override
   String get notifications => 'Meldingen';
@@ -1071,22 +1134,26 @@ class StringsNl extends Strings {
   String get notifyAll => 'Alle taken';
 
   @override
-  String get notifyAllDescription => 'Toon een melding van elke taak met een einddatum';
+  String get notifyAllDescription =>
+      'Toon een melding van elke taak met een einddatum';
 
   @override
   String get notifyTimeOnly => 'Alleen taken met een tijdstip';
 
   @override
-  String get notifyTimeOnlyDescription => 'Toon alleen meldingen van taken met zowel een datum als tijdstip';
+  String get notifyTimeOnlyDescription =>
+      'Toon alleen meldingen van taken met zowel een datum als tijdstip';
 
   @override
   String get notifyTodosChannelName => 'Taken';
 
   @override
-  String get notificationsDescription => 'Krijg een melding als je taken dreigen te verlopen. Je kunt aangeven van welke taken je meldingen wilt ontvangen.';
+  String get notificationsDescription =>
+      'Krijg een melding als je taken dreigen te verlopen. Je kunt aangeven van welke taken je meldingen wilt ontvangen.';
 
   @override
-  String get notificationsDescriptionShort => 'Geef aan van welke taken je meldingen wilt ontvangen';
+  String get notificationsDescriptionShort =>
+      'Geef aan van welke taken je meldingen wilt ontvangen';
 
   @override
   String get notifyNeverDescription => 'Geen meldingen ontvangen';
@@ -1095,7 +1162,8 @@ class StringsNl extends Strings {
   String get defaultNotificationTime => 'Standaard meldingstijdstip';
 
   @override
-  String get defaultNotificationTimeDescription => 'Het tijdstip waarop je een melding krijgt van taken die geen specifiek tijdstip hebben';
+  String get defaultNotificationTimeDescription =>
+      'Het tijdstip waarop je een melding krijgt van taken die geen specifiek tijdstip hebben';
 
   @override
   String get addImage => 'Afbeelding toevoegen';
@@ -1104,7 +1172,8 @@ class StringsNl extends Strings {
   String get todoImages => 'Afbeeldingen';
 
   @override
-  String get todoImagesDescription => 'Voorzie je taken van afbeeldingen om ze te verduidelijken.\n\n**Let op: afbeeldingen worden helaas nog niet gesynchroniseerd.**';
+  String get todoImagesDescription =>
+      'Voorzie je taken van afbeeldingen om ze te verduidelijken.\n\n**Let op: afbeeldingen worden helaas nog niet gesynchroniseerd.**';
 
   @override
   String get clearInputField => 'Invoerveld wissen';
@@ -1116,7 +1185,8 @@ class StringsNl extends Strings {
   String get apkSignatureInvalid => 'Ongeldige ondertekening';
 
   @override
-  String get apkSignatureInvalidDescription => 'De ondertekening van het gedownloade apk-bestand kan niet worden gecontroleerd. Meld dit voorval aan de ontwikkelaars. Je kunt ervoor kiezen om het pakket alsnog te installeren, maar wij raden dit af.';
+  String get apkSignatureInvalidDescription =>
+      'De ondertekening van het gedownloade apk-bestand kan niet worden gecontroleerd. Meld dit voorval aan de ontwikkelaars. Je kunt ervoor kiezen om het pakket alsnog te installeren, maar wij raden dit af.';
 
   @override
   String get searchTodos => 'Taken doorzoeken';
@@ -1131,7 +1201,8 @@ class StringsNl extends Strings {
   String get readerMode => 'Leesmodus';
 
   @override
-  String get readerModeDescription => 'Maak een voorvertoning van taken op het bewerkscherm.';
+  String get readerModeDescription =>
+      'Maak een voorvertoning van taken op het bewerkscherm.';
 
   @override
   String get noList => 'Geen lijst';
@@ -1140,19 +1211,23 @@ class StringsNl extends Strings {
   String get chooseAList => 'Kies een lijst';
 
   @override
-  String get readerModeDescriptionShort => 'Pas de modus aan die gebruikt wordt na het openen van een taak';
+  String get readerModeDescriptionShort =>
+      'Pas de modus aan die gebruikt wordt na het openen van een taak';
 
   @override
   String get lastUsed => 'Laatstgebruikt';
 
   @override
-  String get syncFileLocked => 'De server heeft het reservekopiebestand vergrendeld. Probeer het over 15 minuten opnieuw.';
+  String get syncFileLocked =>
+      'De server heeft het reservekopiebestand vergrendeld. Probeer het over 15 minuten opnieuw.';
 
   @override
-  String get syncInternalError => 'Er is een interne fout opgetreden - excuses voor het ongemak.';
+  String get syncInternalError =>
+      'Er is een interne fout opgetreden - excuses voor het ongemak.';
 
   @override
-  String get syncConnectionError => 'Er is een fout opgetreden tijdens het verbinden met de server.';
+  String get syncConnectionError =>
+      'Er is een fout opgetreden tijdens het verbinden met de server.';
 
   @override
   String get restore => 'Herstellen';
@@ -1164,19 +1239,23 @@ class StringsNl extends Strings {
   String get initializingWebdav => 'Bezig met opzetten van Webdav…';
 
   @override
-  String get migratingNextcloudToRemote => 'Bezig met migreren naar nieuwe synchronisatiemethode…';
+  String get migratingNextcloudToRemote =>
+      'Bezig met migreren naar nieuwe synchronisatiemethode…';
 
   @override
-  String get migratingWebdavToRemote => 'Bezig met migreren naar nieuwe synchronisatiemethode…';
+  String get migratingWebdavToRemote =>
+      'Bezig met migreren naar nieuwe synchronisatiemethode…';
 
   @override
   String get migrateToRemotes => 'Migratie';
 
   @override
-  String get migrateToRemotesDescription => 'Doable heeft onlangs de synchronisatiemethode met Nextcloud en Webdav gewijzigd. Helaas werkt de nieuwe methode niet met terugwerkende kracht en zal er migratie moeten plaatsvinden. Dit zou niet meer dan een minuut moeten kosten.\n\nLet op: als je ervoor kiest om dit later te doen, dan kunnen er foutmeldingen optreden.';
+  String get migrateToRemotesDescription =>
+      'Doable heeft onlangs de synchronisatiemethode met Nextcloud en Webdav gewijzigd. Helaas werkt de nieuwe methode niet met terugwerkende kracht en zal er migratie moeten plaatsvinden. Dit zou niet meer dan een minuut moeten kosten.\n\nLet op: als je ervoor kiest om dit later te doen, dan kunnen er foutmeldingen optreden.';
 
   @override
-  String get fixBrokenRemoteFile => 'Eén Doable-reservekopiebestand lijkt beschadigd te zijn. Dit kan worden opgelost door het bestand te overschrijven met de huidige items. Let op: hierdoor worden wijzigingen door andere apparaten mogelijk gewist.';
+  String get fixBrokenRemoteFile =>
+      'Eén Doable-reservekopiebestand lijkt beschadigd te zijn. Dit kan worden opgelost door het bestand te overschrijven met de huidige items. Let op: hierdoor worden wijzigingen door andere apparaten mogelijk gewist.';
 
   @override
   String get fixedBrokenRemoteFile => 'Het beschadigde bestand is hersteld.';
@@ -1185,7 +1264,8 @@ class StringsNl extends Strings {
   String get unfixableRemoteFile => 'Het bestand kan niet worden hersteld.';
 
   @override
-  String get syncFileDoesNotExist => 'Er is geen reservekopiebestand beschikbaar.';
+  String get syncFileDoesNotExist =>
+      'Er is geen reservekopiebestand beschikbaar.';
 
   @override
   String get todos => 'Taken';
@@ -1203,7 +1283,8 @@ class StringsNl extends Strings {
   String get listColorAsAccent => 'Lijstkleur als accent gebruiken';
 
   @override
-  String get listColorAsAccentDescription => 'Gebruik de kleur van de huidige lijst als accentkleur';
+  String get listColorAsAccentDescription =>
+      'Gebruik de kleur van de huidige lijst als accentkleur';
 
   @override
   String get privacy => 'Privacy';
@@ -1227,10 +1308,12 @@ class StringsNl extends Strings {
   String get fdroid => 'F-Droid';
 
   @override
-  String get aboutOpenSource => 'Alle broncode is beschikbaar op Codeberg onder een FOSS-licentie. Ook kun je op Codeberg problemen melden en pull-aanvragen openen. Doable\'s F-Droid-pakketbron is tevens te vinden op Codeberg!';
+  String get aboutOpenSource =>
+      'Alle broncode is beschikbaar op Codeberg onder een FOSS-licentie. Ook kun je op Codeberg problemen melden en pull-aanvragen openen. Doable\'s F-Droid-pakketbron is tevens te vinden op Codeberg!';
 
   @override
-  String get aboutPrivacy => 'Doable verzamelt geen privé-informatie van je. Het enige dat Doable bewaart is logboeken met gebruiksstatistieken. Deze logboeken worden echter **niet automatisch gedeeld**. Ze worden alléén gedeeld als je ervoor kiest om ze te delen, bijvoorbeeld als je wilt dat ik een bug oplos.';
+  String get aboutPrivacy =>
+      'Doable verzamelt geen privé-informatie van je. Het enige dat Doable bewaart is logboeken met gebruiksstatistieken. Deze logboeken worden echter **niet automatisch gedeeld**. Ze worden alléén gedeeld als je ervoor kiest om ze te delen, bijvoorbeeld als je wilt dat ik een bug oplos.';
 
   @override
   String get httpWarning => 'Onbeveiligde verbinding';
@@ -1239,7 +1322,8 @@ class StringsNl extends Strings {
   String get cancelling => 'Bezig met afbreken…';
 
   @override
-  String get httpWarningDescription => 'Je probeert verbinding te maken met een http-server in plaats van een veiliger https-server. Http verstuurt alle gegevens onversleuteld naar de server, waardoor je mogelijk een beveiligingsrisico loopt. Deze methode is niet aanbevolen, behalve voor hele specifieke doeleinden, zoals een lokaal gehoste server. Weet je zeker dat je wilt doorgaan?';
+  String get httpWarningDescription =>
+      'Je probeert verbinding te maken met een http-server in plaats van een veiliger https-server. Http verstuurt alle gegevens onversleuteld naar de server, waardoor je mogelijk een beveiligingsrisico loopt. Deze methode is niet aanbevolen, behalve voor hele specifieke doeleinden, zoals een lokaal gehoste server. Weet je zeker dat je wilt doorgaan?';
 
   @override
   String get enableNotificationReminder => 'Herinneringsmelding';
@@ -1257,7 +1341,8 @@ class StringsNl extends Strings {
   String get enableNotificationSound => 'Geluid afspelen';
 
   @override
-  String get enableNotificationSoundDescription => 'Speel een geluid af bij het tonen van een melding';
+  String get enableNotificationSoundDescription =>
+      'Speel een geluid af bij het tonen van een melding';
 
   @override
   String get interval => 'Tussenpoos';
@@ -1284,25 +1369,31 @@ class StringsNl extends Strings {
   String get showList => 'Lijst tonen';
 
   @override
-  String get showListDescription => 'Toon taken van deze lijst op het overzicht.';
+  String get showListDescription =>
+      'Toon taken van deze lijst op het overzicht.';
 
   @override
-  String get hideListDescription => 'Toon geen taken van deze lijst op het overzicht.';
+  String get hideListDescription =>
+      'Toon geen taken van deze lijst op het overzicht.';
 
   @override
   String get gotIt => 'Ik begrijp het';
 
   @override
-  String get updateRelease => 'Open Doable\'s uitgavepagina en download de nieuwste versie';
+  String get updateRelease =>
+      'Open Doable\'s uitgavepagina en download de nieuwste versie';
 
   @override
-  String get updateDownload => 'Download de nieuwste versie automatisch en open het installatiebestand via het meldingsgebied';
+  String get updateDownload =>
+      'Download de nieuwste versie automatisch en open het installatiebestand via het meldingsgebied';
 
   @override
-  String get updateFdroid => 'Als je Doable vanuit F-Droid geïnstalleerd hebt, zou je de update in de komende uren moeten ontvangen vanuit IzzyOnDroid\'s of Doable\'s pakketbron';
+  String get updateFdroid =>
+      'Als je Doable vanuit F-Droid geïnstalleerd hebt, zou je de update in de komende uren moeten ontvangen vanuit IzzyOnDroid\'s of Doable\'s pakketbron';
 
   @override
-  String get updateDisable => 'Je kunt automatisch updaten uitschakelen in de instellingen';
+  String get updateDisable =>
+      'Je kunt automatisch updaten uitschakelen in de instellingen';
 
   @override
   String get updateChecker => 'Updatecontrole';
@@ -1323,19 +1414,22 @@ class StringsNl extends Strings {
   String get changeDuration => 'Tussenpoos wĳzigen';
 
   @override
-  String get autoExportDescription => 'Je kunt Doable automatisch al je taken, lijsten en instellingen laten exporteren. Maar let op: Doable maakt een nieuw bestand voor elke export aan! Kies de tussenpoos tussen exporteringen.';
+  String get autoExportDescription =>
+      'Je kunt Doable automatisch al je taken, lijsten en instellingen laten exporteren. Maar let op: Doable maakt een nieuw bestand voor elke export aan! Kies de tussenpoos tussen exporteringen.';
 
   @override
   String get seconds => 'seconden';
 
   @override
-  String get apkVerifyingSignature => 'Bezig met verifiëren van apk-ondertekening…';
+  String get apkVerifyingSignature =>
+      'Bezig met verifiëren van apk-ondertekening…';
 
   @override
   String get swipeActions => 'Veegacties';
 
   @override
-  String get swipeActionsDescription => 'Voegt de mogelijkheid toe om naar links te vegen op taken om ze toe te voegen aan je favorieten of af te ronden.\n\n**Let op: in sommige gevallen kan dit botsen met het lijstmenu.**';
+  String get swipeActionsDescription =>
+      'Voegt de mogelijkheid toe om naar links te vegen op taken om ze toe te voegen aan je favorieten of af te ronden.\n\n**Let op: in sommige gevallen kan dit botsen met het lijstmenu.**';
 
   @override
   String get selectedSwipeActions => 'Gekozen acties';
@@ -1367,7 +1461,8 @@ class StringsNl extends Strings {
   String get forceHighestRefreshRate => 'Hoogste ververssnelheid gebruiken';
 
   @override
-  String get forceHighestRefreshRateDescription => 'Probeer om de hoogste ververssnelheid van het scherm te gebruiken binnen de app';
+  String get forceHighestRefreshRateDescription =>
+      'Probeer om de hoogste ververssnelheid van het scherm te gebruiken binnen de app';
 
   @override
   String get overview => 'Overzicht';
@@ -1390,10 +1485,12 @@ class StringsNl extends Strings {
   String get progressBar => 'Voortgangsbalk';
 
   @override
-  String get progressBarDescription => 'Toon een voortgangsbalk op taken, zodat je in één oogopslag kunt zien hoe ver je ze al hebt afgerond.';
+  String get progressBarDescription =>
+      'Toon een voortgangsbalk op taken, zodat je in één oogopslag kunt zien hoe ver je ze al hebt afgerond.';
 
   @override
-  String get syncMultipleErrors => 'Er zijn meerdere foutmeldingen opgetreden. Bekijk voor meer informatie het logboek.';
+  String get syncMultipleErrors =>
+      'Er zijn meerdere foutmeldingen opgetreden. Bekijk voor meer informatie het logboek.';
 
   @override
   String get deletedCompleted => 'De afgeronde taken zijn gewist.';
@@ -1408,7 +1505,8 @@ class StringsNl extends Strings {
   String get dateFilters => 'Datumfilters';
 
   @override
-  String get dateFiltersDescription => 'Voeg een optie toe om alleen taken uit een bepaalde periode te tonen.';
+  String get dateFiltersDescription =>
+      'Voeg een optie toe om alleen taken uit een bepaalde periode te tonen.';
 
   @override
   String get exportedFile => 'Het bestand is geëxporteerd.';
@@ -1419,7 +1517,8 @@ class StringsNl extends Strings {
   }
 
   @override
-  String get enablePrideFlagsDescription => 'Toon regenboogvlaggen op de titelbalk in bepaalde maanden van het jaar';
+  String get enablePrideFlagsDescription =>
+      'Toon regenboogvlaggen op de titelbalk in bepaalde maanden van het jaar';
 
   @override
   String get enablePrideFlags => 'Regenboogvlaggen tonen';
@@ -1461,7 +1560,8 @@ class StringsNl extends Strings {
   String get anHourBefore => 'Eén uur voor aanvang';
 
   @override
-  String get defaultNotificationsDescriptionIfLists => 'Je kunt ook per lijst meldingen instellen.';
+  String get defaultNotificationsDescriptionIfLists =>
+      'Je kunt ook per lijst meldingen instellen.';
 
   @override
   String get halfHourAfter => '30 minuten na verstrijken';
@@ -1470,7 +1570,8 @@ class StringsNl extends Strings {
   String get customNotificationTime => 'Zelfgekozen tijdstip';
 
   @override
-  String get defaultNotificationsDescription => 'Geef aan welke meldingen moeten worden toegevoegd aan elke taak met een overeenkomende datum.';
+  String get defaultNotificationsDescription =>
+      'Geef aan welke meldingen moeten worden toegevoegd aan elke taak met een overeenkomende datum.';
 
   @override
   String nrOfNotifications(int count) {
@@ -1493,7 +1594,8 @@ class StringsNl extends Strings {
   String get snooze => 'Uitstellen';
 
   @override
-  String get snoozeDurationDescription => 'Hoelang een melding uitgesteld moet worden na het drukken op de uitstelknop';
+  String get snoozeDurationDescription =>
+      'Hoelang een melding uitgesteld moet worden na het drukken op de uitstelknop';
 
   @override
   String get snoozeDuration => 'Uitstellen gedurende';
@@ -1546,16 +1648,19 @@ class StringsNl extends Strings {
   String get info => 'Informatie';
 
   @override
-  String get aboutToCancelChangesToList => 'Je staat op het punt om alle aangebrachte wijzigingen te wissen.';
+  String get aboutToCancelChangesToList =>
+      'Je staat op het punt om alle aangebrachte wijzigingen te wissen.';
 
   @override
   String get notificationsAlwaysPreview => 'Meldingen altijd voorvertonen';
 
   @override
-  String get notificationsAlwaysPreviewDescription => 'Vertoon meldingen altijd voor, ongeacht de systeeminstellingen (niet van toepassing op de laatstgebruikte modus)';
+  String get notificationsAlwaysPreviewDescription =>
+      'Vertoon meldingen altijd voor, ongeacht de systeeminstellingen (niet van toepassing op de laatstgebruikte modus)';
 
   @override
-  String get nextcloudWipeDescription => 'Doable heeft een verzoek ontvangen om alle gegevens gekoppeld aan je Nextcloudaccount te wissen. Hierdoor wordt tevens de accountkoppeling verbroken. Verder kun je ervoor kiezen om al deze gegevens (taken en lijsten) uit de app te wissen. Let op: deze actie is permanent en onomkeerbaar.';
+  String get nextcloudWipeDescription =>
+      'Doable heeft een verzoek ontvangen om alle gegevens gekoppeld aan je Nextcloudaccount te wissen. Hierdoor wordt tevens de accountkoppeling verbroken. Verder kun je ervoor kiezen om al deze gegevens (taken en lijsten) uit de app te wissen. Let op: deze actie is permanent en onomkeerbaar.';
 
   @override
   String get nextcloudWipe => 'Nextcloud-opruiming';
@@ -1573,13 +1678,15 @@ class StringsNl extends Strings {
   String get useSystemFont => 'Systeemlettertype gebruiken';
 
   @override
-  String get useSystemFontDescription => 'Gebruik het systeemlettertype in Doable';
+  String get useSystemFontDescription =>
+      'Gebruik het systeemlettertype in Doable';
 
   @override
   String get batteryOptimization => 'Accuoptimalisatie';
 
   @override
-  String get batteryOptimizationDescription => 'Het accuverbruik van Doable wordt geoptimaliseerd. Doorgaans werkt dit probleemloos, maar het kan voorkomen dat je hierdoor niet kunt inloggen op Nextcloud. Als je problemen ervaart, schakel deze optimalisaties dan uit.';
+  String get batteryOptimizationDescription =>
+      'Het accuverbruik van Doable wordt geoptimaliseerd. Doorgaans werkt dit probleemloos, maar het kan voorkomen dat je hierdoor niet kunt inloggen op Nextcloud. Als je problemen ervaart, schakel deze optimalisaties dan uit.';
 
   @override
   String get couldNotAddTodoToCalendar => 'De taak kan niet worden toegevoegd.';
@@ -1588,5 +1695,6 @@ class StringsNl extends Strings {
   String get sortCompleted => 'Afgeronde taken sorteren';
 
   @override
-  String get sortCompletedDescription => 'Pas de sortering ook toe op afgeronde taken';
+  String get sortCompletedDescription =>
+      'Pas de sortering ook toe op afgeronde taken';
 }

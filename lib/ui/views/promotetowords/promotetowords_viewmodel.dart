@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:stacked/stacked.dart';
-import 'package:toastification/toastification.dart';
 
 import '../../utils/BackgroundAnimation.dart';
 import '../../utils/hero-icons-outline_icons.dart';
@@ -271,20 +270,38 @@ class PromotetowordsViewModel extends BaseViewModel {
                       GestureDetector(
                         onTap: () {
                           Clipboard.setData(ClipboardData(text: text));
-                          toastification.show(
-                            context: context,
-                            type: ToastificationType.success,
-                            style: ToastificationStyle.flatColored,
-                            title: const Text("文字已复制到剪切板"),
-                            description: const Text(
-                                "The text has been copied to the clipboard."),
-                            alignment: Alignment.bottomCenter,
-                            autoCloseDuration:
-                                const Duration(milliseconds: 2000),
-                            primaryColor: Colors.green,
-                            icon: const Icon(Hero_icons_outline.check_badge),
-                            borderRadius: BorderRadius.circular(15.0),
-                            applyBlurEffect: true,
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const Row(
+                                children: [
+                                  Icon(
+                                    Hero_icons_outline.check_badge,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(width: 8),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "文字已复制到剪切板",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                            "The text has been copied to the clipboard."),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              backgroundColor: Colors.green,
+                              duration: const Duration(milliseconds: 2000),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                            ),
                           );
                         },
                         child: Text(

@@ -1,6 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 
+import 'package:at_persistence_secondary_server/at_persistence_secondary_server.dart';
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -10,13 +11,14 @@ import 'package:hung/app/app.dialogs.dart';
 import 'package:hung/app/app.locator.dart';
 import 'package:hung/services/chat_message.dart';
 import 'package:hung/services/image_data.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_loader.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await FastCachedImageConfig.init(clearCacheAfter: const Duration(days: 15));
+
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   ));
@@ -26,29 +28,35 @@ void main() async {
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]);
-  Directory appDocDir = await getApplicationDocumentsDirectory();
-  String appDocPath = appDocDir.path;
 
-  // 初始化 Hive 并指定路径
-  Hive.init(appDocPath);
-  Hive.registerAdapter(
-      ImageDataAdapter()); //根据typeId注册adapter,当只用openBox时直接await openhivebox
+  // ⚡ 推荐使用 Hive.initFlutter() 进行初始化
+  await Hive.initFlutter();
+
+  // ✅ 先注册所有适配器（Adapter）
+  Hive.registerAdapter(ImageDataAdapter());
+  Hive.registerAdapter(ChatMessageAdapter());
+  Hive.registerAdapter(CommitEntryAdapter()); // 🚀 关键：添加这个
+  Hive.registerAdapter(AtDataAdapter());
+
+  // ✅ 然后再打开 Box
+  // // 删除相关的 Box 数据
+  // await Hive.deleteBoxFromDisk('imagesBox');
+  // await Hive.deleteBoxFromDisk('favoriteImagesBox');
+  // await Hive.deleteBoxFromDisk('chatjson');
+
+  // 打开新的 Box
   await Hive.openBox<ImageData>('imagesBox');
   await Hive.openBox<ImageData>('favoriteImagesBox');
-  Hive.registerAdapter(ChatMessageAdapter());
   await Hive.openBox<ChatMessage>('chatjson');
+
   EasyLoading.init();
   await SharedPreferences.getInstance();
 
-  // await dotenv.load(fileName: ".env");
-  // await GetStorage.init();
+  await setupLocator();
+  setupDialogUi();
+  setupBottomSheetUi();
 
-  await setupLocator(); // Assuming this is a function from your first app
-  setupDialogUi(); // Assuming this is a function from your first app
-  setupBottomSheetUi(); // Assuming this is a function from your first app
-  runApp(
-    const AppLoader(),
-  );
+  runApp(const AppLoader());
   configLoading();
 }
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../utils/hero-icons-outline_icons.dart';
 
-
 class donate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

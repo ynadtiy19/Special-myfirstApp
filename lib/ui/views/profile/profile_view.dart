@@ -1,19 +1,18 @@
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gpt_markdown/gpt_markdown.dart';
-import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:lottie/lottie.dart';
 import 'package:path/path.dart';
 import 'package:stacked/stacked.dart';
-import 'package:toastification/toastification.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../utils/hero-icons-outline_icons.dart';
 import '../../webviewsite/ynadtiy19.dart';
+import '../../widgets/common/fullscreen/fullscreen_image_viewer.dart';
 import '../../widgets/common/popmenu/gptdropdown.dart';
 import '../../widgets/common/sider_bar_page/sider_bar_page.dart';
 import 'profile_viewmodel.dart';
@@ -499,53 +498,97 @@ class ImageCardWidget extends StatelessWidget {
               radius: const Radius.circular(16.0),
               padding: const EdgeInsets.all(8.0),
               color: Colors.black87,
-              child: InstaImageViewer(
-                uonTap: (bool value) async {
-                  print(value); // 打印传入的 value 值
-
-                  // 根据 value 值判断是否执行保存逻辑
-                  if (value) {
-                    // 只有当 value 为 false 时执行保存逻辑
-                    print('准备保存图像：$imageUrl');
-
-                    // 保存图像到相册
-                    await viewModel.saveCachedImageToGallery(imageUrl);
-
-                    // 显示成功的 Toast 消息
-                    toastification.show(
+              child: GestureDetector(
+                  onTap: () {
+                    FullscreenImageViewer.open(
                       context: context,
-                      type: ToastificationType.success,
-                      style: ToastificationStyle.flatColored,
-                      title: const Text("Pin图已经保存到相册中"),
-                      description: const Text("Pin image has been saved."),
-                      alignment: Alignment.bottomCenter,
-                      autoCloseDuration: const Duration(milliseconds: 2350),
-                      primaryColor: Colors.green,
-                      icon: const Icon(Hero_icons_outline.check_badge),
-                      borderRadius: BorderRadius.circular(15.0),
-                      applyBlurEffect: true,
+                      child: FastCachedImage(
+                        url: imageUrl,
+                        fit: BoxFit.contain,
+                      ),
+                      closeWidget:
+                          const Icon(Hero_icons_outline.x_mark), // 关闭按钮
+                      saveWidget:
+                          const Icon(Hero_icons_outline.heart), // 如果需要保存按钮可以传入
+                      onTap: () async {
+                        // 只有当 value 为 false 时执行保存逻辑
+                        print('准备保存图像：$imageUrl');
+
+                        // 保存图像到相册
+                        await viewModel.saveCachedImageToGallery(imageUrl);
+
+                        // 显示成功的 Toast 消息
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Row(
+                              children: [
+                                Icon(
+                                  Hero_icons_outline.check_badge,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(width: 8),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: const [
+                                      Text(
+                                        "Pin图已经保存到相册中",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text("Pin image has been saved."),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            backgroundColor: Colors.green,
+                            duration: const Duration(milliseconds: 2350),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                          ),
+                        );
+                      },
                     );
-                  } else {
-                    // 如果 value 为 true，表示按钮已填充，则不执行保存逻辑
-                    print('按钮已填充，不执行保存');
-                  }
-                },
-                ufavoriteIcon: Icons.favorite, // 替换为您的图标
-                ucloseIcon: Icons.close, // 替换为您的图标
-                disableSwipeToDismiss: true,
-                backgroundColor: const Color.fromARGB(255, 216, 219, 231),
-                child: CachedNetworkImage(
-                  width: deviceWidth * 0.91,
-                  imageUrl: imageUrl,
-                  fit: BoxFit.contain,
-                  placeholder: (context, url) => const Center(
-                    child: CircularProgressIndicator(color: Colors.green),
-                  ),
-                  errorWidget: (context, url, error) {
-                    return ErrorWidgetWithRetry(url: url);
                   },
-                ),
-              ),
+                  child: FastCachedImage(
+                    url: imageUrl, // 替换为你的图像 URL
+                    fit: BoxFit.contain, // 设置适配模式
+                    fadeInDuration:
+                        const Duration(milliseconds: 410), // 设置淡入动画时长
+                    errorBuilder: (context, exception, stacktrace) {
+                      // 保持错误处理的行为不变，返回 ErrorWidgetWithRetry
+                      return ErrorWidgetWithRetry(url: imageUrl);
+                    },
+                    loadingBuilder: (context, progress) {
+                      // 加载过程中的显示内容
+                      return Container(
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            if (progress.isDownloading &&
+                                progress.totalBytes != null)
+                              Text(
+                                '${progress.downloadedBytes ~/ 1024} / ${progress.totalBytes! ~/ 1024} kb',
+                                style: const TextStyle(
+                                    color: Colors.red), // 显示已下载字节数
+                              ),
+                            SizedBox(
+                              width: 120,
+                              height: 120,
+                              child: CircularProgressIndicator(
+                                color: Colors.red, // 显示红色进度指示器
+                                value:
+                                    progress.progressPercentage.value, // 设置加载进度
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  )),
             ),
             // 文本信息部分
             const SizedBox(height: 10.0),

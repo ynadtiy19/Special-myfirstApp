@@ -5,27 +5,51 @@ import 'package:hung/app/app.locator.dart';
 import 'package:hung/ui/common/app_strings.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:zenith_snack_bar/zenith_snack_bar.dart';
 
+import '../../../services/atchatclient_service.dart';
 import '../../../services/image_repository_service.dart';
 
 class HomeViewModel extends ReactiveViewModel {
   final _dialogService = locator<DialogService>();
   final _bottomSheetService = locator<BottomSheetService>();
+  final ImageRepository = locator<ImageRepositoryService>();
+  final homeviewchatclientPlugin = locator<AtchatclientService>();
+
+  @override
+  List<ListenableServiceMixin> get listenableServices =>
+      [ImageRepository, homeviewchatclientPlugin];
+
+  late ZenithSnackBarController beautifulcontroller =
+      ZenithSnackBarController();
+  ZenithSnackBarController get beautifulcontrollerValue => beautifulcontroller;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey;
 
   String get counterLabel => 'Counter is: $_counter';
-  int _counter = 0;
+  final int _counter = 0;
 
   int _uuuindex = 0;
   int get uuuindex => _uuuindex;
 
-  final ImageRepository = locator<ImageRepositoryService>();
+  bool get uonboarded => homeviewchatclientPlugin.uonboarded;
+  get username => homeviewchatclientPlugin.recievemessageValue;
+
+  String? previousValue;
+  get previousValueValue => previousValue;
+
+  void onPreviousValueChange(String value) {
+    previousValue = value;
+    print('更改值 :$previousValue');
+    rebuildUi(); // 通知视图更新,get到上面
+  }
+
   @override
-  List<ListenableServiceMixin> get listenableServices => [
-        ImageRepository,
-      ];
+  HomeViewModel(BuildContext context) {
+    print('开始初始化 HomeViewModel');
+    homeviewchatclientPlugin.atauthenticateUser(context);
+  }
 
   bool get isBottomNavVisibleValue => ImageRepository.isBottomNavVisibleValue;
 
@@ -49,5 +73,11 @@ class HomeViewModel extends ReactiveViewModel {
       title: ksHomeBottomSheetTitle,
       description: ksHomeBottomSheetDescription,
     );
+  }
+
+  @override
+  void dispose() {
+    beautifulcontroller.dispose();
+    super.dispose();
   }
 }
