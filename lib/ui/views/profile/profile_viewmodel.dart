@@ -1,13 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/io_client.dart';
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:json_cache/json_cache.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -81,158 +79,30 @@ class ProfileViewModel extends BaseViewModel {
   }
 
   // 默认数据用[int index = 20]
-  Future<void> profileImageFetch([int index = 100]) async {
-    print('开始请求图片来源于https://indexer.clickapp.com/');
+  Future<void> profileImageFetch([int index = 20]) async {
+    final url = Uri.parse('https://mydiumtify.globeapp.dev/ipfs?index=$index');
+
     try {
-      final ioClient = IOClient(HttpClient()
-        ..badCertificateCallback =
-            (X509Certificate cert, String host, int port) => true); // 忽略证书错误
-      final url = Uri.parse('https://indexer.clickapp.com/');
-      final headers = {
-        ":authority": "indexer.clickapp.com",
-        ":method": "POST",
-        ":path": "/",
-        ":scheme": "https",
-        "accept": "*/*",
-        "accept-encoding": "gzip, deflate, br, zstd",
-        "accept-language": "zh-CN,zh;q=0.9",
-        "cache-control": "no-cache",
-        "content-length": "735",
-        "content-type": "application/json",
-        "origin": "https://clickapp.com",
-        "pragma": "no-cache",
-        "priority": "u=1, i",
-        "referer": "https://clickapp.com/",
-        "sec-ch-ua":
-            "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Microsoft Edge\";v=\"134\"",
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": "\"Windows\"",
-        "sec-fetch-dest": "empty",
-        "sec-fetch-mode": "cors",
-        "sec-fetch-site": "same-site",
-        "user-agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
-      };
-
-      // 请求负载
-      final payload = {
-        "operationName": "nftsByOwner",
-        "variables": {
-          "account": "0x1d7baa90d63b79c4cbeaf3b40a7be53791158b1f",
-          "contentType": "",
-          "limit": index,
-        },
-        "query": """
-    query nftsByOwner(\$account: String!, \$limit: Int, \$contentType: String) {
-      eRC721Tokens(
-        filter: {ownerId: {equalToInsensitive: \$account}, contentType: {includes: \$contentType}}
-        first: \$limit
-        orderBy: TIMESTAMP_DESC
-      ) {
-        nodes {
-          id
-          identifier
-          uri
-          timestamp
-          ownerId
-          owner {
-            name
-            __typename
-          }
-          channel
-          content
-          transactionHash
-          contentType
-          thumbnail
-          __typename
-        }
-        pageInfo {
-          hasNextPage
-          endCursor
-          __typename
-        }
-        __typename
-      }
-    }
-    """
-      };
-
-      final response = await ioClient.post(
-        url,
-        headers: headers,
-        body: jsonEncode(payload),
-      );
-      print(response.body);
+      final response = await http.get(url);
 
       if (response.statusCode == 200) {
-        print('响应200');
-        final data = jsonDecode(response.body);
-        final nfts = data['data']['account']['ERC721tokens']['nodes'] as List;
-
-        // 合并生成 uri 和 content 的步骤
-        final transformedData = nfts.map((nft) {
-          final uriValue = (nft['uri'] as String).split('ipfs://').last;
-          final contentValue = (nft['content'] as String).split('ipfs://').last;
-
-          return {
-            'uri':
-                'https://mydiumtify.globeapp.dev/myfilebase?url=https://nodle-community-nfts.myfilebase.com/ipfs/$uriValue',
-            'content':
-                'https://mydiumtify.globeapp.dev/pinterestImage?isImage=true&url=https://nodle-community-nfts.myfilebase.com/ipfs/$contentValue',
-          };
-        }).toList();
-        print(transformedData);
-
-        // 使用 Future.wait 并行请求这些新 URL
-        final futures = transformedData.map((item) async {
-          try {
-            final response = await http.get(Uri.parse(item['uri']!));
-            if (response.statusCode == 200) {
-              final responseData = jsonDecode(response.body);
-              return responseData; // 根据需要处理响应数据
-            } else {
-              print('请求失败，状态码：${response.statusCode}');
-              return null; // 返回 null 或其他处理
-            }
-          } catch (e) {
-            print('获取内容失败: $e');
-            return null;
-          }
-        });
-
-        // 等待所有请求完成
-        final responses = await Future.wait(futures);
-        print(responses.length);
-
-        // 处理响应数据，构建最终的 mediaInfoMap
-        final mediaInfoMap = <String, Map<String, dynamic>>{};
-
-        for (var i = 0; i < transformedData.length; i++) {
-          final contentUrl = transformedData[i]['content']; // 明确声明为可空字符串
-          final responseData = responses[i];
-
-          if (contentUrl != null && responseData != null) {
-            // 只在 contentUrl 非空时添加到 map 中
-            mediaInfoMap[contentUrl] = {
-              'placeName': responseData['placeName'] ?? '未知地点',
-              'name': responseData['name'] ?? '未知名称',
-            };
-          } else {
-            print('contentUrl 或响应数据 为 null，跳过该条目');
-          }
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        if (data.isNotEmpty) {
+          // Convert data to the expected format
+          Map<String, Map<String, dynamic>> formattedData = {};
+          data.forEach((key, value) {
+            formattedData[key] = Map<String, dynamic>.from(value);
+          });
+          // 处理数据并存储
+          await saveFirst10MediaInfo(formattedData);
+        } else {
+          print('请求成功，但返回的数据为空');
         }
-
-        // 存储数据到 JsonCacheMem
-        await jsonCacheMem.refresh('uuuprofile', mediaInfoMap);
-        notifyListeners();
-
-        // 存储前面10条数据
-        await saveFirst10MediaInfo(mediaInfoMap);
       } else {
-        print('请求失败，状态码：${response.statusCode}');
+        print('请求失败，状态码: ${response.statusCode}');
       }
     } catch (e) {
-      print('发生错误: $e');
+      print('请求异常: $e');
     }
   }
 
