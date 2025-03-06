@@ -93,8 +93,11 @@ class ProfileViewModel extends BaseViewModel {
           data.forEach((key, value) {
             formattedData[key] = Map<String, dynamic>.from(value);
           });
+          print(formattedData);
           // 处理数据并存储
           await saveFirst10MediaInfo(formattedData);
+          await jsonCacheMem.refresh('uuuprofile', formattedData);
+          notifyListeners();
         } else {
           print('请求成功，但返回的数据为空');
         }

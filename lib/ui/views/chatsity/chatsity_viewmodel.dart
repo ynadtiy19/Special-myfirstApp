@@ -72,6 +72,7 @@ class ChatsityViewModel extends ReactiveViewModel {
     _textController.addListener(initState);
   }
   bool get isfetchingUpdateVersion => !chatclientPlugin.uonboarded;
+  String? get uuuavatarImagePathValue => ImageRepository.avatarImagePathValue;
 
   bool available = false;
   get availableValue => available;
@@ -90,45 +91,54 @@ class ChatsityViewModel extends ReactiveViewModel {
   String message = "";
   get messageValue => message;
   stt.SpeechToText speech = stt.SpeechToText();
-  Future<void> listenSpeech(BuildContext context) async {
+  Future<void> listenSpeech(setState, BuildContext context) async {
     if (!available) {
       available = await speech.initialize();
     }
     if (available) {
-      recognizedText = "";
+      setState(() {
+        recognizedText = "";
+      });
       speech.listen(
         onResult: (result) {
-          recognizedText = result.recognizedWords;
-          message = result.recognizedWords;
+          setState(() {
+            recognizedText = result.recognizedWords;
+          });
         },
       );
       speech.statusListener = (status) async {
         if (status == 'listening') {
-          _isListening = true;
+          setState(() => _isListening = true);
         }
         if (status == 'notListening') {
-          _isListening = false;
+          setState(() => _isListening = false);
         }
         if (status == 'done') {
           if (recognizedText.isNotEmpty) {
             Navigator.pop(context);
             await routeTotextPage(recognizedText, context);
           }
-          _isListening = false;
-          recognizedText = "";
+          setState(() {
+            _isListening = false;
+            recognizedText = "";
+          });
         }
       };
     } else {
-      _isListening = false;
-      recognizedText = "Can't Recognize\nVoice";
+      setState(() {
+        _isListening = false;
+        recognizedText = "Can't Recognize\nVoice";
+      });
     }
     notifyListeners();
   }
 
-  void stopSpeech() {
+  void stopSpeech(setState) {
     if (available) {
       speech.stop();
-      _isListening = false;
+      setState(() {
+        _isListening = false;
+      });
     }
     notifyListeners();
   }

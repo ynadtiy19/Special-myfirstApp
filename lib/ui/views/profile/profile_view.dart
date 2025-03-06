@@ -36,8 +36,9 @@ class ProfileView extends StackedView<ProfileViewModel> {
     Widget? child,
   ) {
     return RefreshIndicator(
+      color: Colors.black87,
       onRefresh: () async {
-        await viewModel.profileImageFetch(5);
+        await viewModel.profileImageFetch(10);
       },
       child: Scaffold(
         key: viewModel.scaffoldKey,
@@ -484,7 +485,7 @@ class ImageCardWidget extends StatelessWidget {
                         // 显示成功的 Toast 消息
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Row(
+                            content: const Row(
                               children: [
                                 Icon(
                                   Hero_icons_outline.check_badge,
@@ -495,13 +496,12 @@ class ImageCardWidget extends StatelessWidget {
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    children: const [
+                                    children: [
                                       Text(
-                                        "Pin图已经保存到相册中",
+                                        "已经保存到可爱的相册中",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      Text("Pin image has been saved."),
                                     ],
                                   ),
                                 ),
@@ -509,6 +509,7 @@ class ImageCardWidget extends StatelessWidget {
                             ),
                             backgroundColor: Colors.green,
                             duration: const Duration(milliseconds: 2350),
+                            behavior: SnackBarBehavior.floating,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
@@ -521,35 +522,26 @@ class ImageCardWidget extends StatelessWidget {
                     url: imageUrl, // 替换为你的图像 URL
                     fit: BoxFit.contain, // 设置适配模式
                     fadeInDuration:
-                        const Duration(milliseconds: 410), // 设置淡入动画时长
+                        const Duration(milliseconds: 210), // 设置淡入动画时长
                     errorBuilder: (context, exception, stacktrace) {
                       // 保持错误处理的行为不变，返回 ErrorWidgetWithRetry
                       return ErrorWidgetWithRetry(url: imageUrl);
                     },
                     loadingBuilder: (context, progress) {
                       // 加载过程中的显示内容
-                      return Container(
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            if (progress.isDownloading &&
-                                progress.totalBytes != null)
-                              Text(
-                                '${progress.downloadedBytes ~/ 1024} / ${progress.totalBytes! ~/ 1024} kb',
-                                style: const TextStyle(
-                                    color: Colors.red), // 显示已下载字节数
-                              ),
-                            SizedBox(
-                              width: 120,
-                              height: 120,
-                              child: CircularProgressIndicator(
-                                color: Colors.red, // 显示红色进度指示器
-                                value:
-                                    progress.progressPercentage.value, // 设置加载进度
-                              ),
+                      return Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          SizedBox(
+                            width: 120,
+                            height: 120,
+                            child: CircularProgressIndicator(
+                              color: Colors.green[50], // 显示红色进度指示器
+                              value:
+                                  progress.progressPercentage.value, // 设置加载进度
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       );
                     },
                   )),
@@ -579,9 +571,9 @@ class ErrorWidgetWithRetry extends StatelessWidget {
   final String url;
 
   const ErrorWidgetWithRetry({
-    Key? key,
+    super.key,
     required this.url,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -719,8 +711,36 @@ class ShareButton extends StatelessWidget {
             borderRadius: const BorderRadius.all(Radius.circular(12)),
             onTap: () {
               Clipboard.setData(ClipboardData(text: imageUrl)).then((_) {
+                // 显示成功的 Toast 消息
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('图像 URL : $imageUrl 已复制到剪贴板')),
+                  SnackBar(
+                    content: const Row(
+                      children: [
+                        Icon(
+                          Hero_icons_outline.check_badge,
+                          color: Colors.white,
+                        ),
+                        SizedBox(width: 8),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "已复制图像链接",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    backgroundColor: Colors.green,
+                    duration: const Duration(milliseconds: 2350),
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                  ),
                 );
               });
             },

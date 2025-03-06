@@ -79,7 +79,7 @@ class SiderBarPage extends StackedView<SiderBarPageModel> {
                                     ? FileImage(File(
                                             viewModel.avatarImagePathValue!))
                                         as ImageProvider
-                                    : const AssetImage('images/dev.png'),
+                                    : const AssetImage('images/uu4.jpg'),
                               ),
                             ),
                           ],

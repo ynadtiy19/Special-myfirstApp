@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:auto_size_text_plus/auto_size_text_plus.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:chat_bubbles/bubbles/bubble_normal_image.dart';
-import 'package:device_scan_animation/device_scan_animation.dart';
 import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +14,7 @@ import 'package:pretty_animated_buttons/widgets/pretty_shadow_button.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../services/chat_message.dart';
+import '../../common/ui_helpers.dart';
 import '../../utils/hero-icons-outline_icons.dart';
 import '../../widgets/common/popmenu/gptdropdown.dart';
 import 'bubbletext.dart';
@@ -48,9 +48,9 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
           Positioned.fill(
             child: viewModel.imageBackground == null
                 ? const FastCachedImage(
-                    fadeInDuration: const Duration(milliseconds: 123),
+                    fadeInDuration: Duration(milliseconds: 123),
                     url:
-                        'https://utfs.io/f/e9rePmZszdcgCYSAVwB68En15KMm7CcRVx0pUrehv3OJqtXi', // 替换为你的图片URL
+                        'https://uuunu.standard.us-east-1.oortstorage.com/b900ca8f-9f9c-436c-b5b5-a0141a3ca4f9.jpg?signature=be0fa9891a9c0c40b2d774b18702dcbc9eced61758d7091c02a36c642a45d3142c6b7a9a24aacf967644c8a8f9e47aecd7e20d7e91879c134c389bcac4ad23aa9e71c611c01b2f2b0041297c73979b47721df0f35ff183c4bd097e3cf507df91&provider=1', // 替换为你的图片URL
                     fit: BoxFit.cover, // 确保图片覆盖整个背景
                   )
                 : Image.file(
@@ -87,95 +87,139 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                     children: [
                       const SizedBox(height: 70),
                       InkWell(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text('聊天',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 30)),
-                                  content: const Text('选择一个你喜欢的聊天机器人'),
-                                  actions: <Widget>[
-                                    Container(
-                                      alignment: Alignment.center,
-                                      width: double.infinity,
-                                      child: Column(
-                                        children: [
-                                          PrettyShadowButton(
-                                            label: "进入Chatgpt聊天",
-                                            onPressed: () {
-                                              viewModel.uchangeGeminichat();
-                                              viewModel.UchangeUI();
-                                              viewModel.ImageRepository
-                                                  .setBottomNavVisible(); //调用方法
-                                              Navigator.of(context).pop();
-                                            },
-                                            icon: Icons.arrow_forward,
-                                            shadowColor: Colors.green,
-                                          ),
-                                          const SizedBox(height: 10),
-                                          PrettyShadowButton(
-                                            label: "进入Gemini聊天",
-                                            onPressed: () {
-                                              viewModel.changeGeminichat();
-                                              viewModel.UchangeUI();
-                                              viewModel.ImageRepository
-                                                  .setBottomNavVisible();
-                                              Navigator.of(context).pop();
-                                            },
-                                            icon: Icons.arrow_forward,
-                                            shadowColor: Colors.green,
-                                          ),
-                                          const SizedBox(height: 10),
-                                          PrettyShadowButton(
-                                            label: "选择喜欢的背景墙",
-                                            onPressed: () {
-                                              viewModel
-                                                  .pickImageforbackground();
-                                              Navigator.of(context).pop();
-                                            },
-                                            icon: Icons.arrow_forward,
-                                            shadowColor: Colors.green,
-                                          ),
-                                          const SizedBox(height: 10),
-                                          TextButton(
-                                            child: const Text('取消',
-                                                style: TextStyle(
-                                                    color: Colors.black)),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                        ],
-                                      ),
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('聊天',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 30)),
+                                content: const Text('选择一个你喜欢的聊天机器人'),
+                                actions: <Widget>[
+                                  Container(
+                                    alignment: Alignment.center,
+                                    width: double.infinity,
+                                    child: Column(
+                                      children: [
+                                        PrettyShadowButton(
+                                          label: "进入Chatgpt聊天",
+                                          onPressed: () {
+                                            viewModel.uchangeGeminichat();
+                                            viewModel.UchangeUI();
+                                            viewModel.ImageRepository
+                                                .setBottomNavVisible(); //调用方法
+                                            Navigator.of(context).pop();
+                                          },
+                                          icon: Icons.arrow_forward,
+                                          shadowColor: Colors.green,
+                                        ),
+                                        const SizedBox(height: 10),
+                                        PrettyShadowButton(
+                                          label: "进入Gemini聊天",
+                                          onPressed: () {
+                                            viewModel.changeGeminichat();
+                                            viewModel.UchangeUI();
+                                            viewModel.ImageRepository
+                                                .setBottomNavVisible();
+                                            Navigator.of(context).pop();
+                                          },
+                                          icon: Icons.arrow_forward,
+                                          shadowColor: Colors.green,
+                                        ),
+                                        const SizedBox(height: 10),
+                                        PrettyShadowButton(
+                                          label: "选择喜欢的背景墙",
+                                          onPressed: () {
+                                            viewModel.pickImageforbackground();
+                                            Navigator.of(context).pop();
+                                          },
+                                          icon: Icons.arrow_forward,
+                                          shadowColor: Colors.green,
+                                        ),
+                                        const SizedBox(height: 10),
+                                        TextButton(
+                                          child: const Text('取消',
+                                              style: TextStyle(
+                                                  color: Colors.black)),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                          child: DeviceScanWidget()),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        child: Container(
+                          width: screenWidth(context) / 2,
+                          height: screenWidth(context) / 2,
+                          margin: const EdgeInsets.all(1),
+                          padding: const EdgeInsets.all(0),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(20),
+                            onTap: null,
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Container(
+                                width: screenWidth(context) / 2 - 4,
+                                height: screenWidth(context) / 2 - 4,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: viewModel.uuuavatarImagePathValue !=
+                                            null
+                                        ? FileImage(File(viewModel
+                                                .uuuavatarImagePathValue!))
+                                            as ImageProvider
+                                        : const AssetImage('images/uu4.jpg'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: CustomPaint(
+                                    painter: CircleBorderWithGlow(
+                                      color: Colors.white,
+                                      strokeWidth: 2,
+                                      glowRadius: 5, // 光晕半径
+                                    ),
+                                    child:
+                                        Container(), // 使用空容器，因为绘制已经在 CustomPaint 中完成
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 24),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
-                              'Free Tools',
+                              '免费助手',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             Ink(
                               width: 65,
-                              decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 216, 219, 231),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12)),
+                              decoration: BoxDecoration(
+                                color: Colors.pink[100],
+                                borderRadius: BorderRadius.circular(
+                                    12), // 如果 InkWell 有圆角，这里也要设置
                               ),
                               child: Material(
                                 color: Colors.transparent,
                                 child: InkWell(
+                                  splashFactory: InkSparkle
+                                      .constantTurbulenceSeedSplashFactory,
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(12)),
                                   onTap: () async {
@@ -224,20 +268,20 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                       // 使用自定义的 CustomGridColumn 部件
                       const CustomGridColumn(
                         imageUrls: [
-                          'https://utfs.io/f/e9rePmZszdcgcNfK53MfPredhvoHpLy5a2Oi1Un9VBj4YSZI',
-                          'https://utfs.io/f/e9rePmZszdcgcNfK53MfPredhvoHpLy5a2Oi1Un9VBj4YSZI',
-                          'https://utfs.io/f/e9rePmZszdcgcNfK53MfPredhvoHpLy5a2Oi1Un9VBj4YSZI',
-                          'https://utfs.io/f/e9rePmZszdcgcNfK53MfPredhvoHpLy5a2Oi1Un9VBj4YSZI',
-                          'https://utfs.io/f/e9rePmZszdcgcNfK53MfPredhvoHpLy5a2Oi1Un9VBj4YSZI',
+                          'https://uuunu.standard.us-east-1.oortstorage.com/Nature%20picture%20%20Nature%20photography%20%20Natural%20beauty.jpg?signature=be0fa9891a9c0c40b2d774b18702dcbc9eced61758d7091c02a36c642a45d3142c6b7a9a24aacf967644c8a8f9e47aecd7e20d7e91879c134c389bcac4ad23aa9e71c611c01b2f2b0041297c73979b47721df0f35ff183c4bd097e3cf507df91&provider=1',
+                          'https://uuunu.standard.us-east-1.oortstorage.com/9493c0d0-9f7a-4f8e-9b5a-34fa0052ca2c.jpg?signature=be0fa9891a9c0c40b2d774b18702dcbc9eced61758d7091c02a36c642a45d3142c6b7a9a24aacf967644c8a8f9e47aecd7e20d7e91879c134c389bcac4ad23aa9e71c611c01b2f2b0041297c73979b47721df0f35ff183c4bd097e3cf507df91&provider=1',
+                          'https://uuunu.standard.us-east-1.oortstorage.com/095042ea-5443-4ed7-a264-6613a3fc3be6.jpg?signature=be0fa9891a9c0c40b2d774b18702dcbc9eced61758d7091c02a36c642a45d3142c6b7a9a24aacf967644c8a8f9e47aecd7e20d7e91879c134c389bcac4ad23aa9e71c611c01b2f2b0041297c73979b47721df0f35ff183c4bd097e3cf507df91&provider=1',
+                          'https://uuunu.standard.us-east-1.oortstorage.com/42c00291-702d-434e-9d4d-3d9fe9859c84.jpg?signature=be0fa9891a9c0c40b2d774b18702dcbc9eced61758d7091c02a36c642a45d3142c6b7a9a24aacf967644c8a8f9e47aecd7e20d7e91879c134c389bcac4ad23aa9e71c611c01b2f2b0041297c73979b47721df0f35ff183c4bd097e3cf507df91&provider=1',
+                          'https://uuunu.standard.us-east-1.oortstorage.com/Nature%20picture%20%20Nature%20photography%20%20Natural%20beauty.jpg?signature=be0fa9891a9c0c40b2d774b18702dcbc9eced61758d7091c02a36c642a45d3142c6b7a9a24aacf967644c8a8f9e47aecd7e20d7e91879c134c389bcac4ad23aa9e71c611c01b2f2b0041297c73979b47721df0f35ff183c4bd097e3cf507df91&provider=1',
                           'https://utfs.io/f/e9rePmZszdcgcNfK53MfPredhvoHpLy5a2Oi1Un9VBj4YSZI',
                         ],
                         items: [
-                          'Rectangle 1',
-                          'Rectangle 2',
-                          'Rectangle 3',
-                          'Rectangle 4',
-                          'Rectangle 5',
-                          'Rectangle 6',
+                          '创作',
+                          '关键词',
+                          '写诗歌',
+                          '写故事',
+                          '图像识别',
+                          '提示词',
                         ],
                         itemHeight: 50.0, // 控制每个项目的高度
                         spacing: 10.0, // 控制项目之间的间隔
@@ -363,48 +407,67 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                                                   style: const TextStyle(
                                                       fontSize: 30.0)),
                                             ),
-                                            Center(
-                                                child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(20.0),
-                                              child: AvatarGlow(
-                                                glowColor: Colors.yellow,
-                                                animate: viewModel.isListening,
-                                                repeat: true,
-                                                child: InkWell(
-                                                  overlayColor:
-                                                      const MaterialStatePropertyAll(
-                                                          Colors.transparent),
-                                                  onTap: () async {
-                                                    viewModel
-                                                        .changeIsListening();
-                                                    print(
-                                                        viewModel.isListening);
-                                                    print(viewModel
-                                                        .availableValue);
-                                                    if (viewModel.isListening) {
-                                                      await viewModel
-                                                          .listenSpeech(
-                                                              context);
-                                                    } else {
-                                                      viewModel.stopSpeech();
-                                                    }
-                                                  },
-                                                  child: CircleAvatar(
-                                                    radius: 40.0,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    child: Icon(
-                                                      viewModel.isListening
-                                                          ? Icons.mic
-                                                          : Icons.mic_none,
-                                                      size: 40.0,
-                                                      color: Colors.black,
+                                            StatefulBuilder(
+                                              builder: (BuildContext context,
+                                                  StateSetter setState) {
+                                                return Center(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            20.0),
+                                                    child: AvatarGlow(
+                                                      glowColor: Colors.yellow,
+                                                      animate:
+                                                          viewModel.isListening,
+                                                      repeat: true,
+                                                      child: InkWell(
+                                                        overlayColor:
+                                                            const MaterialStatePropertyAll(
+                                                                Colors
+                                                                    .transparent),
+                                                        onTap: () async {
+                                                          // 调用 setState 更新状态
+                                                          setState(() {
+                                                            viewModel
+                                                                .changeIsListening();
+                                                          });
+                                                          print(viewModel
+                                                              .isListening);
+                                                          print(viewModel
+                                                              .availableValue);
+                                                          if (viewModel
+                                                              .isListening) {
+                                                            await viewModel
+                                                                .listenSpeech(
+                                                                    setState,
+                                                                    context);
+                                                          } else {
+                                                            viewModel
+                                                                .stopSpeech(
+                                                                    setState);
+                                                          }
+                                                        },
+                                                        child: CircleAvatar(
+                                                          radius: 40.0,
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          child: Icon(
+                                                            viewModel
+                                                                    .isListening
+                                                                ? Icons.mic
+                                                                : Icons
+                                                                    .mic_none,
+                                                            size: 40.0,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              ),
-                                            ))
+                                                );
+                                              },
+                                            ),
                                           ],
                                         );
                                       },
@@ -819,6 +882,47 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
     BuildContext context,
   ) =>
       ChatsityViewModel(context);
+}
+
+// 自定义绘制器
+class CircleBorderWithGlow extends CustomPainter {
+  final Color color;
+  final double strokeWidth;
+  final double glowRadius;
+
+  CircleBorderWithGlow({
+    required this.color,
+    required this.strokeWidth,
+    required this.glowRadius,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = (size.width - strokeWidth) / 2 - glowRadius; // 调整半径以适应光晕
+
+    // 绘制光晕
+    final glowPaint = Paint()
+      ..color = color.withOpacity(0.5) // 设置光晕颜色和透明度
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth + glowRadius * 2
+      ..maskFilter = MaskFilter.blur(BlurStyle.normal, glowRadius);
+
+    canvas.drawCircle(center, radius + glowRadius, glowPaint);
+
+    // 绘制边框
+    final borderPaint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth;
+
+    canvas.drawCircle(center, radius, borderPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false; // 如果绘制内容不变，返回 false 以优化性能
+  }
 }
 
 class CustomGridColumn extends StatelessWidget {
