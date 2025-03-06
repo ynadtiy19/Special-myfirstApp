@@ -11,6 +11,7 @@ import 'package:hung/app/app.dialogs.dart';
 import 'package:hung/app/app.locator.dart';
 import 'package:hung/services/chat_message.dart';
 import 'package:hung/services/image_data.dart';
+import 'package:kplayer/kplayer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_loader.dart';
@@ -55,6 +56,7 @@ void main() async {
   await setupLocator();
   setupDialogUi();
   setupBottomSheetUi();
+  Player.boot();
 
   runApp(const AppLoader());
   configLoading();

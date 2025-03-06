@@ -401,6 +401,7 @@ class ArticleViewModel extends ReactiveViewModel {
   @override
   ArticleViewModel() {
     print('初始化 ArticleViewModel');
+    _ArticalfocusNode.unfocus();
     fetchData();
     freeMediumfetchData();
     ImageRepository.loadAvatarImagePath();

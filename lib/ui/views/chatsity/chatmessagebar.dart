@@ -1,5 +1,5 @@
+import 'package:custom_button_builder/custom_button_builder.dart';
 import 'package:flutter/material.dart';
-import 'package:pretty_animated_buttons/widgets/pretty_shadow_button.dart';
 
 import '../../utils/hero-icons-outline_icons.dart';
 
@@ -48,7 +48,7 @@ class chatMessageBar extends StatelessWidget {
       builder: (BuildContext context) {
         return DraggableScrollableSheet(
           expand: false,
-          initialChildSize: 0.83,
+          initialChildSize: 0.93,
           minChildSize: 0.1,
           maxChildSize: 0.95,
           builder: (BuildContext context, ScrollController scrollController) {
@@ -82,7 +82,7 @@ class chatMessageBar extends StatelessWidget {
                           child: TextFormField(
                             textInputAction: TextInputAction.send,
                             controller: textController,
-                            maxLines: 8,
+                            maxLines: 7,
                             decoration: const InputDecoration.collapsed(
                               hintStyle: TextStyle(color: Colors.black),
                               hintText: '问任何问题...',
@@ -162,25 +162,38 @@ class chatMessageBar extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0),
-                    child: PrettyShadowButton(
-                      label: "发送", // Set the label to "Send"
+                    child: CustomButton(
+                      width: 300,
+                      backgroundColor: Colors.white,
+                      isThreeD: true,
+                      height: 50,
+                      borderRadius: 25,
+                      animate: true,
+                      margin: const EdgeInsets.all(10),
                       onPressed: () {
                         // Handle the button press logic
                         if (textController.text.trim().isNotEmpty) {
                           if (onSend != null) {
                             onSend!(textController.text.trim());
                           }
-                          //延迟
-                          Future.delayed(const Duration(milliseconds: 1200),
-                              () {
-                            textController.clear();
-                            Navigator.pop(context);
-                          });
+                          textController.clear();
+                          Navigator.pop(context);
                         }
                       },
-                      icon: sendButtonIcon, // Use the sendButtonIcon
-                      shadowColor:
-                          sendButtonColor, // Use sendButtonColor for the shadow
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(sendButtonIcon, color: sendButtonColor), // 图标
+                          const SizedBox(width: 8), // 间距
+                          Text(
+                            "发送", // 文字
+                            style: TextStyle(
+                                color: sendButtonColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

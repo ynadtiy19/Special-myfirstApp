@@ -14,10 +14,12 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as h2;
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kplayer/kplayer.dart';
 import 'package:listview_screenshot/listview_screenshot.dart';
 import 'package:mime/mime.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:stacked/stacked.dart';
 
 import '../../../app/app.locator.dart';
@@ -52,6 +54,15 @@ class ChatsityViewModel extends ReactiveViewModel {
   List<String> imagePaths = []; // 保存所有图像文件路径
   get imagePathsList => imagePaths;
 
+  void changechatwithHistory() async {
+    if (_chatwithHistory == false) {
+      _chatwithHistory = true;
+    } else {
+      _chatwithHistory = false;
+    }
+    notifyListeners();
+  }
+
   @override
   ChatsityViewModel(BuildContext context) {
     print('初始化 ChatsityViewModel');
@@ -61,6 +72,67 @@ class ChatsityViewModel extends ReactiveViewModel {
     _textController.addListener(initState);
   }
   bool get isfetchingUpdateVersion => !chatclientPlugin.uonboarded;
+
+  bool available = false;
+  get availableValue => available;
+
+  bool _isListening = false;
+  get isListening => _isListening;
+
+  void changeIsListening() {
+    _isListening = !_isListening;
+    notifyListeners();
+  }
+
+  String recognizedText = "";
+  get recognizedTextValue => recognizedText;
+
+  String message = "";
+  get messageValue => message;
+  stt.SpeechToText speech = stt.SpeechToText();
+  Future<void> listenSpeech(BuildContext context) async {
+    if (!available) {
+      available = await speech.initialize();
+    }
+    if (available) {
+      recognizedText = "";
+      speech.listen(
+        onResult: (result) {
+          recognizedText = result.recognizedWords;
+          message = result.recognizedWords;
+        },
+      );
+      speech.statusListener = (status) async {
+        if (status == 'listening') {
+          _isListening = true;
+        }
+        if (status == 'notListening') {
+          _isListening = false;
+        }
+        if (status == 'done') {
+          if (recognizedText.isNotEmpty) {
+            Navigator.pop(context);
+            await routeTotextPage(recognizedText, context);
+          }
+          _isListening = false;
+          recognizedText = "";
+        }
+      };
+    } else {
+      _isListening = false;
+      recognizedText = "Can't Recognize\nVoice";
+    }
+    notifyListeners();
+  }
+
+  void stopSpeech() {
+    if (available) {
+      speech.stop();
+      _isListening = false;
+    }
+    notifyListeners();
+  }
+
   Future<void> routeTotextPage(String text, BuildContext context) async {
     await HapticFeedback.lightImpact();
     Navigator.of(context).push(
@@ -491,7 +563,8 @@ class ChatsityViewModel extends ReactiveViewModel {
       );
 
       items = [image];
-      await changechatwithHistory();
+      notifyListeners();
+      changechatwithHistory();
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -517,10 +590,12 @@ class ChatsityViewModel extends ReactiveViewModel {
       );
 
       items = images;
-      await changechatwithHistory();
+      notifyListeners();
+      changechatwithHistory();
     } catch (e) {
       debugPrint(e.toString());
     }
+    notifyListeners();
   }
 
   String getRandomUserAgent() {
@@ -603,16 +678,6 @@ class ChatsityViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
-  Future<void> changechatwithHistory() async {
-    if (_chatwithHistory == false) {
-      _chatwithHistory = true;
-    } else {
-      _chatwithHistory = false;
-    }
-
-    notifyListeners();
-  }
-
   Future<void> UchatwithHistory(String text) async {
     final url = Uri.parse('https://labs.writingmate.ai/api/chat/public');
     _isfetching = true;
@@ -684,6 +749,7 @@ class ChatsityViewModel extends ReactiveViewModel {
         );
         // 将接收到的消息存储到 Hive
         _chatBox.add(message);
+        Player.asset("assets/audios/message.mp3");
         _isfetching = false;
         isNeedTypingIndicator = false;
         notifyListeners();
@@ -798,6 +864,7 @@ class ChatsityViewModel extends ReactiveViewModel {
             imagePath: null,
           );
           _chatBox.add(message);
+          Player.asset("assets/audios/message.mp3");
           _isfetching = false;
           isNeedTypingIndicator = false;
         } else {
@@ -814,6 +881,7 @@ class ChatsityViewModel extends ReactiveViewModel {
             imagePath: null,
           );
           _chatBox.add(message);
+          Player.asset("assets/audios/message.mp3");
           _isfetching = false;
           isNeedTypingIndicator = false;
         }
@@ -949,6 +1017,7 @@ class ChatsityViewModel extends ReactiveViewModel {
       );
       // 将接收到的消息存储到 Hive
       _chatBox.add(message);
+      Player.asset("assets/audios/message.mp3");
       _isfetching = false;
       isNeedTypingIndicator = false;
       _image = null;
@@ -961,79 +1030,13 @@ class ChatsityViewModel extends ReactiveViewModel {
     }
   }
 
-  void choosechatmodel(BuildContext context) {
+  void choosechatmodel() {
     if (_chatImage == false) {
-      // 如果数据库已经为空，提示用户
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return CupertinoAlertDialog(
-            title: const Text('启用图像聊天模式'),
-            content: Row(
-              children: [
-                const Text('双击图标可以切换图片获取方式'),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: Color(0xffF6E7B0),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(25),
-                    ),
-                  ),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    '⭐️',
-                    style: TextStyle(fontSize: 30),
-                  ),
-                ),
-              ],
-            ),
-            actions: [
-              CupertinoDialogAction(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('取消', style: TextStyle(color: Colors.black)),
-              ),
-              CupertinoDialogAction(
-                onPressed: () {
-                  _chatImage = true;
-                  notifyListeners();
-                  Navigator.of(context).pop();
-                },
-                child: const Text('确定', style: TextStyle(color: Colors.black)),
-              ),
-            ],
-          );
-        },
-      );
+      _chatImage = true;
     } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return CupertinoAlertDialog(
-            title: const Text('当前处于图像聊天模式，检测到是否关闭?'),
-            // content:
-            // const Text('您正在尝试删除一张重要的图片。此操作不可撤销，删除后将无法恢复。请确认您是否真的要删除这张图片。'),
-            actions: [
-              CupertinoDialogAction(
-                onPressed: () {
-                  Navigator.of(context).pop(); // 关闭对话框
-                },
-                child: const Text('取消', style: TextStyle(color: Colors.black)),
-              ),
-              CupertinoDialogAction(
-                onPressed: () {
-                  _chatImage = false;
-                  notifyListeners();
-                  Navigator.of(context).pop(); // 关闭对话框
-                },
-                child: const Text('确定', style: TextStyle(color: Colors.black)),
-              ),
-            ],
-          );
-        },
-      );
+      _chatImage = false;
     }
+    notifyListeners();
   }
 
   void choosepicker(BuildContext context) {

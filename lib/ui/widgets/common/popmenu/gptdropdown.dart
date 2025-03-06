@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:hung/ui/widgets/common/popmenu/strings/strings.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import '../../../common/app_colors.dart';
@@ -8,44 +6,29 @@ import '../../../utils/hero-icons-outline_icons.dart';
 import 'window_breakpoint.dart';
 
 enum TodoViewMenuDestination {
-  showCompleted(SingleActivator(LogicalKeyboardKey.keyH, control: true)),
-  hideCompleted(SingleActivator(LogicalKeyboardKey.keyH, control: true)),
-  deleteCompleted,
-  settings(SingleActivator(LogicalKeyboardKey.keyS, control: true)),
-  feedback,
-  export(SingleActivator(LogicalKeyboardKey.keyE, control: true, shift: true)),
+  photo,
+  camera,
   divider,
-  update,
-  deleteList,
-  selectAll(SingleActivator(LogicalKeyboardKey.keyA, control: true)),
+  microphone,
+  sparkles,
   editList;
 
   const TodoViewMenuDestination([this.shortcut]);
   final ShortcutActivator? shortcut;
 
-  Widget icon([double size = 18]) {
+  Widget icon([double size = 24]) {
     return switch (this) {
-      showCompleted => Icon(Symbols.visibility,
-          size: size, color: const Color.fromARGB(255, 85, 26, 26)), // 加入颜色
-      hideCompleted => Icon(Symbols.visibility_off,
+      camera => Icon(Hero_icons_outline.camera,
           size: size, color: const Color.fromARGB(255, 85, 26, 26)),
-      settings => Icon(Symbols.tune,
-          size: size, color: const Color.fromARGB(255, 85, 26, 26)),
-      feedback => Icon(Symbols.chat,
-          size: size, color: const Color.fromARGB(255, 85, 26, 26)),
-      deleteCompleted => Icon(Symbols.delete_forever,
+      photo => Icon(Hero_icons_outline.photo,
           weight: 500,
           size: size,
           color: const Color.fromARGB(255, 85, 26, 26)),
-      selectAll => Icon(Symbols.select_all,
-          size: size, color: const Color.fromARGB(255, 85, 26, 26)),
-      update => Icon(Symbols.download,
+      microphone => Icon(Hero_icons_outline.microphone,
           size: size, color: const Color.fromARGB(255, 85, 26, 26)),
       editList => Icon(Symbols.edit,
           size: size, color: const Color.fromARGB(255, 85, 26, 26)),
-      deleteList => Icon(Symbols.delete_forever,
-          size: size, color: const Color.fromARGB(255, 85, 26, 26)),
-      export => Icon(Symbols.export_notes,
+      sparkles => Icon(Hero_icons_outline.sparkles,
           size: size, color: const Color.fromARGB(255, 85, 26, 26)),
       divider => SizedBox(height: size, width: size),
     };
@@ -95,7 +78,7 @@ class TodoViewMenu extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Tooltip(
-                message: '全部故事',
+                message: '其他功能',
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -178,7 +161,7 @@ class TodoViewMenu extends StatelessWidget {
     final text = theme.textTheme;
     final platform = theme.platform;
 
-    final content = destinationText(context, destination);
+    final content = destinationText(destination);
 
     final showAndroidKeys = platform == TargetPlatform.android &&
         WindowBreakpoint.fromMediaQuery(MediaQuery.of(context))
@@ -257,27 +240,14 @@ class TodoViewMenu extends StatelessWidget {
     return null;
   }
 
-  String? destinationText(
-      BuildContext context, TodoViewMenuDestination destination) {
-    final strings = Strings.of(context);
-    if (strings == null) {
-      return 'Default Text'; // 或者你可以提供其他的默认文本
-    }
-
-    final materialStrings = MaterialLocalizations.of(context);
+  String destinationText(TodoViewMenuDestination destination) {
     return switch (destination) {
-      TodoViewMenuDestination.showCompleted => strings.showCompletedTodos,
-      TodoViewMenuDestination.hideCompleted => strings.popupMenuHideCompleted,
-      TodoViewMenuDestination.deleteCompleted =>
-        strings.popupMenuDeleteCompleted,
-      TodoViewMenuDestination.settings => strings.settings,
-      TodoViewMenuDestination.export => strings.export,
-      TodoViewMenuDestination.feedback => strings.giveFeedback,
-      TodoViewMenuDestination.update => strings.updateDoable,
+      TodoViewMenuDestination.photo => '相册',
+      TodoViewMenuDestination.camera => '相机',
+      TodoViewMenuDestination.microphone => '语音转文字',
       TodoViewMenuDestination.divider => '',
-      TodoViewMenuDestination.deleteList => strings.deleteTodoList,
-      TodoViewMenuDestination.editList => strings.editTodoList,
-      TodoViewMenuDestination.selectAll => materialStrings.selectAllButtonLabel,
+      TodoViewMenuDestination.sparkles => '文本转语音',
+      TodoViewMenuDestination.editList => '更新',
     };
   }
 }

@@ -67,19 +67,19 @@ class TravelcardView extends StackedView<TravelcardViewModel> {
                           content: const Row(
                             children: [
                               Icon(
-                                Hero_icons_outline.trash,
+                                Hero_icons_outline.check_badge,
                                 color: Colors.white,
                               ),
                               SizedBox(width: 10),
                               Text(
-                                '相片已删除.',
+                                '图片已保存至相册.',
                                 style: TextStyle(color: Colors.white),
                               ),
                             ],
                           ),
-                          backgroundColor: Colors.yellowAccent,
-                          duration: const Duration(milliseconds: 1600),
-                          behavior: SnackBarBehavior.fixed,
+                          backgroundColor: Colors.green,
+                          duration: const Duration(milliseconds: 2350),
+                          behavior: SnackBarBehavior.floating,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
                           ),
@@ -106,9 +106,9 @@ class TravelcardView extends StackedView<TravelcardViewModel> {
                               ),
                             ],
                           ),
-                          backgroundColor: Colors.yellowAccent,
-                          duration: const Duration(milliseconds: 1600),
-                          behavior: SnackBarBehavior.fixed,
+                          backgroundColor: Colors.red,
+                          duration: const Duration(milliseconds: 2350),
+                          behavior: SnackBarBehavior.floating,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
                           ),

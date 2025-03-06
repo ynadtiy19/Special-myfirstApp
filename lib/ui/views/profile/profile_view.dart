@@ -1,12 +1,9 @@
-import 'dart:async';
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:lottie/lottie.dart';
-import 'package:path/path.dart';
 import 'package:stacked/stacked.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -20,23 +17,17 @@ import 'profile_viewmodel.dart';
 class ProfileView extends StackedView<ProfileViewModel> {
   const ProfileView({Key? key}) : super(key: key);
 
-  FutureOr onPopupSelected(
-      TodoViewMenuDestination destination, Context context) {
-    return switch (destination) {
-      TodoViewMenuDestination.showCompleted => () {},
-      TodoViewMenuDestination.hideCompleted => () {},
-      TodoViewMenuDestination.deleteCompleted => () {},
-      TodoViewMenuDestination.settings => context.hash('/settings'),
-      TodoViewMenuDestination.feedback => context.hash('/feedback'),
-      TodoViewMenuDestination.update => context.hash('/update'),
-      TodoViewMenuDestination.deleteList => () {},
-      TodoViewMenuDestination.editList => () {},
-      TodoViewMenuDestination.export ||
-      TodoViewMenuDestination.divider ||
-      TodoViewMenuDestination.selectAll =>
-        null,
-    };
-  }
+  // FutureOr onPopupSelected(
+  //     TodoViewMenuDestination destination, Context context) {
+  //   return switch (destination) {
+  //     TodoViewMenuDestination.deleteCompleted => () {},
+  //     TodoViewMenuDestination.feedback => context.hash('/feedback'),
+  //     TodoViewMenuDestination.update => context.hash('/update'),
+  //     TodoViewMenuDestination.deleteList => () {},
+  //     TodoViewMenuDestination.editList => () {},
+  //     TodoViewMenuDestination.divider => null,
+  //   };
+  // }
 
   @override
   Widget builder(
@@ -46,7 +37,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
   ) {
     return RefreshIndicator(
       onRefresh: () async {
-        await viewModel.profileImageFetch(15);
+        await viewModel.profileImageFetch(5);
       },
       child: Scaffold(
         key: viewModel.scaffoldKey,
@@ -136,34 +127,6 @@ class ProfileView extends StackedView<ProfileViewModel> {
                         onSelected: (TodoViewMenuDestination destination) {
                           // 处理菜单项选择
                           switch (destination) {
-                            case TodoViewMenuDestination.showCompleted:
-                              // 执行显示已完成任务的操作
-                              print('Show Completed');
-                              break;
-                            case TodoViewMenuDestination.hideCompleted:
-                              // 执行隐藏已完成任务的操作
-                              print('Hide Completed');
-                              break;
-                            case TodoViewMenuDestination.deleteCompleted:
-                              // 执行删除已完成任务的操作
-                              print('Delete Completed');
-                              break;
-                            case TodoViewMenuDestination.settings:
-                              // 执行打开设置的操作
-                              print('Settings');
-                              break;
-                            case TodoViewMenuDestination.feedback:
-                              // 执行打开反馈页面的操作
-                              print('Feedback');
-                              break;
-                            case TodoViewMenuDestination.export:
-                              // 执行导出操作
-                              print('Export');
-                              break;
-                            case TodoViewMenuDestination.update:
-                              // 执行更新操作
-                              print('Update');
-                              break;
                             default:
                               print('Unknown Action');
                               break;
@@ -503,6 +466,7 @@ class ImageCardWidget extends StatelessWidget {
                     FullscreenImageViewer.open(
                       context: context,
                       child: FastCachedImage(
+                        fadeInDuration: const Duration(milliseconds: 123),
                         url: imageUrl,
                         fit: BoxFit.contain,
                       ),

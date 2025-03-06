@@ -392,6 +392,7 @@ class ImageGridItem extends StatelessWidget {
                     FullscreenImageViewer.open(
                       context: context,
                       child: FastCachedImage(
+                        fadeInDuration: const Duration(milliseconds: 123),
                         url: url,
                         fit: BoxFit.contain,
                       ),

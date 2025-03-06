@@ -1,7 +1,7 @@
 name: hung
 description: A able chatbot made by LUDEYU,check out.
 publish_to: 'none'
-version: 0.4.9
+version: 0.5.3
 
 environment:
   sdk: '>=3.0.3 <4.0.0'
@@ -85,6 +85,9 @@ dependencies:
   mime: ^2.0.0
   flutter_animate_border: ^0.2.3
   at_persistence_secondary_server: 3.0.65
+  kplayer: ^0.4.2
+  custom_button_builder: ^0.0.4
+  speech_to_text: ^7.0.0
 
 
 
@@ -101,6 +104,7 @@ flutter:
   assets:
     - images/
     - images/avatars/
+    - assets/audios/
     - .env
     - riv/
     - assets/keys/@dolphin9interim_key.atKeys

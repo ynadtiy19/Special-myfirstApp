@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:custom_button_builder/custom_button_builder.dart';
 import 'package:flutter/material.dart';
 
 class FullscreenViewer extends StatefulWidget {
@@ -97,31 +98,52 @@ class _FullscreenViewerState extends State<FullscreenViewer>
             ),
           ),
         ),
-        if (widget.closeWidget != null)
-          Positioned(
-            top: 50,
-            left: 45,
-            child: SafeArea(
-              child: GestureDetector(
-                onTap: () => Navigator.pop(context),
-                child: widget.closeWidget,
-              ),
+        Align(
+          alignment: Alignment.bottomCenter, // 将按钮对齐到底部中心
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 20), // 控制按钮与底部的间距
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center, // 水平居中
+              children: [
+                if (widget.closeWidget != null)
+                  CustomButton(
+                    width: 100,
+                    height: 100,
+                    backgroundColor: Colors.blueAccent,
+                    borderRadius: 100,
+                    isThreeD: true,
+                    animate: true,
+                    shadowColor: Colors.blueGrey,
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 10), // 添加按钮间距
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: widget.closeWidget ??
+                        const Icon(Icons.close, size: 50, color: Colors.white),
+                  ),
+                if (widget.downloadWidget != null)
+                  CustomButton(
+                    width: 100,
+                    height: 100,
+                    backgroundColor: Colors.greenAccent,
+                    borderRadius: 100,
+                    isThreeD: true,
+                    animate: true,
+                    shadowColor: Colors.green,
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 10), // 添加按钮间距
+                    onPressed: () async {
+                      await widget.onTap();
+                    },
+                    child: widget.downloadWidget ??
+                        const Icon(Icons.download,
+                            size: 50, color: Colors.white),
+                  ),
+              ],
             ),
           ),
-        if (widget.downloadWidget != null)
-          Positioned(
-            bottom: 50,
-            right: 25,
-            child: SafeArea(
-              child: GestureDetector(
-                onTap: () async {
-                  // Trigger the custom onTap callback
-                  await widget.onTap();
-                },
-                child: widget.downloadWidget,
-              ),
-            ),
-          ),
+        ),
       ],
     );
   }

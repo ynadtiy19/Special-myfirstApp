@@ -665,6 +665,8 @@ class _ArticleCardState extends State<ArticleCard>
                                   child: AspectRatio(
                                     aspectRatio: 16 / 9,
                                     child: FastCachedImage(
+                                      fadeInDuration:
+                                          const Duration(milliseconds: 123),
                                       url: widget.postImg,
                                       height: 500,
                                       fit: BoxFit.cover,

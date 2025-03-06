@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate_border/flutter_animate_border.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:lottie/lottie.dart';
@@ -40,15 +41,32 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  IconButton.outlined(
-                    tooltip: '打开旋转相册',
-                    icon: const Icon(Hero_icons_outline.light_bulb),
-                    color: Colors.grey,
-                    onPressed: () {
-                      _showCustomDialog(context);
-                    },
+                  FlutterAnimateBorder(
+                    controller: FlutterAnimateBorderController()
+                      ..setGradient(
+                        const RadialGradient(
+                          radius: 3.2,
+                          colors: [
+                            Colors.green,
+                            Colors.redAccent,
+                            Colors.amberAccent
+                          ],
+                        ),
+                      )
+                      ..setLineThickness(2)
+                      ..setLineWidth(48)
+                      ..setLinePadding(12)
+                      ..setCornerRadius(12),
+                    child: IconButton.outlined(
+                      tooltip: '打开旋转相册',
+                      icon: const Icon(Hero_icons_outline.light_bulb),
+                      color: Colors.grey,
+                      onPressed: () {
+                        _showCustomDialog(context);
+                      },
+                    ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 21),
                   Expanded(
                     child: KeyboardListener(
                       focusNode: FocusNode(),
@@ -60,56 +78,77 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                           FocusScope.of(context).unfocus();
                         }
                       },
-                      child: TextFormField(
-                        focusNode: viewModel.focusNode,
-                        maxLength: 1000,
-                        controller: viewModel.query,
-                        maxLines: 2,
-                        keyboardType: TextInputType.multiline,
-                        textInputAction: TextInputAction.send,
-                        onFieldSubmitted: (value) async {
-                          FocusManager.instance.primaryFocus?.unfocus();
-                          await viewModel.generateImagesFromMultipleSources(
-                              context, viewModel.query.text);
-                        },
-                        decoration: InputDecoration(
-                          isDense: true,
-                          filled: true,
-                          fillColor: Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withAlpha(100),
-                          hintText: '输入提示文本...',
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(
-                              20,
+                      child: FlutterAnimateBorder(
+                        controller: FlutterAnimateBorderController()
+                          ..setGradient(
+                            const RadialGradient(
+                              radius: 0.75,
+                              colors: [
+                                Colors.green,
+                                Colors.yellow,
+                                Colors.redAccent,
+                                Colors.amberAccent
+                              ],
                             ),
-                            borderSide: const BorderSide(color: Colors.grey),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: const BorderSide(color: Colors.green),
-                          ),
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: IconButton.outlined(
-                              tooltip: '生成图像',
-                              onPressed: viewModel.isGenerating
-                                  ? null
-                                  : () async {
-                                      if (viewModel.query.text.isEmpty) {
-                                        print('is empty');
-                                        _showCustomDialog2(context);
-                                      } else {
-                                        await viewModel
-                                            .generateImagesFromMultipleSources(
-                                                context, viewModel.query.text);
-                                      }
-                                    },
-                              iconSize: 27.0,
-                              color: Colors.black87,
-                              icon:
-                                  const Icon(Hero_icons_outline.rocket_launch),
+                          )
+                          ..setLineThickness(2)
+                          ..setLineWidth(48)
+                          ..setLinePadding(12)
+                          ..setCornerRadius(12),
+                        child: TextFormField(
+                          focusNode: viewModel.promoterealfocusNode,
+                          maxLength: 1000,
+                          showCursor: false,
+                          controller: viewModel.query,
+                          maxLines: 2,
+                          keyboardType: TextInputType.multiline,
+                          textInputAction: TextInputAction.send,
+                          onFieldSubmitted: (value) async {
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            await viewModel.generateImagesFromMultipleSources(
+                                context, viewModel.query.text);
+                          },
+                          decoration: InputDecoration(
+                            counterText: '',
+                            isDense: true,
+                            filled: true,
+                            fillColor: Colors.purple[100],
+                            hintText: '输入提示文本...',
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(14),
+                              borderSide: BorderSide.none,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(14),
+                              borderSide: const BorderSide(
+                                color: Colors.lightGreen, // 聚焦时的粉橙色边框
+                                width: 2.0,
+                              ),
+                            ),
+                            suffixIcon: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: IconButton.outlined(
+                                tooltip: '生成图像',
+                                onPressed: viewModel.isGenerating
+                                    ? null
+                                    : () async {
+                                        if (viewModel.query.text.isEmpty) {
+                                          print('is empty');
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
+                                          _showCustomDialog2(context);
+                                        } else {
+                                          await viewModel
+                                              .generateImagesFromMultipleSources(
+                                                  context,
+                                                  viewModel.query.text);
+                                        }
+                                      },
+                                iconSize: 27.0,
+                                color: Colors.black87,
+                                icon: const Icon(
+                                    Hero_icons_outline.rocket_launch),
+                              ),
                             ),
                           ),
                         ),
@@ -372,7 +411,7 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                                     backgroundColor: Colors.green, // 使用绿色
                                     duration:
                                         const Duration(milliseconds: 2350),
-                                    behavior: SnackBarBehavior.fixed,
+                                    behavior: SnackBarBehavior.floating,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15.0),
                                     ),
@@ -419,7 +458,7 @@ class PromptToRealView extends StackedView<PromptToRealViewModel> {
                                 return false; // 返回 false
                               }
                             },
-                            crossAxisCount: 2,
+                            crossAxisCount: 3,
                           )
                 : Center(
                     child: Column(
@@ -722,7 +761,7 @@ class ImageGridView extends StatelessWidget {
                         saveWidget: const Icon(
                             Hero_icons_outline.heart), // 如果需要保存按钮可以传入
                         onTap: () async {
-                          await onImageTap(context, imageBase64, false);
+                          await onImageTap(context, imageBase64, true);
                           print("图片被点击");
                         },
                       );

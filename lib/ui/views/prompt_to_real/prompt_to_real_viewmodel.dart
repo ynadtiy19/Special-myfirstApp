@@ -6,6 +6,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate_border/flutter_animate_border.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
@@ -40,12 +41,16 @@ class PromptToRealViewModel extends ReactiveViewModel {
   String singleimgPath = '';
   get singleimgPath1 => singleimgPath;
 
-  final FocusNode _focusNode = FocusNode();
-  FocusNode get focusNode => _focusNode;
+  final FocusNode _promoterealfocusNode = FocusNode();
+  FocusNode get promoterealfocusNode => _promoterealfocusNode;
+
+  final FlutterAnimateBorderController promoterealcontroller =
+      FlutterAnimateBorderController();
+  FlutterAnimateBorderController get controller1 => promoterealcontroller;
 
   @override
   PromptToRealViewModel() {
-    _focusNode.unfocus();
+    _promoterealfocusNode.unfocus();
     print('初始化PromptToRealViewModel');
     ImageRepository.getFolderNames();
     print(_folderNames);
@@ -55,7 +60,7 @@ class PromptToRealViewModel extends ReactiveViewModel {
   @override
   void dispose() {
     // 销毁FocusNode，防止内存泄漏
-    _focusNode.dispose();
+    _promoterealfocusNode.dispose();
     super.dispose();
   }
 
@@ -257,7 +262,7 @@ class PromptToRealViewModel extends ReactiveViewModel {
                           backgroundColor: Colors.green, // 使用绿色背景
                           duration:
                               const Duration(milliseconds: 2350), // 设置持续时间
-                          behavior: SnackBarBehavior.fixed, // 固定位置
+                          behavior: SnackBarBehavior.floating, // 固定位置
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0), // 圆角效果
                           ),

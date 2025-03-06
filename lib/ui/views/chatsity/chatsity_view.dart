@@ -8,6 +8,7 @@ import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:listview_screenshot/listview_screenshot.dart';
 import 'package:pretty_animated_buttons/widgets/pretty_shadow_button.dart';
@@ -47,6 +48,7 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
           Positioned.fill(
             child: viewModel.imageBackground == null
                 ? const FastCachedImage(
+                    fadeInDuration: const Duration(milliseconds: 123),
                     url:
                         'https://utfs.io/f/e9rePmZszdcgCYSAVwB68En15KMm7CcRVx0pUrehv3OJqtXi', // 替换为你的图片URL
                     fit: BoxFit.cover, // 确保图片覆盖整个背景
@@ -307,8 +309,7 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                         // 检查是否是放下按钮（一般是“返回”键）
                         if (event is KeyDownEvent &&
                             event.logicalKey == LogicalKeyboardKey.escape) {
-                          // 关闭输入框的焦点
-                          FocusScope.of(context).unfocus();
+                          FocusManager.instance.primaryFocus?.unfocus();
                         }
                       },
                       child: chatMessageBar(
@@ -318,36 +319,104 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                           TodoViewMenu(
                             destinations:
                                 TodoViewMenuDestination.values.toList(),
-                            onSelected: (TodoViewMenuDestination destination) {
+                            onSelected:
+                                (TodoViewMenuDestination destination) async {
                               // 处理菜单项选择
                               switch (destination) {
-                                case TodoViewMenuDestination.showCompleted:
-                                  // 执行显示已完成任务的操作
-                                  print('Show Completed');
+                                case TodoViewMenuDestination.photo:
+                                  await viewModel.UopenImagePicker();
+                                  print('请求打开相册');
                                   break;
-                                case TodoViewMenuDestination.hideCompleted:
-                                  // 执行隐藏已完成任务的操作
-                                  print('Hide Completed');
+                                case TodoViewMenuDestination.camera:
+                                  await viewModel.UopenCamera();
+                                  print('请求打开相机');
                                   break;
-                                case TodoViewMenuDestination.deleteCompleted:
-                                  // 执行删除已完成任务的操作
-                                  print('Delete Completed');
+                                case TodoViewMenuDestination.microphone:
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => StatefulBuilder(
+                                      builder: (context, setState) {
+                                        return AlertDialog(
+                                          backgroundColor:
+                                              const Color(0XFF1e1c22),
+                                          actionsPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 40.0),
+                                          title: Text('Tap To Speak',
+                                              textAlign: TextAlign.center,
+                                              style: GoogleFonts.poppins(
+                                                color: Colors.white,
+                                                fontSize: 30.0,
+                                                fontStyle: FontStyle.italic,
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                          actionsAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          actions: [
+                                            SizedBox(
+                                              width: double.infinity,
+                                              child: Text(
+                                                  viewModel.recognizedTextValue,
+                                                  textAlign: TextAlign.center,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontSize: 30.0)),
+                                            ),
+                                            Center(
+                                                child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(20.0),
+                                              child: AvatarGlow(
+                                                glowColor: Colors.yellow,
+                                                animate: viewModel.isListening,
+                                                repeat: true,
+                                                child: InkWell(
+                                                  overlayColor:
+                                                      const MaterialStatePropertyAll(
+                                                          Colors.transparent),
+                                                  onTap: () async {
+                                                    viewModel
+                                                        .changeIsListening();
+                                                    print(
+                                                        viewModel.isListening);
+                                                    print(viewModel
+                                                        .availableValue);
+                                                    if (viewModel.isListening) {
+                                                      await viewModel
+                                                          .listenSpeech(
+                                                              context);
+                                                    } else {
+                                                      viewModel.stopSpeech();
+                                                    }
+                                                  },
+                                                  child: CircleAvatar(
+                                                    radius: 40.0,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    child: Icon(
+                                                      viewModel.isListening
+                                                          ? Icons.mic
+                                                          : Icons.mic_none,
+                                                      size: 40.0,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ))
+                                          ],
+                                        );
+                                      },
+                                    ),
+                                  );
+                                  print('语音转文本');
                                   break;
-                                case TodoViewMenuDestination.settings:
-                                  // 执行打开设置的操作
-                                  print('Settings');
+                                case TodoViewMenuDestination.sparkles:
+                                  print('文字转语音');
                                   break;
-                                case TodoViewMenuDestination.feedback:
-                                  // 执行打开反馈页面的操作
-                                  print('Feedback');
-                                  break;
-                                case TodoViewMenuDestination.export:
-                                  // 执行导出操作
-                                  print('Export');
-                                  break;
-                                case TodoViewMenuDestination.update:
-                                  // 执行更新操作
-                                  print('Update');
+                                case TodoViewMenuDestination.editList:
+                                  print('获取更新版本');
                                   break;
                                 default:
                                   print('Unknown Action');
@@ -355,17 +424,6 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                               }
                             },
                           ),
-                          // const Text(
-                          //   '截图',
-                          //   style: TextStyle(color: Colors.black),
-                          // ),
-                          // InkWell(
-                          //   child: Icon(Hero_icons_outline.rectangle_stack),
-                          //   onTap: () {
-                          //     viewModel.onScreenshot();
-                          //     print('最后截图成功');
-                          //   },
-                          // )
                         ],
                         onTapCloseReply: () {
                           viewModel.ureplychange(); //关闭回复框
@@ -420,7 +478,7 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Tooltip(
                                         message: viewModel.exchange
-                                            ? '切换图标'
+                                            ? '显示选定图片'
                                             : '切换图标', // 根据您的逻辑修改提示信息
                                         child: Row(
                                           mainAxisAlignment:
@@ -482,7 +540,7 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                                                               'swatchIcon'),
                                                           color: Colors.black,
                                                           size:
-                                                              18) // 调整图标大小以适应容器
+                                                              20) // 调整图标大小以适应容器
                                                       : const Icon(
                                                           Hero_icons_outline
                                                               .bars_3,
@@ -490,7 +548,7 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                                                               'bars3Icon'),
                                                           color: Colors.black,
                                                           size:
-                                                              18), // 调整图标大小以适应容器
+                                                              20), // 调整图标大小以适应容器
                                                 ),
                                               ),
                                             ),
@@ -519,41 +577,56 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Tooltip(
                                         message: viewModel.chatwithHistory
-                                            ? '关闭通知'
-                                            : '打开通知', // 根据您的逻辑修改提示信息
+                                            ? '启动多轮聊天'
+                                            : '已关闭多轮聊天', // 根据您的逻辑修改提示信息
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                    170, 206, 96, 96),
-                                                shape: BoxShape.circle,
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.grey
-                                                        .withOpacity(0.5),
-                                                    spreadRadius: 2,
-                                                    blurRadius: 4,
-                                                    offset: const Offset(0, 2),
-                                                  ),
-                                                ],
-                                              ),
-                                              child: Center(
-                                                child: viewModel.chatwithHistory
-                                                    ? const Icon(
-                                                        Hero_icons_outline
-                                                            .bell_alert,
-                                                        color: Colors.green,
-                                                        size: 18) // 调整图标大小以适应容器
-                                                    : const Icon(
-                                                        Hero_icons_outline.bell,
-                                                        color: Colors.black,
-                                                        size:
-                                                            18), // 调整图标大小以适应容器
+                                            AvatarGlow(
+                                              glowCount: 2,
+                                              glowRadiusFactor: 1.2,
+                                              animate:
+                                                  viewModel.chatwithHistory,
+                                              startDelay:
+                                                  const Duration(seconds: 0),
+                                              glowColor: Colors.yellowAccent,
+                                              glowShape: BoxShape.circle,
+                                              curve: Curves.fastOutSlowIn,
+                                              child: Container(
+                                                width: 25,
+                                                height: 25,
+                                                decoration: BoxDecoration(
+                                                  color: const Color.fromARGB(
+                                                      170, 206, 96, 96),
+                                                  shape: BoxShape.circle,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey
+                                                          .withOpacity(0.5),
+                                                      spreadRadius: 2,
+                                                      blurRadius: 4,
+                                                      offset:
+                                                          const Offset(0, 2),
+                                                    ),
+                                                  ],
+                                                ),
+                                                child: Center(
+                                                  child: viewModel
+                                                          .chatwithHistory
+                                                      ? const Icon(
+                                                          Hero_icons_outline
+                                                              .bell_alert,
+                                                          color: Colors.green,
+                                                          size:
+                                                              20) // 调整图标大小以适应容器
+                                                      : const Icon(
+                                                          Hero_icons_outline
+                                                              .bell,
+                                                          color: Colors.black,
+                                                          size:
+                                                              20), // 调整图标大小以适应容器
+                                                ),
                                               ),
                                             ),
                                           ],
@@ -575,11 +648,11 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(12)),
                                     onTap: () {
-                                      viewModel.choosechatmodel(context);
+                                      viewModel.choosechatmodel();
                                     },
-                                    onDoubleTap: () {
-                                      viewModel.choosepicker(context);
-                                    },
+                                    // onDoubleTap: () {
+                                    //   viewModel.choosepicker(context);
+                                    // },
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Tooltip(
@@ -608,24 +681,12 @@ class ChatsityView extends StackedView<ChatsityViewModel> {
                                                 ],
                                               ),
                                               child: Center(
-                                                child: viewModel.pickermodel
-                                                    ? Icon(
-                                                        Hero_icons_outline
-                                                            .camera,
-                                                        color:
-                                                            viewModel.chatImage
-                                                                ? Colors.green
-                                                                : Colors.black,
-                                                        size: 18) // 调整图标大小以适应容器
-                                                    : Icon(
-                                                        Hero_icons_outline
-                                                            .photo,
-                                                        color:
-                                                            viewModel.chatImage
-                                                                ? Colors.green
-                                                                : Colors.black,
-                                                        size:
-                                                            18), // 调整图标大小以适应容器
+                                                child: Icon(
+                                                    Hero_icons_outline.photo,
+                                                    color: viewModel.chatImage
+                                                        ? Colors.green
+                                                        : Colors.black,
+                                                    size: 20), // 调整图标大小以适应容器
                                               ),
                                             ),
                                           ],
@@ -861,6 +922,7 @@ class RecentPlayCard extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(15.0), // 图片圆角
                     child: FastCachedImage(
+                      fadeInDuration: const Duration(milliseconds: 123),
                       url: imageUrl,
                       width: 100, // 图片宽度
                       height: 100, // 图片高度
@@ -1101,6 +1163,7 @@ class _MyCustomAppBarState extends State<MyCustomAppBar>
                       child: Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: AvatarGlow(
+                          animate: true,
                           startDelay: const Duration(seconds: 0),
                           glowColor: Colors.yellowAccent,
                           glowShape: BoxShape.circle,

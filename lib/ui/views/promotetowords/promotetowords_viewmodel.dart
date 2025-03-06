@@ -301,6 +301,8 @@ class PromotetowordsViewModel extends BaseViewModel {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
+                              behavior:
+                                  SnackBarBehavior.floating, // 使 SnackBar 浮动显示
                             ),
                           );
                         },

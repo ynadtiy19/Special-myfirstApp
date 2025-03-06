@@ -82,23 +82,36 @@ class ProfileViewModel extends BaseViewModel {
 
   // 默认数据用[int index = 20]
   Future<void> profileImageFetch([int index = 100]) async {
+    print('开始请求图片来源于https://indexer.clickapp.com/');
     try {
       final ioClient = IOClient(HttpClient()
         ..badCertificateCallback =
             (X509Certificate cert, String host, int port) => true); // 忽略证书错误
       final url = Uri.parse('https://indexer.clickapp.com/');
       final headers = {
-        'Content-Type': 'application/json',
-        'Accept': '*/*',
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache',
-        'Origin': 'https://clickapp.com',
-        'Referer': 'https://clickapp.com/',
-        'Sec-Fetch-Dest': 'empty',
-        'Sec-Fetch-Mode': 'cors',
-        'Sec-Fetch-Site': 'same-site',
-        'User-Agent':
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0',
+        ":authority": "indexer.clickapp.com",
+        ":method": "POST",
+        ":path": "/",
+        ":scheme": "https",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "accept-language": "zh-CN,zh;q=0.9",
+        "cache-control": "no-cache",
+        "content-length": "735",
+        "content-type": "application/json",
+        "origin": "https://clickapp.com",
+        "pragma": "no-cache",
+        "priority": "u=1, i",
+        "referer": "https://clickapp.com/",
+        "sec-ch-ua":
+            "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Microsoft Edge\";v=\"134\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-site",
+        "user-agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
       };
 
       // 请求负载
